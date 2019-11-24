@@ -129,10 +129,10 @@ class AdminController extends Controller
         if ($request->has('pagesize')) {
             $pagesize = $request->get('pagesize');
             if($pagesize == 'all'){
-                $pagesize = Invoice::all()->count();
+                $pagesize = Invoice::whereNotNull('user_id')->get()->count();
             }
         }
-        $invoice = Invoice::orderBy('created_at', 'desc')->paginate($pagesize);
+        $invoice = Invoice::whereNotNull('user_id')->orderBy('created_at', 'desc')->paginate($pagesize);
         return view('admin.order_manage', compact('invoice', 'pagesize'));
     }
 
