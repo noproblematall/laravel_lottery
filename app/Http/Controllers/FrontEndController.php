@@ -58,6 +58,8 @@ class FrontEndController extends Controller
         // $last_bitcoin = $last_lottery->total_bitcoin;
         if (Lottery::where('is_end', 1)->orderBy('created_at', 'desc')->exists()) {
             $last_four_lottery = Lottery::where('is_end', 1)->orderBy('created_at', 'desc')->get()->take(4);
+        }else{
+            $last_four_lottery = collect([]);
         }
         $sent_sum = 0;
         $prize_number = 0;
