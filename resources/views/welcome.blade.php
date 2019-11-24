@@ -235,7 +235,10 @@
                             <div class="prize">
                                 @if ($last_lottery->exists())
                                     <h2>{{$last_lottery->first()->total_bitcoin * 0.15}}btc</h2>
-                                    <p>( {{$last_lottery->first()->total_bitcoin * 0.15 * $usd}} USD )</p>                                    
+                                    <p>( {{$last_lottery->first()->total_bitcoin * 0.15 * $usd}} USD )</p>
+                                @else
+                                    <h2>Not yet</h2>
+                                    <p>Not yet</p>
                                 @endif
                             </div>
                         </div>
@@ -246,6 +249,9 @@
                             <p>Address bitcoin:</p>
                             @if ($last_lottery->exists())
                                 <p>{{ $last_lottery->first()->tickets()->find($last_lottery->first()->win_of_prize2)->user->invoices()->first()->wallet_address }}</p>
+                            @else
+                                <h2>Not yet</h2>
+                                <p>Not yet</p>
                             @endif
                         </div>
                     </div>
@@ -257,7 +263,10 @@
                             <div class="prize">
                                 @if ($last_lottery->exists())
                                     <h2>{{$last_lottery->first()->total_bitcoin * 0.05}}btc</h2>
-                                    <p>( {{$last_lottery->first()->total_bitcoin * 0.05 * $usd}} USD )</p>                                    
+                                    <p>( {{$last_lottery->first()->total_bitcoin * 0.05 * $usd}} USD )</p>
+                                @else
+                                    <h2>Not yet</h2>
+                                    <p>Not yet</p>
                                 @endif
                             </div>
                         </div>
