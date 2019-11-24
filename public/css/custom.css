@@ -1,0 +1,349 @@
+html, body {background-color: #fff;}
+html {
+    scroll-behavior: smooth;
+  }
+.custom-container {
+    padding-left: 0;
+    padding-right: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #fff;
+}
+p{margin-bottom: 0;}
+header {
+    background-image: linear-gradient(133deg, #24126a -7%, #24126a 34%, #3f1268 50%);
+    border-bottom-left-radius: 50px;
+    border-bottom-right-radius: 50px;
+    /* height: 748px; */
+}
+.real_container {
+    max-width: 1366px;
+    margin: auto;    
+}
+.custom-select2{
+    background-image: url(../img/arrow-down-orange.svg);
+    background-size: 20px auto;
+    padding-right: 40px;
+}
+a{color: #fff;}
+a:hover{text-decoration: none;color: #ccc;}
+ul {padding: 0; margin: 0;}
+ul li{list-style: none;}
+.bit_bg_primary{background-color: #FDB702;}
+.bit_bg_second{background-color: #24126A;}
+input[type="text"]::-webkit-input-placeholder {
+    color: #24126A;
+  }  
+  input[type="text"]:-ms-input-placeholder { 
+    color: #24126A;
+  }  
+input[type="email"]::-webkit-input-placeholder {
+    color: #24126A;
+  }  
+  input[type="email"]:-ms-input-placeholder { 
+    color: #24126A;
+  }  
+  input[type="text"]::placeholder {
+    color: #24126A;
+  }
+  input[type="email"]::placeholder {
+    color: #24126A;
+  }
+  .display_none {display: none !important;}
+  .display_block {display: block !important;}
+/* ---------------------------- Header ------------------------------ */
+header .mobile_menu {display: none;}
+header div.real_container {padding: 24px 72px; background: url(../img/back.png) no-repeat left bottom;}
+.header_menu {border-bottom: 1px solid #fff; padding-bottom: 13px;}
+.logo{padding-top: 8px;}
+.logo a{font-size: 16px;}
+.left_menu ul li{display: inline-block; padding: 8px 13px 0 13px;}
+.bit_price {padding: 8px 4px;background-color: #fdb702; border-radius: 20px;}
+div.bit_price {color: #24126a;}
+.bit_price svg {font-size: 0.5em; width: 1.75em;}
+.right_menu ul {margin-top: 8px;}
+.right_menu li{display: inline-block;}
+.right_menu ul li a{font-weight: bold; padding: 8px 40px;border-radius: 20px;border: solid 1px #ffffff;}
+.right_menu ul li:first-child {margin-right: 15px;}
+.right_menu ul li a:hover {background-color: #fff;color: #3f1268 !important;}
+
+.win_address p{margin-top: 20px; margin-left: 20px;}
+.win_address p span{padding: 10px 20px;border-radius: 20px;background-color: #fdb702;color: #3F1268;}
+.banner p{font-size: 30px;margin-bottom: 0;}
+.banner h1{font-size: 100px;margin-bottom: 0;}
+.banner .usd_now {font-size: 50px;}
+
+.prizes .prize_one{padding-left: 70px;padding-top: 80px;}
+.prizes .prize_one > p{font-size: 20px;margin-bottom: 10px;}
+.prizes .prize_one div{padding: 10px 20px;border: 1px solid; border-bottom-left-radius: 30px;border-bottom-right-radius: 30px;}
+.prizes .prize_one div p:first-child{font-size: 30px;font-weight: bold;}
+.prizes .prize_one div p:last-child{font-size: 20px;}
+.prizes .prize_two {padding: 0 20px;margin-top: 40px;}
+.prizes .prize_two p{font-size: 20px;margin-bottom: 10px;}
+.prizes .prize_two div{padding: 5px 5px;border: 1px solid; border-bottom-left-radius: 50px;border-bottom-right-radius: 50px;}
+.prizes .prize_two div p:first-child{font-size: 50px;font-weight: bold;}
+.prizes .prize_three{padding-right: 70px;padding-top: 80px;}
+.prizes .prize_three > p{font-size: 20px;margin-bottom: 10px;}
+.prizes .prize_three div{padding: 10px 20px;border: 1px solid; border-bottom-left-radius: 30px;border-bottom-right-radius: 30px;}
+.prizes .prize_three div p:first-child{font-size: 30px;font-weight: bold;}
+.prizes .prize_three div p:last-child{font-size: 20px;}
+
+.ticket_buy{margin-top: 30px;}
+.ticket_buy div.col-md-3{padding: 0 5px;}
+.ticket_buy input, .ticket_buy select{border-radius: 20px;border: none;color: #24126A;}
+.ticket_buy input[type=button]{background-color: #FDB702; font-weight: bold;}
+.ticket_buy input[type=button]:hover{background-color: #fff;}
+#submit_btn {cursor: pointer;}
+/* .ticket_buy select option{-webkit-appearance: none;-moz-appearance: none;appearance: none;padding: 20px;} */
+
+/* --------------------------- Last Time --------------------------------- */
+.last_time {color: #3f1268; padding-top: 45px;margin-bottom: 50px;}
+.last_time p.normal_text{font-size: 30px;}
+.last_time div.time {width: 390px; padding:10px 65px 20px;margin:auto;background-color: #FDB702;border-radius: 20px;position: relative;}
+.last_time div.time img{position: absolute;left: -135px;top: 38px;}
+.last_time h2{font-size: 100px;margin-bottom: 0;font-weight: bold;}
+.last_time p.today_date {font-size: 13px;margin-top: 10px;}
+.last_time p.grinich {font-size: 13px;}
+.last_time a {background-color: #FDB702;margin-top: 20px;font-size: 16px;padding: 5px 50px;border: none;border-radius: 20px;color: #3F1268;font-weight: bold;}
+.last_time a:hover{background-color: #3f1268;}
+/* ------------------------ Chart -------------------------------------- */
+.apexcharts-datalabel {font-weight: bold;}
+.chart p{color: #24126A; margin-left: 125px; font-size: 11px;}
+
+/* ------------------------- Last Winners ------------------------------ */
+.last_winner {background-image: linear-gradient(143deg, #24126a -9%, #24126a 36%, #3f1268 53%); border-bottom-left-radius: 50px;border-bottom-right-radius: 50px;}
+.last_winner .real_container {padding-top: 75px; padding-bottom: 75px;}
+.last_winner .accumulated h4{font-size: 30px;}
+.last_winner .accumulated h2{font-size: 100px;color: #fdb702;}
+.last_winner .accumulated h3{font-size: 50px;color: #fdb702;}
+.last_winner .prize_1 h4 {font-size: 20px;}
+.last_winner .prize_1 div.prize {border: 1px solid;border-bottom-left-radius: 30px;border-bottom-right-radius: 30px;padding: 15px 25px 10px;margin-top: 15px;}
+.last_winner .prize_1 div.prize h2 {font-size: 50px;}
+.last_winner .prize_1 div.prize p {font-size: 20px;}
+.last_winner .prize_1 div.text-left {display: flex; align-items: center;}
+.last_winner .prize_1 div.text-left p {font-size: 20px;}
+.last_winner .prize_2 h4 {font-size: 20px;}
+.last_winner .prize_2 div.prize {border: 1px solid;border-bottom-left-radius: 30px;border-bottom-right-radius: 30px;padding: 15px 60px 10px;margin-top: 15px;}
+.last_winner .prize_2 div.prize h2 {font-size: 30px;}
+.last_winner .prize_2 div.prize p {font-size: 15px;}
+.last_winner .prize_2 div.text-left {display: flex; align-items: center;}
+.last_winner .prize_2 div.text-left p {font-size: 20px;}
+.last_winner .prize_3 h4 {font-size: 20px;}
+.last_winner .prize_3 div.prize {border: 1px solid #707070;border-bottom-left-radius: 30px;border-bottom-right-radius: 30px;padding: 15px 60px 10px;margin-top: 15px;}
+.last_winner .prize_3 div.prize h2 {font-size: 30px;}
+.last_winner .prize_3 div.prize p {font-size: 15px;}
+.last_winner .prize_3 div.text-left {display: flex; align-items: center;}
+.last_winner .prize_3 div.text-left p {font-size: 20px;}
+.last_winner a {background-color: #FDB702;margin-top: 20px;font-size: 16px;padding: 5px 50px;border: none;border-radius: 20px;color: #3F1268;font-weight: bold;}
+.last_winner a:hover {background-color: #fff;color: #3F1268;}
+/* ------------------------------- Result Tables ------------------------------------------- */
+.result_table {margin-top: 20px;}
+.result_table div.real_container {background: url(../img/bitcoin.png) no-repeat left bottom;}
+div.custom_table {max-width: 820px; margin: auto;margin-top: 80px;}
+div.custom_table h3 {font-size: 20px; color: #3F1268;font-weight: bold;padding-left: 0.75rem;}
+div.custom_table .table thead th{border: none;}
+div.custom_table .table tbody td{border-top: 1px dashed #707070;}
+div.custom_table .table tbody tr:first-child td{border-top: none;}
+div.custom_table .table thead th{color: #3F1268; font-size: 20px;}
+div.custom_table .table tbody td{color: #3F1268; font-size: 16px;}
+/* ---------------------------- Bitcoin Sum ------------------------- */
+.bitcoin_sum {border-bottom-left-radius: 30px;border-bottom-right-radius: 30px;padding: 25px 0 20px;}
+.bitcoin_sum h2 {font-size: 100px; font-weight: bold;}
+.bitcoin_sum h3 {font-size: 50px;}
+.bitcoin_sum p {font-size: 30px;}
+/* ------------------------------ Prize Percent ------------------------- */
+.real_percent {border-bottom-left-radius: 30px; border-bottom-right-radius: 30px; padding: 25px 0 20px;background-color: #fff;color: #24126A;}
+.prize_percent h2 {font-size: 100px; font-weight: bold;}
+.prize_percent p {font-size: 30px;}
+/* ------------------------------ Number Of Prize ------------------------ */
+.number_prize {border-bottom-left-radius: 30px; border-bottom-right-radius: 30px; padding: 25px 0 20px;color: #FDB702;}
+.number_prize h2 {font-size: 100px; font-weight: bold;}
+.number_prize p {font-size: 30px;}
+/* ------------------------------ How it works ---------------------------- */
+.how_work {padding-top: 100px;}
+.how_work h4 {color: #24126a; font-size: 30px; font-weight: bold;}
+.circle {border-radius: 50%;padding: 20px 20px;width: 68px; height: 68px;font-size: 30px;font-weight: bold;color: #3F1268;display: flex;align-items: center;justify-content: space-around;}
+.how_work p{color: #24126A; margin-left: 50px; margin-right: 200px;font-size: 20px;}
+.how_work a {background-color: #FDB702;margin-top: 20px;font-size: 16px;padding: 5px 50px;border: none;border-radius: 20px;color: #3F1268;font-weight: bold;}
+.how_work a:hover{background-color: #3f1268; color: #fff;}
+/* ----------------------------- Questions And Answers -------------------------- */
+.question h4 {font-size: 30px; font-weight: bold; color: #24126A;margin-top: 70px; margin-bottom: 50px;}
+.question div.card-header {border-bottom-left-radius: 50px !important; border-bottom-right-radius: 50px !important;background-color: #fff;border:2px solid #24126A;margin-left: -2px;margin-right: -2px;}
+.question button {color: #24126A; background: url(../img/arrow-down-orange.svg) no-repeat; background-size: 20px auto; padding-right: 40px;background-position: right center;font-size: 20px;}
+.question button:hover {color: #24126A;}
+.question div.card {border: none; border-left: 2px solid #24126A; border-right: 2px solid #24126A;}
+.question div.card:last-child {border-bottom-right-radius: 50px;border-bottom-left-radius: 50px;}
+.question div.card:last-child .card-body{border-bottom-right-radius: 50px;border-bottom-left-radius: 50px;border-bottom: 2px solid #24126A;}
+.question div.card-body {color: #24126A; font-size: 18px;}
+.question div.card_1{z-index: 10;}
+.question div.card_2{margin-top: -10px; z-index: 9;}
+.question div.card_3{margin-top: -10px; z-index: 8;}
+.question div.card_4{margin-top: -10px; z-index: 7;}
+.accordion>.card .card-header {margin-bottom: 0;}
+/* ----------------------------- Footer ---------------------------------- */
+footer {background-image: linear-gradient(105deg, #24126a -2%, #24126a 32%, #3f1268 45%);}
+footer .real_container {padding-top: 60px; padding-bottom: 30px;}
+footer h3{font-size: 18px; font-weight: normal;}
+footer .text-left h3:first-child{font-size: 18px; font-weight: bold;}
+footer ul li{display: inline-block;margin-right: 15px;}
+.mobile_footer {display: none;}
+
+
+/*********************************** Responsive ************************************/
+
+/* -------------- Header -------------------- */
+@media (max-width: 1310px)
+{
+    .real_container {
+        max-width: unset;
+        width: 100%;
+        margin: auto;    
+    }
+    .prizes .prize_two div p:first-child{font-size: 35px;font-weight: bold;}
+}
+
+@media (max-width: 1140px)
+{
+    header .desktop_menu a {
+        font-size: 14px;
+    }
+    .bit_price {padding: 5px 4px;font-size: 12px;}
+    .left_menu ul li {padding: 4px 6px;}
+    .right_menu ul li a {padding: 4px 20px;}
+    /* --------------------------- */
+    .how_work p{margin-right: 150px;}
+
+}
+
+@media (max-width: 1110px)
+{
+    header div.real_container {background-size: 250px;}
+    /* --------------------------------------- */
+    .banner h1{font-size: 60px;margin-bottom: 0;}
+    .banner .usd_now {font-size: 35px;}
+    /* ----------------------------------- */
+    .prizes .prize_one {padding-left: 35px;}
+    .prizes .prize_three {padding-right: 35px;}
+    .prizes .item > p{font-size: 16px;}
+    .prizes .item div p:first-child {font-size: 20px;}
+    .prizes .item div p:last-child {font-size: 16px;}
+    .prizes .prize_two div p:first-child {font-size: 24px;}
+    /* ----------------------------------------- */
+    .how_work p{ margin-right: 100px;}
+}
+
+
+
+@media (max-width: 880px)
+{
+    header div.real_container {padding: 10px 20px;}
+    header .desktop_menu {display: none;}
+    header .mobile_menu {display: block;}
+    .mobile_menu .mobile_nav {position: relative;z-index: 12;height: 80px;padding: 15px 30px;}
+    .mobile_menu div.bit_price {position: absolute; padding: 5px 30px; left: calc((100% - 140px) / 2);}
+    .mobile_menu .logo a {float: left;color: #fff;font-weight: 700; font-size: 18px;}
+    .mobile_menu .menu_icon {float: right;cursor: pointer;margin-top: -2px;}
+    .bar1, .bar2, .bar3 {width: 35px;height: 5px;background-color: #fff; margin: 6px 0;transition: 0.4s;}
+    .change .bar1 {-webkit-transform: rotate(-45deg) translate(-9px, 6px);transform: rotate(-45deg) translate(-9px,6px);}
+    .change .bar2 {opacity: 0;}
+    .change .bar3 {-webkit-transform: rotate(45deg) translate(-8px, -8px);transform: rotate(45deg) translate(-8px, -8px);}
+    #sub_menu {position: absolute;top: 70px;z-index: 12;width: 97%;padding: 15px 30px;display: none;background: #fdb702;}
+    #sub_menu ul {list-style: none;}
+    #sub_menu ul li {padding: 5px 0;cursor: pointer;}
+    #sub_menu ul li:hover a {color: #fff !important;}
+    #sub_menu ul li a {color: #24126A;display: block;font-weight: bold;}
+    #sub_menu ul li a:hover {text-decoration: none;}
+    /* -------------------------------------------- */
+    .win_address {text-align: center;}
+    .win_address p span {padding: 5px 10px; font-size: 14px;}
+    /* ---------------------------------------------- */
+    .prizes .item {padding: 0; margin-top: 10px;}
+    .prizes .item div {border-bottom-left-radius: 20px;border-bottom-right-radius: 20px;}
+    .prizes .prize_two div p:first-child {font-size: 20px;}
+    header {border-bottom-left-radius: 30px;border-bottom-right-radius: 30px;}
+    .ticket_buy {padding: 0 10px;}
+    .ticket_buy > div {margin-top: 10px;}
+    header div.real_container {background-image: unset;}
+    /* ------------------------------------------------ */
+    .last_time h2 {font-size: 50px;}
+    .last_time div.time {width: 170px;padding: 10px 20px 20px;}
+    .last_time div.time img {left: -80px;top: 22px;width: 50px;}
+    /* ----------------------------------------------- */
+    .last_winner {border-bottom-left-radius: 30px;border-bottom-right-radius: 30px;}
+    .last_winner .accumulated h2 {font-size: 60px;}
+    .last_winner .accumulated h3 {font-size: 30px;}
+    .last_winner .accumulated h4 {font-size: 20px;}
+    /* ---------------------------------------------------- */
+    .prize_1 > div:first-child > div:first-child {float: unset !important;}
+    .prize_1 > div:last-child {text-align: center !important;}
+    .prize_1 > div:last-child > div {margin: 10px auto;}
+    .prize_2 > div:first-child > div:first-child {float: unset !important;}
+    .prize_2 > div:last-child {text-align: center !important;}
+    .prize_2 > div:last-child > div {margin: 10px auto;}
+    .prize_3 > div:first-child > div:first-child {float: unset !important;}
+    .prize_3 > div:last-child {text-align: center !important;}
+    .prize_3 > div:last-child > div {margin: 10px auto;}
+    /* ----------------------------------------------------- */
+    .result_table div.real_container {background-image: unset;}
+    div.custom_table {max-width: unset; width: 100%;}
+    /* -------------------------------------------------- */
+    .bitcoin_sum h2 {font-size: 60px;}
+    .bitcoin_sum h3 {font-size: 30px;}
+    .bitcoin_sum p {font-size: 20px;}
+    /* --------------------------------------------------- */
+    .prize_percent h2 {font-size: 60px;}
+    .prize_percent p {font-size: 20px;}
+    /* ---------------------------------------------------- */
+    .number_prize h2 {font-size: 60px;}
+    .number_prize p {font-size: 20px;}
+    /* ------------------------------------------------------ */
+    
+}
+
+@media (max-width: 768px)
+{
+    .how_work {margin-top: 50px;}
+    .how_work div.circle.float-right {float: unset !important; margin: auto;}
+    .how_work div.col-md-8.text-left {text-align: center !important;}
+    .how_work p{ margin-right: 0px; margin-left: 0px;}
+    /* ------------------------------------------------------ */
+    footer .real_container {padding-top: 40px;}
+    footer div.float-right {float: unset !important;}
+}
+@media (max-width: 720px)
+{
+    .desktop_footer {display: none;}
+    .mobile_footer {display: block; padding-left: 20px;}
+}
+
+
+
+@media (max-width: 500px)
+{    
+    .banner p {font-size: 20px;}
+    .banner h1{font-size: 40px;margin-bottom: 0;}
+    .banner .usd_now {font-size: 20px;}
+    .banner p {font-size: 16px;}
+    /* ------------------------------------------------ */
+    .last_winner .accumulated h2 {font-size: 40px;}
+    .last_winner .accumulated h3 {font-size: 20px;}
+    .last_winner .accumulated h4 {font-size: 16px;}
+    /* --------------------------------------------------- */
+    div.prize h2 {font-size: 30px !important;}
+    .last_winner div.text-left p {font-size: 16px !important;}
+    /* ----------------------------------------------- */
+    div.custom_table h3 {font-size: 18px;}
+    div.custom_table .table thead th {color: #3F1268;font-size: 16px;}
+    /* -------------------------------------------------- */
+    .bitcoin_sum h2 {font-size: 40px;}
+    .bitcoin_sum h3 {font-size: 25px;}
+    .bitcoin_sum p {font-size: 18px;}
+    /* --------------------------------------------------- */
+    .prize_percent h2 {font-size: 40px;}
+    .prize_percent p {font-size: 20px;}
+    /* ---------------------------------------------------- */
+    .number_prize h2 {font-size: 40px;}
+    /* ------------------------------------------------- */
+    .question div.card-header {border-bottom-left-radius: 30px !important; border-bottom-right-radius: 30px !important;}
+    .question div.card:last-child {border-bottom-right-radius: 30px;border-bottom-left-radius: 30px;}
+    .question div.card:last-child .card-body {border-bottom-right-radius: 30px;border-bottom-left-radius: 30px;}
+}
