@@ -28,16 +28,16 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        if (Setting::first()) {
-            $time_prize1 = Setting::first()->time_of_prize1;
-            $time_prize2 = Setting::first()->time_of_prize2;
-            $time_prize3 = Setting::first()->time_of_prize3;
-            $schedule->command('prize1:start')->dailyAt($time_prize1);
-            $schedule->command('prize2:start')->dailyAt($time_prize2);
-            $schedule->command('prize3:start')->dailyAt($time_prize3);
-        } else {
-            echo 'Please set the time for prizes. ';
-        }
+        // if (Setting::first()) {
+        //     $time_prize1 = Setting::first()->time_of_prize1;
+        //     $time_prize2 = Setting::first()->time_of_prize2;
+        //     $time_prize3 = Setting::first()->time_of_prize3;
+        //     $schedule->command('prize1:start')->dailyAt($time_prize1);
+        //     $schedule->command('prize2:start')->dailyAt($time_prize2);
+        //     $schedule->command('prize3:start')->dailyAt($time_prize3);
+        // } else {
+        //     echo 'Please set the time for prizes. ';
+        // }
         
     }
 
