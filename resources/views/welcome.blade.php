@@ -266,7 +266,9 @@
                     <div class="col-md-6 text-left">
                         <div>
                             <p>Address bitcoin:</p>
-                            <p><p>{{ $last_lottery->first()->tickets()->find($last_lottery->first()->win_of_prize3)->user->invoices()->first()->wallet_address }}</p></p>                            
+                            @if ($last_lottery->exists())
+                                <p>{{ $last_lottery->first()->tickets()->find($last_lottery->first()->win_of_prize3)->user->invoices()->first()->wallet_address }}</p>
+                            @endif
                         </div>
                     </div>
                 </div>
