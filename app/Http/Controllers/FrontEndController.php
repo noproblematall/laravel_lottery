@@ -129,7 +129,7 @@ class FrontEndController extends Controller
         if (empty($data)) {
             return;
         }
-        CustomHelper::datalog(json_encode($data));
+        // CustomHelper::datalog(json_encode($data));
         $invoice_id = $data['invoice_id'];
         $transaction_hash = $data['transaction_hash'];
         $address = $data['address'];
