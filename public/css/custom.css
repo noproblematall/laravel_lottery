@@ -50,6 +50,24 @@ input[type="email"]::-webkit-input-placeholder {
   }
   .display_none {display: none !important;}
   .display_block {display: block !important;}
+  .loader_container {
+    position: fixed;
+    background: rgba(0,0,0,0.2);
+    width: 100%;
+    height: 100%;
+    top:0;
+    left:0;
+    z-index: 100000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    }
+    .sk-three-bounce {
+        /* margin-top: 25%; */
+    }
+    .sk-three-bounce .sk-child {
+        background-color: #FDB702 !important;
+    }
 /* ---------------------------- Header ------------------------------ */
 header .mobile_menu {display: none;}
 header div.real_container {padding: 24px 72px; background: url(../img/back.png) no-repeat left bottom;}
@@ -68,6 +86,8 @@ div.bit_price {color: #24126a;}
 
 .win_address p{margin-top: 20px; margin-left: 20px;}
 .win_address p span{padding: 10px 20px;border-radius: 20px;background-color: #fdb702;color: #3F1268;}
+.win_address p span a {color: #3F1268 !important;}
+    .win_address p span a:hover {color: #fff !important;}
 .banner p{font-size: 30px;margin-bottom: 0;}
 .banner h1{font-size: 100px;margin-bottom: 0;}
 .banner .usd_now {font-size: 50px;}
@@ -133,8 +153,9 @@ div.bit_price {color: #24126a;}
 .last_winner .prize_3 div.prize p {font-size: 15px;}
 .last_winner .prize_3 div.text-left {display: flex; align-items: center;}
 .last_winner .prize_3 div.text-left p {font-size: 20px;}
-.last_winner a {background-color: #FDB702;margin-top: 20px;font-size: 16px;padding: 5px 50px;border: none;border-radius: 20px;color: #3F1268;font-weight: bold;}
-.last_winner a:hover {background-color: #fff;color: #3F1268;}
+.last_winner a:hover {color: #fdb702}
+.last_winner a.buy_ticket {background-color: #FDB702;margin-top: 20px;font-size: 16px;padding: 5px 50px;border: none;border-radius: 20px;color: #3F1268;font-weight: bold;}
+.last_winner a.buy_ticket:hover {background-color: #fff;color: #3F1268;}
 /* ------------------------------- Result Tables ------------------------------------------- */
 .result_table {margin-top: 20px;}
 .result_table div.real_container {background: url(../img/bitcoin.png) no-repeat left bottom;}
@@ -145,6 +166,8 @@ div.custom_table .table tbody td{border-top: 1px dashed #707070;}
 div.custom_table .table tbody tr:first-child td{border-top: none;}
 div.custom_table .table thead th{color: #3F1268; font-size: 20px;}
 div.custom_table .table tbody td{color: #3F1268; font-size: 16px;}
+div.custom_table .table td a {color: #3F1268 !important;}
+div.custom_table .table td a:hover {color: #FDB702 !important;}
 /* ---------------------------- Bitcoin Sum ------------------------- */
 .bitcoin_sum {border-bottom-left-radius: 30px;border-bottom-right-radius: 30px;padding: 25px 0 20px;}
 .bitcoin_sum h2 {font-size: 100px; font-weight: bold;}
@@ -255,6 +278,8 @@ footer ul li{display: inline-block;margin-right: 15px;}
     /* -------------------------------------------- */
     .win_address {text-align: center;}
     .win_address p span {padding: 5px 10px; font-size: 14px;}
+    .win_address p span a {color: #3F1268 !important;}
+    .win_address p span a:hover {color: #fff !important;}
     /* ---------------------------------------------- */
     .prizes .item {padding: 0; margin-top: 10px;}
     .prizes .item div {border-bottom-left-radius: 20px;border-bottom-right-radius: 20px;}

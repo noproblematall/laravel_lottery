@@ -22,9 +22,9 @@
         if($payment_flag) {$email = $data['email'];}
     @endphp
     <div class="d-flex align-items-center justify-content-center bg-custom ht-100v">        
-        <form action="{{ route('register') }}" method="post">
+        <form action="{{ route('register') }}" method="post" id="register_form">
             @csrf
-            <div class="login-wrapper wd-300 wd-xs-350 pd-25 pd-xs-40 bg-white rounded shadow-base" id="register_form">
+            <div class="login-wrapper wd-300 wd-xs-350 pd-25 pd-xs-40 bg-white rounded shadow-base">
                 <div class="signin-logo tx-center tx-28 tx-bold tx-inverse"><a href="{{ asset('/') }}"><span class="tx-normal">[ LOGO ]</span></a></div>
                 <div class="tx-center mg-b-30">Please enter your info</div>
 
@@ -59,25 +59,31 @@
                 </div><!-- form-group -->
 
                 <div class="form-group tx-12">By clicking the Sign Up button below, you agreed to our privacy policy and terms of use of our website.</div>
-                <button type="submit" class="btn btn-custom btn-block">Sign Up</button>
+                <button type="button" id="sign_up" class="btn btn-custom btn-block">Sign Up</button>
 
                 <div class="mg-t-10 tx-center">Already a member? <a href="{{ route('login') }}" class="tx-info">Sign In</a></div>
                 <div class="mg-t-10 tx-center"><a href="{{ route('welcome') }}" class="tx-info">Go to homepage</a></div>
             </div><!-- login-wrapper -->
         </form>
+        <div class="loader_container display_none">
+            <div class="sk-three-bounce">
+                <div class="sk-child sk-bounce1 bg-gray-800"></div>
+                <div class="sk-child sk-bounce2 bg-gray-800"></div>
+                <div class="sk-child sk-bounce3 bg-gray-800"></div>
+            </div>
+        </div>
     </div><!-- d-flex -->
 
-    <div class="loader_container display_none">
-        <div class="sk-three-bounce">
-            <div class="sk-child sk-bounce1 bg-gray-800"></div>
-            <div class="sk-child sk-bounce2 bg-gray-800"></div>
-            <div class="sk-child sk-bounce3 bg-gray-800"></div>
-        </div>
-    </div>
 
     <script src="{{asset('js/app.js')}}"></script>
     <script defer>
-        
+        $(document).ready(function(){
+            $('#sign_up').click(function(){
+                $('.loader_container').removeClass('display_none');
+                $(this).attr('disabled', 'disabled');
+                $('#register_form').submit();
+            })
+        })
     </script>
   </body>
 </html>

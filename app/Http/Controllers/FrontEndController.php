@@ -14,6 +14,7 @@ use App\Lottery;
 use CustomHelper;
 
 use Auth;
+use Session;
 
 class FrontEndController extends Controller
 {
@@ -38,26 +39,33 @@ class FrontEndController extends Controller
         $today_bitcoin = 0;
         $next_time = Setting::first()->time_of_prize1;
         $bit_per_ticket = Setting::first()->cost_of_ticket;
-        $current_lottery = Lottery::where('is_end', 0);
+        $current_lottery = Lottery::where('is_end', 0)->orderBy('created_at', 'desc');
+        $date = date('m/d/Y') . ' - Today at ';
+        $more_flag = 0;
         if ($current_lottery->exists()) {
             $today_bitcoin = $current_lottery->first()->total_bitcoin;
             if ($current_lottery->first()->time_of_prize2 == null) {
                 $next_time = $current_lottery->first()->time_of_prize2;
             } else {
-                $current_lottery->first()->time_of_prize3;
+                $next_time = $current_lottery->first()->time_of_prize3;
             }
-            
-        }else{
+        }else {
             $current_tickets = Ticket::whereNull('lottery_id');
             if ($current_tickets->exists()) {
                 $today_bitcoin = $bit_per_ticket * $current_tickets->count();
+            }
+            if(Lottery::where('is_end', 1)->whereDate('created_at', '=', date('Y-m-d'))->exists()){
+                $date = date("m/d/Y", strtotime("+1 day")) . ' - Tomorrow at ';
             }
         }
 
         $last_lottery = Lottery::where('is_end', 1)->orderBy('created_at', 'desc');
         // $last_bitcoin = $last_lottery->total_bitcoin;
         if (Lottery::where('is_end', 1)->orderBy('created_at', 'desc')->exists()) {
-            $last_four_lottery = Lottery::where('is_end', 1)->orderBy('created_at', 'desc')->get()->take(4);
+            $last_four_lottery = Lottery::with(['tickets'])->where('is_end', 1)->orderBy('created_at', 'desc')->get()->take(4);
+            if ($last_four_lottery->count() > 4) {
+                $more_flag = 1;
+            }
         }else{
             $last_four_lottery = collect([]);
         }
@@ -70,11 +78,11 @@ class FrontEndController extends Controller
                  $sent_sum += $item * 0.6;
             }
         }
-
-        return view('welcome', compact('usd', 'today_bitcoin', 'next_time', 'last_lottery', 'last_four_lottery', 'sent_sum', 'prize_number'));
+        $result = $date  . date('h:i a', strtotime($next_time));
+        return view('welcome', compact('usd', 'today_bitcoin', 'next_time', 'last_lottery', 'last_four_lottery', 'sent_sum', 'prize_number', 'result', 'more_flag'));
     }    
     
-    public function post_home(Request $request) 
+    public function post_home(Request $request)
     {
         $request->validate([
             'email' => 'required|email',
@@ -89,7 +97,7 @@ class FrontEndController extends Controller
         $wallet_address = $data['wallet_address'];
         $invoice_id = uniqid();
         $secret = md5(uniqid());
-        $invoice = Invoice::create([
+        Invoice::create([
             'secret' => $secret,
             'my_invoice_id' => $invoice_id,
             'price_in_bitcoin' => $amount,
@@ -121,6 +129,7 @@ class FrontEndController extends Controller
         if (empty($data)) {
             return;
         }
+        CustomHelper::datalog(json_encode($data));
         $invoice_id = $data['invoice_id'];
         $transaction_hash = $data['transaction_hash'];
         $address = $data['address'];
@@ -224,6 +233,28 @@ class FrontEndController extends Controller
             $data['status'] = 2;
             $data['paid_btc'] = 0;
             return response()->json($data);
+        }
+    }
+
+   
+    public function clear_seesion(Request $request)
+    {
+        Session::forget(['payment_flag', 'post_home']);
+        Session::save();
+        return response()->json([
+            'status' => 'ok'
+        ]);
+    }
+
+    public function more_view($id)
+    {
+        $lottery = Lottery::where('is_end', 1)->orderBy('created_at', 'desc');
+        if ($lottery->exists() && ($id == 1 || $id == 2 || $id || 3)) {
+            $lottery = $lottery->get();
+            $id = $id;
+            return view('more_view', compact('lottery', 'id'));
+        }else{
+            return back();
         }
     }
 }

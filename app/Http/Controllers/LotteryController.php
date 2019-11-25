@@ -95,8 +95,8 @@ class LotteryController extends Controller
             'time_of_prize2' => $setting->time_of_prize2,
             'time_of_prize3' => $setting->time_of_prize3,
         ]);
-        $tickets = Ticket::where('lottery_id', 1);
-        // $tickets = Ticket::whereNull('lottery_id');
+        // $tickets = Ticket::where('lottery_id', 1);
+        $tickets = Ticket::whereNull('lottery_id');
         if (!$tickets->exists()) {
             $result = 'There are not any tickets.' . ' -- ' . $now;
             $this->dataLog($result);
@@ -124,7 +124,8 @@ class LotteryController extends Controller
         $temp_tickets = $tickets->get()->random($random_number);
         $prize1_ticket = $temp_tickets->random();
         // ---------------------------------------
-
+        $prize1_ticket->is_win = 40;
+        $prize1_ticket->save();
         $lottery->update([
             'win_of_prize1' => $prize1_ticket->id,
             'total_bitcoin' => $total_bitcoin
@@ -139,7 +140,7 @@ class LotteryController extends Controller
         $now = date('Y-m-d H:i:s');
         $result = "Let's start today lottery prize 2 " . " --- " . $now;
         $this->dataLog($result);
-        $lottery = Lottery::whereDate('created_at', '=', date('Y-m-d'))->where('is_end', 0)->first();
+        $lottery = Lottery::whereDate('created_at', '=', date('Y-m-d'))->where('is_end', 0)->orderBy('created_at', 'desc')->first();
         $users = User::where('role_id', 2)->whereNotNull('email_verified_at')->get();
         foreach ($users as $user) {
             $this->dataLog($user->email . '  email sent');
@@ -162,6 +163,8 @@ class LotteryController extends Controller
         $temp_tickets = $tickets->get()->random($random_number);
         $prize2_ticket = $temp_tickets->random();
         // ---------------------------------------
+        $prize2_ticket->is_win = 15;
+        $prize2_ticket->save();
         $lottery->update([
             'win_of_prize2' => $prize2_ticket->id,
         ]);
@@ -176,7 +179,7 @@ class LotteryController extends Controller
         $result = "Let's start today lottery prize 3 " . " --- " . $now;
         $this->dataLog($result);
         $now = date('Y-m-d H:i:s');
-        $lottery = Lottery::whereDate('created_at', '=', date('Y-m-d'))->where('is_end', 0)->first();
+        $lottery = Lottery::whereDate('created_at', '=', date('Y-m-d'))->where('is_end', 0)->orderBy('created_at', 'desc')->first();
         $users = User::where('role_id', 2)->whereNotNull('email_verified_at')->get();
         foreach ($users as $user) {
             $this->lottery_start_email($user->username, $user->email, 'prize3');
@@ -196,6 +199,8 @@ class LotteryController extends Controller
         $temp_tickets = $tickets->get()->random($random_number);
         $prize3_ticket = $temp_tickets->random();
         // ---------------------------------------
+        $prize3_ticket->is_win = 5;
+        $prize3_ticket->save();
         $lottery->update([
             'win_of_prize3' => $prize3_ticket->id,
             'is_end' => 1,

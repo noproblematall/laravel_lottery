@@ -12,6 +12,7 @@
     <!-- jQuery library -->
     <script src="{{('js/app.js')}}"></script>  
     <link rel="stylesheet" href="{{asset('css/custom.css')}}">
+    <link rel="stylesheet" href="{{asset('library/spinkit/css/spinkit.css')}}">
     <title>{{ config('app.name') }}</title>
     <style>
         .invalid-feedback {color: #fdb702;display: block;}
@@ -90,7 +91,7 @@
                 </div>
                 <div class="row win_address">
                     <div class="col-md-12">
-                        <p><span><a href="https://www.blockchain.com/btc/address/1234567890123456789123456789123456" style="color: #3F1268;">1234567890123456789123456789123456</a></span></p>
+                        <p><span><a href="https://www.blockchain.com/btc/address/1234567890123456789123456789123456" target="_blank">1234567890123456789123456789123456</a></span></p>
                     </div>
                 </div>
                 <div class="row banner text-center">
@@ -177,7 +178,7 @@
                             <img src="{{asset('img/clock.png')}}" alt="CLOCK" srcset="">
                             <h2>{{$next_time}}</h2>
                         </div>
-                        <p class="today_date">11/09/2019 - Today at 8pm</p>
+                        <p class="today_date">{{$result}}</p>
                         <p class="grinich">Currently Greenwich Mean Time (GMT), UTC +0</p>
                         <a href="#header" class="btn btn-primary btn-sm">Buy tickets</a>
                     </div>
@@ -226,7 +227,7 @@
                         <div>
                             <p>Address bitcoin:</p>
                             @if ($last_lottery->exists())
-                                <p><a href="https://www.blockchain.com/btc/address/{{ $last_lottery->first()->tickets()->find($last_lottery->first()->win_of_prize1)->user->invoices()->first()->wallet_address }}">{{ $last_lottery->first()->tickets()->find($last_lottery->first()->win_of_prize1)->user->invoices()->first()->wallet_address }}</a></p>                                
+                                <p><a href="https://www.blockchain.com/btc/address/{{ $last_lottery->first()->tickets()->find($last_lottery->first()->win_of_prize1)->user->invoices()->first()->wallet_address }}" target="_blank">{{ $last_lottery->first()->tickets()->find($last_lottery->first()->win_of_prize1)->user->invoices()->first()->wallet_address }}</a></p>                                
                             @endif
                         </div>
                     </div>
@@ -251,7 +252,7 @@
                         <div>
                             <p>Address bitcoin:</p>
                             @if ($last_lottery->exists())
-                                <p>{{ $last_lottery->first()->tickets()->find($last_lottery->first()->win_of_prize2)->user->invoices()->first()->wallet_address }}</p>                            
+                                <p><a href="https://www.blockchain.com/btc/address/{{ $last_lottery->first()->tickets()->find($last_lottery->first()->win_of_prize2)->user->invoices()->first()->wallet_address }}" target="_blank">{{ $last_lottery->first()->tickets()->find($last_lottery->first()->win_of_prize2)->user->invoices()->first()->wallet_address }}</a></p>                            
                             @endif
                         </div>
                     </div>
@@ -276,14 +277,14 @@
                         <div>
                             <p>Address bitcoin:</p>
                             @if ($last_lottery->exists())
-                                <p>{{ $last_lottery->first()->tickets()->find($last_lottery->first()->win_of_prize3)->user->invoices()->first()->wallet_address }}</p>
+                                <p><a href="https://www.blockchain.com/btc/address/{{ $last_lottery->first()->tickets()->find($last_lottery->first()->win_of_prize3)->user->invoices()->first()->wallet_address }}" target="_blank">{{ $last_lottery->first()->tickets()->find($last_lottery->first()->win_of_prize3)->user->invoices()->first()->wallet_address }}</a></p>
                             @endif
                         </div>
                     </div>
                 </div>
                 <div class="row mt-5">
                     <div class="col-md-12 text-center">
-                        <a href="#header" class="btn btn-sm">Buy tickets</a>
+                        <a href="#header" class="btn btn-sm buy_ticket">Buy tickets</a>
                     </div>
                 </div>
             </div>
@@ -304,13 +305,19 @@
                                 </thead>
                                 <tbody>
                                     @if (!$last_four_lottery->isEmpty())
+                                    
                                         @foreach ($last_four_lottery as $item)
                                             <tr>
-                                                <td>{{ date("d/m/Y", strtotime($item->date)) }}</td>
-                                                <td>{{ $item->tickets()->find($item->win_of_prize1)->user->invoices()->first()->wallet_address }}</td>
-                                                <td>{{ $item->total_bitcoin * 0.4 }} ({{ $item->total_bitcoin * 0.4 }}USD)</td>
+                                                @if (!empty($item->tickets()->find($item->win_of_prize1)))
+                                                    <td>{{ date("d/m/Y", strtotime($item->date)) }}</td>
+                                                    <td><a href="https://www.blockchain.com/btc/address/{{ $item->tickets()->find($item->win_of_prize1)->user->invoices()->first()->wallet_address }}" target="_blank">{{ $item->tickets()->find($item->win_of_prize1)->user->invoices()->first()->wallet_address }}</a></td>
+                                                    <td>{{ $item->total_bitcoin * 0.4 }} ({{ $item->total_bitcoin * 0.4 }}USD)</td>                                                    
+                                                @endif
                                             </tr>
                                         @endforeach
+                                        @if ($more_flag)
+                                            <a href="{{ route('more_view', 1) }}" class="btn btn-sm buy_ticket">More view</a>
+                                        @endif
                                     @endif                                    
                                 </tbody>
                             </table>
@@ -331,13 +338,19 @@
                                 </thead>
                                 <tbody>
                                     @if (!$last_four_lottery->isEmpty())
+                                    
                                         @foreach ($last_four_lottery as $item)
-                                            <tr>
-                                                <td>{{ date("d/m/Y", strtotime($item->date)) }}</td>
-                                                <td>{{ $item->tickets()->find($item->win_of_prize2)->user->invoices()->first()->wallet_address }}</td>
-                                                <td>{{ $item->total_bitcoin * 0.15 }} ({{ $item->total_bitcoin * 0.15 }}USD)</td>
-                                            </tr>
+                                            @if (!empty($item->tickets()->find($item->win_of_prize1)))
+                                                <tr>
+                                                    <td>{{ date("d/m/Y", strtotime($item->date)) }}</td>
+                                                    <td><a href="https://www.blockchain.com/btc/address/{{ $item->tickets()->find($item->win_of_prize2)->user->invoices()->first()->wallet_address }}" target="_blank">{{ $item->tickets()->find($item->win_of_prize2)->user->invoices()->first()->wallet_address }}</a></td>
+                                                    <td>{{ $item->total_bitcoin * 0.15 }} ({{ $item->total_bitcoin * 0.15 }}USD)</td>
+                                                </tr>
+                                            @endif
                                         @endforeach
+                                        @if ($more_flag)
+                                            <a href="{{ route('more_view', 2) }}" class="btn btn-sm buy_ticket">More view</a>
+                                        @endif
                                     @endif 
                                 </tbody>
                             </table>
@@ -359,12 +372,17 @@
                                 <tbody>
                                     @if (!$last_four_lottery->isEmpty())
                                         @foreach ($last_four_lottery as $item)
-                                            <tr>
-                                                <td>{{ date("d/m/Y", strtotime($item->date)) }}</td>
-                                                <td>{{ $item->tickets()->find($item->win_of_prize3)->user->invoices()->first()->wallet_address }}</td>
-                                                <td>{{ $item->total_bitcoin * 0.05 }} ({{ $item->total_bitcoin * 0.05 }}USD)</td>
-                                            </tr>
+                                            @if (!empty($item->tickets()->find($item->win_of_prize1)))
+                                                <tr>
+                                                    <td>{{ date("d/m/Y", strtotime($item->date)) }}</td>
+                                                    <td><a href="https://www.blockchain.com/btc/address/{{ $item->tickets()->find($item->win_of_prize3)->user->invoices()->first()->wallet_address }}" target="_blank">{{ $item->tickets()->find($item->win_of_prize3)->user->invoices()->first()->wallet_address }}</a></td>
+                                                    <td>{{ $item->total_bitcoin * 0.05 }} ({{ $item->total_bitcoin * 0.05 }}USD)</td>
+                                                </tr>
+                                            @endif
                                         @endforeach
+                                        @if ($more_flag)
+                                            <a href="{{ route('more_view', 3) }}" class="btn btn-sm buy_ticket">More view</a>
+                                        @endif
                                     @endif 
                                 </tbody>
                             </table>
@@ -527,9 +545,9 @@
                         <div class="float-right text-left">
                             <h3 class="mb-4">Flowy Lottery 2019</h3>
                             <ul>
-                                <li><a href="#"><img src="https://public-images.flowybusinesses.com/img/Facebook.png" alt="Facebook"></a></li>
-                                <li><a href="#"><img src="https://public-images.flowybusinesses.com/img/Instagram.png" alt="Instagram"></a></li>
-                                <li><a href="#"><img src="https://public-images.flowybusinesses.com/img/youtube.png" alt="Youtube"></a></li>
+                                <li><a href="#" target="_blank"><img src="https://public-images.flowybusinesses.com/img/Facebook.png" alt="Facebook"></a></li>
+                                <li><a href="#" target="_blank"><img src="https://public-images.flowybusinesses.com/img/Instagram.png" alt="Instagram"></a></li>
+                                <li><a href="#" target="_blank"><img src="https://public-images.flowybusinesses.com/img/youtube.png" alt="Youtube"></a></li>
                             </ul>
                             <h3 class="mt-2">About us</h3>
                         </div>
@@ -552,9 +570,9 @@
                         <div class="text-left">
                             <h3 class="mb-2">Flowy Lottery 2019</h3>
                             <ul>
-                                <li><a href="#"><img src="https://public-images.flowybusinesses.com/img/Facebook.png" alt="Facebook"></a></li>
-                                <li><a href="#"><img src="https://public-images.flowybusinesses.com/img/Instagram.png" alt="Instagram"></a></li>
-                                <li><a href="#"><img src="https://public-images.flowybusinesses.com/img/youtube.png" alt="Youtube"></a></li>
+                                <li><a href="#" target="_blank"><img src="https://public-images.flowybusinesses.com/img/Facebook.png" alt="Facebook"></a></li>
+                                <li><a href="#" target="_blank"><img src="https://public-images.flowybusinesses.com/img/Instagram.png" alt="Instagram"></a></li>
+                                <li><a href="#" target="_blank"><img src="https://public-images.flowybusinesses.com/img/youtube.png" alt="Youtube"></a></li>
                             </ul>
                             <h3 class="mt-2">About us</h3>
                         </div>
@@ -569,6 +587,14 @@
             </div>
         </footer>
     </div>
+
+    <div class="loader_container display_none">
+        <div class="sk-three-bounce">
+            <div class="sk-child sk-bounce1 bg-gray-800"></div>
+            <div class="sk-child sk-bounce2 bg-gray-800"></div>
+            <div class="sk-child sk-bounce3 bg-gray-800"></div>
+        </div>
+    </div>
     <script src="{{asset('library/apexchart/dist/apexcharts.min.js')}}"></script>
     <script src="{{asset('js/custom.js')}}"></script>
     <script src="{{asset('library/wallet_validation/dist/wallet-address-validator.min.js')}}"></script>
@@ -582,6 +608,7 @@
                     $('.wallet_invalid').removeClass('display_none');
                     return
                 }
+                $('.loader_container').removeClass('display_none');
                 $(this).attr('disabled', 'disabled');
                 $('#form_submit').submit();
                 

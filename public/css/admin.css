@@ -20,12 +20,31 @@ input[type="email"]::-webkit-input-placeholder {
   input[type="password"]::placeholder {
     color: #24126A;
   }
-.display_none{display: none;}
+.display_none{display: none !important;}
 .bg-custom {background-image: linear-gradient(133deg, #24126a -7%, #24126a 34%, #3f1268 50%);}
 .btn-custom{background-color: #FDB702;border-color: #FDB702;color: #24126A;font-weight: bold;}
 .br-pagetitle h4 {color: #24126A;}
 .br-sideleft {background-image: linear-gradient(133deg, #24126a -7%, #24126a 34%, #3f1268 50%);}
 .br-menu-link.active {background-color: #FDB702; color: #24126A; font-weight: bold;}
 .br-menu-link:hover {background-color: #fdb7024a;}
+
+.loader_container {
+  position: fixed;
+  background: rgba(0,0,0,0.2);
+  width: 100%;
+  height: 100%;
+  top:0;
+  left:0;
+  z-index: 100000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  }
+  .sk-three-bounce {
+      /* margin-top: 25%; */
+  }
+  .sk-three-bounce .sk-child {
+      background-color: #FDB702 !important;
+  }
 
 /* --------------------- Login --------------------- */

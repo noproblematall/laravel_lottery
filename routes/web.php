@@ -44,5 +44,7 @@ Route::get('/payment', 'HomeController@payment')->name('payment');
 
 Route::any('/callback', 'FrontEndController@callback')->name('callback');
 Route::any('/payment_verify', 'FrontEndController@payment_verify')->name('payment_verify');
-Route::post('/clear_seesion', 'HomeController@clear_seesion')->name('clear_seesion');
+Route::post('/clear_seesion', 'FrontEndController@clear_seesion')->name('clear_seesion');
+
+Route::get('more_view/{id}', 'FrontEndController@more_view')->name('more_view');
 

@@ -38,7 +38,7 @@
                     <div class="card-body bd bd-t-0 rounded-bottom">
                         <p class="mg-b-0">Ticket Number: <b>{{ $lottery->tickets()->find($lottery->win_of_prize1)->number }}</b></p>
                         <p class="mg-b-0 mg-t-2">User Email: <b>{{ $lottery->tickets()->find($lottery->win_of_prize1)->user->email }}</b></p>
-                        <p class="mg-b-0 mg-t-2">Wallet Address: <b>{{ $lottery->tickets()->find($lottery->win_of_prize1)->invoice->wallet_address }}</b></p>
+                        <p class="mg-b-0 mg-t-2">Wallet Address: <b><a href="https://www.blockchain.com/btc/address/{{ $lottery->tickets()->find($lottery->win_of_prize1)->invoice->wallet_address }}" target="_blank">{{ $lottery->tickets()->find($lottery->win_of_prize1)->invoice->wallet_address }}</a></b></p>
                         {{-- <p class="mg-b-0 mg-t-2">Transaction Hash For This Ticket: <b>{{ $lottery->tickets()->find($lottery->win_of_prize1)->invoice->invoice_payment()->first()->transaction_hash }}</b></p> --}}
                     </div><!-- card-body -->
                 </div>
@@ -51,7 +51,7 @@
                     <div class="card-body bd bd-t-0 rounded-bottom">
                         <p class="mg-b-0">Ticket Number: <b>{{ $lottery->tickets()->find($lottery->win_of_prize2)->number }}</b></p>
                         <p class="mg-b-0 mg-t-2">User Email: <b>{{ $lottery->tickets()->find($lottery->win_of_prize2)->user->email }}</b></p>
-                        <p class="mg-b-0 mg-t-2">Wallet Address: <b>{{ $lottery->tickets()->find($lottery->win_of_prize2)->invoice->wallet_address }}</b></p>
+                        <p class="mg-b-0 mg-t-2">Wallet Address: <b><a href="https://www.blockchain.com/btc/address/{{ $lottery->tickets()->find($lottery->win_of_prize2)->invoice->wallet_address }}" target="_blank">{{ $lottery->tickets()->find($lottery->win_of_prize2)->invoice->wallet_address }}</a></b></p>
                     </div><!-- card-body -->
                 </div>
             </div>
@@ -63,7 +63,7 @@
                     <div class="card-body bd bd-t-0 rounded-bottom">
                         <p class="mg-b-0">Ticket Number: <b>{{ $lottery->tickets()->find($lottery->win_of_prize3)->number }}</b></p>
                         <p class="mg-b-0 mg-t-2">User Email: <b>{{ $lottery->tickets()->find($lottery->win_of_prize3)->user->email }}</b></p>
-                        <p class="mg-b-0 mg-t-2">Wallet Address: <b>{{ $lottery->tickets()->find($lottery->win_of_prize3)->invoice->wallet_address }}</b></p>
+                        <p class="mg-b-0 mg-t-2">Wallet Address: <b><a href="https://www.blockchain.com/btc/address/{{ $lottery->tickets()->find($lottery->win_of_prize3)->invoice->wallet_address }}" target="_blank">{{ $lottery->tickets()->find($lottery->win_of_prize3)->invoice->wallet_address }}</a></b></p>
                     </div><!-- card-body -->
                 </div>
             </div>           

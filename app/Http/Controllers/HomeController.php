@@ -14,7 +14,7 @@ use App\Transaction;
 use App\Ticket;
 use App\Invoice;
 use App\TempAddress;
-use Session;
+
 
 class HomeController extends Controller
 {
@@ -55,7 +55,7 @@ class HomeController extends Controller
             $ticket_for_prize2 = '';
             $ticket_for_prize3 = '';
             $cost_of_ticket = Setting::first()->cost_of_ticket;
-            $lottery = Lottery::whereDate('created_at', '=', date('Y-m-d'))->where('is_end', 0);
+            $lottery = Lottery::whereDate('created_at', '=', date('Y-m-d'))->where('is_end', 0)->orderBy('created_at', 'desc');
             if ($lottery->exists()) {
                 $lottery = $lottery->first();
                 if ($lottery->win_of_prize2 == null) {
@@ -69,7 +69,7 @@ class HomeController extends Controller
                     $income_lottery = '5%';
                     $user_id = Ticket::find($lottery->win_of_prize2)->user_id;
                     if ($user->id == $user_id) {
-                        $ticket_for_prize1 = '15';
+                        $ticket_for_prize2 = '15';
                     }
                 }
                 $today_ticket = $user->tickets()->where('lottery_id', $lottery->id);
@@ -86,25 +86,28 @@ class HomeController extends Controller
                 }
             }
 
-            $lottery = Lottery::whereDate('created_at', '=', date('Y-m-d'))->where('is_end', 1);
+            $lottery = Lottery::whereDate('created_at', '=', date('Y-m-d'))->where('is_end', 1)->orderBy('created_at', 'desc');
             if ($lottery->exists()) {
-                $user_id = Ticket::find($lottery->win_of_prize1)->user_id;
+                $user_id = Ticket::find($lottery->first()->win_of_prize1)->user_id;
                 if ($user->id == $user_id) {
                     $ticket_for_prize1 = '40';
                 }
-                $user_id = Ticket::find($lottery->win_of_prize2)->user_id;
+                $user_id = Ticket::find($lottery->first()->win_of_prize2)->user_id;
                 if ($user->id == $user_id) {
-                    $ticket_for_prize1 = '15';
+                    $ticket_for_prize2 = '15';
                 }
-                $user_id = Ticket::find($lottery->win_of_prize3)->user_id;
+                $user_id = Ticket::find($lottery->first()->win_of_prize3)->user_id;
                 if ($user->id == $user_id) {
-                    $ticket_for_prize1 = '5';
+                    $ticket_for_prize3 = '5';
                 }
             }
-
-
-
-            return view('home', compact('user', 'income_lottery', 'current_bitcoin', 'available_number', 'cost_of_ticket', 'ticket_for_prize1', 'ticket_for_prize2', 'ticket_for_prize3'));
+            $unpaid_flag = 0;
+            if ($user->invoices()->exists()) {
+                if($user->invoices()->orderBy('created_at', 'desc')->first()->address != null && $user->invoices()->orderBy('created_at', 'desc')->first()->is_paid == 0){
+                    $unpaid_flag = 1;
+                }
+            }
+            return view('home', compact('user', 'income_lottery', 'current_bitcoin', 'available_number', 'cost_of_ticket', 'ticket_for_prize1', 'ticket_for_prize2', 'ticket_for_prize3', 'unpaid_flag'));
         }
     }
 
@@ -166,13 +169,14 @@ class HomeController extends Controller
     public function payment(Request $request) {
         $payment_flag = session('payment_flag');
         $data = session('post_home');
+        $user = Auth::user();
         if ($payment_flag) {
             session()->forget('visit_flag');
             $invoice_id = $data['invoice_id'];
             $invoice = Invoice::where('my_invoice_id', $invoice_id)->first();
             $secret = $invoice->secret;
             $amount = $invoice->price_in_bitcoin;
-            if($invoice->address != null){
+            if($invoice->address != null && $invoice->is_paid == 0){
                 $address = $invoice->address;
                 return view('payment', compact('address', 'amount', 'invoice_id'));
             }
@@ -215,32 +219,30 @@ class HomeController extends Controller
                 if ($err) {
                     return $err;
                 }
-
-                $invoice->update([
-                    'address' => $response->address,
-                    'user_id' => Auth::id(),
-                ]);
-                // TempAddress::create([
-                //     'invoice_id' => $invoice_id,
-                //     'temp_address' => $response->address,
-                // ]);
-
-                $address = $response->address;
-                return view('payment', compact('address', 'amount', 'invoice_id'));
+                if(property_exists($response, 'message')){
+                    return redirect(route('home'));
+                }else{
+                    $invoice->update([
+                        'address' => $response->address,
+                        'user_id' => Auth::id(),
+                    ]);
+                    $address = $response->address;
+                    return view('payment', compact('address', 'amount', 'invoice_id'));
+                }
             }
 
+        }else if($user->invoices()->exists()){
+            if ($user->invoices()->orderBy('created_at', 'desc')->first()->address != null && $user->invoices()->orderBy('created_at', 'desc')->first()->is_paid == 0) {
+                $invoice_id = $user->invoices()->orderBy('created_at', 'desc')->first()->my_invoice_id;
+                $amount = $user->invoices()->orderBy('created_at', 'desc')->first()->amount;
+                $address = $user->invoices()->orderBy('created_at', 'desc')->first()->address;
+                return view('payment', compact('address', 'amount', 'invoice_id'));                
+            }else{
+                return redirect(route('home'));
+            }
         }else {
             return redirect(route('home'));
         }
-    }
-
-    public function clear_seesion(Request $request)
-    {
-        Session::forget(['payment_flag', 'post_home']);
-        Session::save();
-        return response()->json([
-            'status' => 'ok'
-        ]);
     }
 
 }
