@@ -131,7 +131,14 @@ class LotteryController extends Controller
             'total_bitcoin' => $total_bitcoin
         ]);
         $result = 'The winner of prize1 is => ' . $prize1_ticket->number . ' -- ' . $now;
-        // $this->dataLog($result);
+        
+        // $ticket = Ticket::find($prize1_ticket->id);
+        // $winner_email = $ticket->user->email;
+        // $winner_name = $ticket->user->name;
+        // $data = array('name'=>$winner_name, 'prize'=>'prize1', 'amount_bit'=>$total_bitcoin * 0.4);
+        // Mail::send('emails.winner', $data, function($message) use($winner_email, $winner_name) {
+        //    $message->to($winner_email, $winner_name)->subject('You are winner.');
+        // });
         return $result;
     }
 
@@ -170,6 +177,14 @@ class LotteryController extends Controller
         ]);
         $result = 'The winner of prize1 is => ' . $prize2_ticket->number . ' -- ' . $now;
         // $this->dataLog($result);
+        
+        // $ticket = Ticket::find($prize2_ticket->id);
+        // $winner_email = $ticket->user->email;
+        // $winner_name = $ticket->user->name;
+        // $data = array('name'=>$winner_name, 'prize'=>'prize2', 'amount_bit'=>$lottery->total_bitcoin * 0.15);
+        // Mail::send('emails.winner', $data, function($message) use($winner_email, $winner_name) {
+        //    $message->to($winner_email, $winner_name)->subject('You are winner.');
+        // });
         return $result;
     }
 
@@ -207,6 +222,14 @@ class LotteryController extends Controller
         ]);
         $result = 'The winner of prize3 is => ' . $prize3_ticket->number . ' -- ' . $now;
         // $this->dataLog($result);
+
+        // $ticket = Ticket::find($prize3_ticket->id);
+        // $winner_email = $ticket->user->email;
+        // $winner_name = $ticket->user->name;
+        // $data = array('name'=>$winner_name, 'prize'=>'prize3', 'amount_bit'=>$lottery->total_bitcoin * 0.15);
+        // Mail::send('emails.winner', $data, function($message) use($winner_email, $winner_name) {
+        //    $message->to($winner_email, $winner_name)->subject('You are winner.');
+        // });
         return $result;
     }
 

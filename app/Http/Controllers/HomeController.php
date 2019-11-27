@@ -13,7 +13,7 @@ use App\Setting;
 use App\Transaction;
 use App\Ticket;
 use App\Invoice;
-use App\TempAddress;
+use App\Helper\CustomHelper;
 
 
 class HomeController extends Controller
@@ -48,6 +48,7 @@ class HomeController extends Controller
                 return redirect(route('payment'));
             }
             session(['page' => 'home']);
+            $success_ticket = null;
             $income_lottery = '';
             $current_bitcoin = '';
             $available_number = '';
@@ -124,6 +125,21 @@ class HomeController extends Controller
         $pagesize = $this->pagesize;
         $tickets = $user->tickets()->orderBy('created_at', 'desc')->with(['invoice'])->paginate($pagesize);
         return view('history', compact('tickets', 'pagesize'));
+    }
+
+    public function order_history(Request $request)
+    {
+        $user = Auth::user();
+        session(['page' => 'order_history']);
+        if ($request->has('pagesize')) {
+            $this->pagesize = $request->get('pagesize');
+            if($this->pagesize == 'all'){
+                $this->pagesize = $user->invoices()->count();
+            }
+        }
+        $pagesize = $this->pagesize;
+        $invoice = $user->invoices()->orderBy('created_at', 'desc')->paginate($pagesize);
+        return view('order_history', compact('invoice', 'pagesize'));
     }
 
     public function change_password(Request $request)

@@ -36,6 +36,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'admin']],function (
 
 Route::get('/home', 'HomeController@index')->name('home');
 Route::any('/history', 'HomeController@history')->name('history');
+Route::any('/order_history', 'HomeController@order_history')->name('order_history');
 Route::post('/profile', 'HomeController@change_profile')->name('profile');
 Route::get('/password', 'HomeController@change_password')->name('password');
 

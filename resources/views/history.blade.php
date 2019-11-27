@@ -23,7 +23,7 @@
         <div class="row row-sm mg-t-20 card card-body">
             <div class="col-md-12">
                 <div class="search-form">
-                    <form action="#" method="POST" class="form-inline float-left" id="searchForm">
+                    <form action="{{route('history')}}" method="POST" class="form-inline float-left" id="searchForm">
                         @csrf
                         <label for="pagesize" class="control-label ml-3 mb-2">Show :</label>
                         <select class="form-control form-control-sm mx-2 mb-2" name="pagesize" id="pagesize">

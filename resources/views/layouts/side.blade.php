@@ -22,7 +22,14 @@
       <li class="br-menu-item">
         <a href="{{route('history')}}" class="br-menu-link {{ $page==='history' ? 'active' : null }}">
           <i class="menu-item-icon icon ion-clock tx-24"></i>
-          <span class="menu-item-label"> History</span>
+          <span class="menu-item-label">Ticket History</span>
+        </a>
+      </li> 
+
+      <li class="br-menu-item">
+        <a href="{{route('order_history')}}" class="br-menu-link {{ $page==='order_history' ? 'active' : null }}">
+          <i class="menu-item-icon icon ion-briefcase tx-24"></i>
+          <span class="menu-item-label">Order History</span>
         </a>
       </li>      
 

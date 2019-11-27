@@ -15,9 +15,9 @@ class DatabaseSeeder extends Seeder
         $this->call(RoleSeeder::class);
         $this->call(AdminSeeder::class);
         $this->call(SettingSeeder::class);
-        $this->call(InvoiceSeeder::class);
-        $this->call(InvoicePaymentSeeder::class);
-        $this->call(TicketSeeder::class);
+        // $this->call(InvoiceSeeder::class);
+        // $this->call(InvoicePaymentSeeder::class);
+        // $this->call(TicketSeeder::class);
 
     }
 }
