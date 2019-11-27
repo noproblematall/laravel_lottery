@@ -16,6 +16,7 @@
     <title>{{ config('app.name') }}</title>
     <style>
         .invalid-feedback {color: #fdb702;display: block;}
+        .more_view {background-color:#FDB702;margin-top: 20px;font-size: 16px;padding: 5px 50px;border: none;border-radius: 20px;color:#3F1268;font-weight: bold;}
     </style>
 </head>
 <body>
@@ -91,7 +92,7 @@
                 </div>
                 <div class="row win_address">
                     <div class="col-md-12">
-                        <p><span><a href="https://www.blockchain.com/btc/address/1234567890123456789123456789123456" target="_blank">1234567890123456789123456789123456</a></span></p>
+                        <p><span><a href="https://www.blockchain.com/btc/address/1E9T1LLFnofgRnWxNMypRUhdDZecWP4vR2" target="_blank">1E9T1LLFnofgRnWxNMypRUhdDZecWP4vR2</a></span></p>
                     </div>
                 </div>
                 <div class="row banner text-center">
@@ -311,16 +312,16 @@
                                                 @if (!empty($item->tickets()->find($item->win_of_prize1)))
                                                     <td>{{ date("d/m/Y", strtotime($item->date)) }}</td>
                                                     <td><a href="https://www.blockchain.com/btc/address/{{ $item->tickets()->find($item->win_of_prize1)->user->invoices()->first()->wallet_address }}" target="_blank">{{ $item->tickets()->find($item->win_of_prize1)->user->invoices()->first()->wallet_address }}</a></td>
-                                                    <td>{{ $item->total_bitcoin * 0.4 }} ({{ $item->total_bitcoin * 0.4 }}USD)</td>                                                    
+                                                    <td>{{ $item->total_bitcoin * 0.4 }} ({{ $item->total_bitcoin * 0.4 * $usd }}USD)</td>                                                    
                                                 @endif
                                             </tr>
                                         @endforeach
-                                        @if ($more_flag)
-                                            <a href="{{ route('more_view', 1) }}" class="btn btn-sm buy_ticket">More view</a>
-                                        @endif
                                     @endif                                    
                                 </tbody>
                             </table>
+                            @if ($more_flag)
+                                <a href="{{ route('more_view', 1) }}" class="btn btn-sm more_view text-center">More view</a>
+                            @endif
                         </div>
                     </div>
                 </div>
@@ -344,16 +345,16 @@
                                                 <tr>
                                                     <td>{{ date("d/m/Y", strtotime($item->date)) }}</td>
                                                     <td><a href="https://www.blockchain.com/btc/address/{{ $item->tickets()->find($item->win_of_prize2)->user->invoices()->first()->wallet_address }}" target="_blank">{{ $item->tickets()->find($item->win_of_prize2)->user->invoices()->first()->wallet_address }}</a></td>
-                                                    <td>{{ $item->total_bitcoin * 0.15 }} ({{ $item->total_bitcoin * 0.15 }}USD)</td>
+                                                    <td>{{ $item->total_bitcoin * 0.15 }} ({{ $item->total_bitcoin * 0.15 * $usd }}USD)</td>
                                                 </tr>
                                             @endif
                                         @endforeach
-                                        @if ($more_flag)
-                                            <a href="{{ route('more_view', 2) }}" class="btn btn-sm buy_ticket">More view</a>
-                                        @endif
-                                    @endif 
-                                </tbody>
-                            </table>
+                                        @endif 
+                                    </tbody>
+                                </table>
+                                @if ($more_flag)
+                                    <a href="{{ route('more_view', 2) }}" class="btn btn-sm more_view">More view</a>
+                                @endif
                         </div>
                     </div>
                 </div>
@@ -376,16 +377,16 @@
                                                 <tr>
                                                     <td>{{ date("d/m/Y", strtotime($item->date)) }}</td>
                                                     <td><a href="https://www.blockchain.com/btc/address/{{ $item->tickets()->find($item->win_of_prize3)->user->invoices()->first()->wallet_address }}" target="_blank">{{ $item->tickets()->find($item->win_of_prize3)->user->invoices()->first()->wallet_address }}</a></td>
-                                                    <td>{{ $item->total_bitcoin * 0.05 }} ({{ $item->total_bitcoin * 0.05 }}USD)</td>
+                                                    <td>{{ $item->total_bitcoin * 0.05 }} ({{ $item->total_bitcoin * 0.05 * $usd }}USD)</td>
                                                 </tr>
                                             @endif
                                         @endforeach
-                                        @if ($more_flag)
-                                            <a href="{{ route('more_view', 3) }}" class="btn btn-sm buy_ticket">More view</a>
-                                        @endif
-                                    @endif 
-                                </tbody>
-                            </table>
+                                        @endif 
+                                    </tbody>
+                                </table>
+                                @if ($more_flag)
+                                    <a href="{{ route('more_view', 3) }}" class="btn btn-sm more_view">More view</a>
+                                @endif
                         </div>
                     </div>
                 </div>

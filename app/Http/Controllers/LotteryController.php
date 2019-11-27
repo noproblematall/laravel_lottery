@@ -81,11 +81,11 @@ class LotteryController extends Controller
     {
         $now = date('Y-m-d H:i:s');
         $result = "Let's start today lottery prize 1 " . " --- " . $now;
-        $this->dataLog($result);
+        // $this->dataLog($result);
         $setting = Setting::first();
         if (!$setting) {
             $result = 'You have to set time and cost.' . ' -- ' . $now;
-            $this->dataLog($result);
+            // $this->dataLog($result);
             return $result;
         }
         $lottery = Lottery::create([
@@ -99,7 +99,7 @@ class LotteryController extends Controller
         $tickets = Ticket::whereNull('lottery_id');
         if (!$tickets->exists()) {
             $result = 'There are not any tickets.' . ' -- ' . $now;
-            $this->dataLog($result);
+            // $this->dataLog($result);
             return $result;
         }
         $total_bitcoin = $tickets->count() * $setting->cost_of_ticket;
@@ -108,15 +108,15 @@ class LotteryController extends Controller
         ]);
 
         $users = User::where('role_id', 2)->whereNotNull('email_verified_at')->get();
-        foreach ($users as $user) {
-            $this->lottery_start_email($user->username, $user->email, 'prize1');
-        }
+        // foreach ($users as $user) {
+        //     $this->lottery_start_email($user->username, $user->email, 'prize1');
+        // }
         $tickets = Ticket::where('lottery_id', $lottery->id);
         // ------ Win Ticket algothrism ---------   
         $ticket_number = $tickets->count();
         if ($ticket_number == 1) {
             $result = 'There is only one ticket.' . ' -- ' . $now;
-            $this->dataLog($result);
+            // $this->dataLog($result);
             return $result;
         }
         mt_srand();
@@ -131,7 +131,7 @@ class LotteryController extends Controller
             'total_bitcoin' => $total_bitcoin
         ]);
         $result = 'The winner of prize1 is => ' . $prize1_ticket->number . ' -- ' . $now;
-        $this->dataLog($result);
+        // $this->dataLog($result);
         return $result;
     }
 
@@ -139,22 +139,22 @@ class LotteryController extends Controller
     {
         $now = date('Y-m-d H:i:s');
         $result = "Let's start today lottery prize 2 " . " --- " . $now;
-        $this->dataLog($result);
+        // $this->dataLog($result);
         $lottery = Lottery::whereDate('created_at', '=', date('Y-m-d'))->where('is_end', 0)->orderBy('created_at', 'desc')->first();
         $users = User::where('role_id', 2)->whereNotNull('email_verified_at')->get();
-        foreach ($users as $user) {
-            $this->dataLog($user->email . '  email sent');
-            $this->lottery_start_email($user->username, $user->email, 'prize2');
-        }
+        // foreach ($users as $user) {
+        //     // $this->dataLog($user->email . '  email sent');
+        //     $this->lottery_start_email($user->username, $user->email, 'prize2');
+        // }
 
         $tickets = Ticket::where('lottery_id', $lottery->id)->where('id', '!=', $lottery->win_of_prize1);
         
         // ------ Win Ticket algothrism ---------   
         $ticket_number = $tickets->count();
-        $this->dataLog($ticket_number);
+        // $this->dataLog($ticket_number);
         if ($ticket_number == 1) {
             $result = 'There is only one ticket.' . ' -- ' . $now;
-            $this->dataLog($result);
+            // $this->dataLog($result);
             return $result;
         }
         mt_srand();
@@ -169,7 +169,7 @@ class LotteryController extends Controller
             'win_of_prize2' => $prize2_ticket->id,
         ]);
         $result = 'The winner of prize1 is => ' . $prize2_ticket->number . ' -- ' . $now;
-        $this->dataLog($result);
+        // $this->dataLog($result);
         return $result;
     }
 
@@ -177,13 +177,13 @@ class LotteryController extends Controller
     {
         $now = date('Y-m-d H:i:s');
         $result = "Let's start today lottery prize 3 " . " --- " . $now;
-        $this->dataLog($result);
+        // $this->dataLog($result);
         $now = date('Y-m-d H:i:s');
         $lottery = Lottery::whereDate('created_at', '=', date('Y-m-d'))->where('is_end', 0)->orderBy('created_at', 'desc')->first();
         $users = User::where('role_id', 2)->whereNotNull('email_verified_at')->get();
-        foreach ($users as $user) {
-            $this->lottery_start_email($user->username, $user->email, 'prize3');
-        }
+        // foreach ($users as $user) {
+        //     $this->lottery_start_email($user->username, $user->email, 'prize3');
+        // }
 
         $tickets = Ticket::where('lottery_id', $lottery->id)->where('id', '!=', $lottery->win_of_prize1)->where('id', '!=', $lottery->win_of_prize2);
 
@@ -191,7 +191,7 @@ class LotteryController extends Controller
         $ticket_number = $tickets->count();
         if ($ticket_number == 1) {
             $result = 'There is only one ticket.' . ' -- ' . $now;
-            $this->dataLog($result);
+            // $this->dataLog($result);
             return $result;
         }
         mt_srand();
@@ -206,7 +206,7 @@ class LotteryController extends Controller
             'is_end' => 1,
         ]);
         $result = 'The winner of prize3 is => ' . $prize3_ticket->number . ' -- ' . $now;
-        $this->dataLog($result);
+        // $this->dataLog($result);
         return $result;
     }
 

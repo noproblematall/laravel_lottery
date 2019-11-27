@@ -136,7 +136,7 @@ div.bit_price {color: #24126a;}
 .last_winner .accumulated h2{font-size: 100px;color: #fdb702;}
 .last_winner .accumulated h3{font-size: 50px;color: #fdb702;}
 .last_winner .prize_1 h4 {font-size: 20px;}
-.last_winner .prize_1 div.prize {border: 1px solid;border-bottom-left-radius: 30px;border-bottom-right-radius: 30px;padding: 15px 25px 10px;margin-top: 15px;}
+.last_winner .prize_1 div.prize {border: 1px solid;border-bottom-left-radius: 30px;border-bottom-right-radius: 30px;padding: 15px 50px 10px;margin-top: 15px;}
 .last_winner .prize_1 div.prize h2 {font-size: 50px;}
 .last_winner .prize_1 div.prize p {font-size: 20px;}
 .last_winner .prize_1 div.text-left {display: flex; align-items: center;}

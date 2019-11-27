@@ -18,7 +18,7 @@ class CreateInvoicesTable extends Migration
             $table->bigInteger('user_id')->nullable();
             $table->string('secret')->nullable();
             $table->string('my_invoice_id')->unique();
-            $table->double('price_in_bitcoin')->nullable();
+            $table->string('price_in_bitcoin')->nullable();
             $table->string('address')->nullable();
             $table->integer('number_of_ticket')->nullable();
             $table->string('wallet_address')->nullable();

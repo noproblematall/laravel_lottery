@@ -16,15 +16,15 @@ class CreateLotteriesTable extends Migration
         Schema::create('lotteries', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->date('date')->nullable();
-            $table->double('cost_of_ticket')->nullable();
+            $table->string('cost_of_ticket')->nullable();
             $table->string('description')->nullable();
-            $table->time('time_of_prize1')->nullable();
-            $table->time('time_of_prize2')->nullable();
-            $table->time('time_of_prize3')->nullable();
+            $table->string('time_of_prize1')->nullable();
+            $table->string('time_of_prize2')->nullable();
+            $table->string('time_of_prize3')->nullable();
             $table->bigInteger('win_of_prize1')->nullable();
             $table->bigInteger('win_of_prize2')->nullable();
             $table->bigInteger('win_of_prize3')->nullable();
-            $table->double('total_bitcoin')->nullable();
+            $table->string('total_bitcoin')->nullable();
             $table->integer('is_end')->default(0);
             $table->timestamps();
         });

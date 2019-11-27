@@ -39,6 +39,10 @@ class AdminController extends Controller
         $sent_sum = 0;
         $get_sum = 0;
         $today_bitcoin = 0;
+        $lottery_running = 0;
+        $win_of_prize1 = null;
+        $win_of_prize2 = null;
+        $win_of_prize3 = null;
         $lottery = Lottery::where('is_end', 1);
         if($lottery->exists()) {
             foreach ($lottery->get()->pluck('total_bitcoin') as $item) {
@@ -49,6 +53,10 @@ class AdminController extends Controller
         $current_lottery = Lottery::where('is_end', 0);
         if ($current_lottery->exists()) {
             $today_bitcoin = $current_lottery->first()->total_bitcoin;
+            $lottery_running = 1;
+            $win_of_prize1 = $current_lottery->first()->win_of_prize1;
+            $win_of_prize2 = $current_lottery->first()->win_of_prize2;
+            $win_of_prize3 = $current_lottery->first()->win_of_prize3;
         }else{
             $current_tickets = Ticket::whereNull('lottery_id');
             if ($current_tickets->exists()) {
@@ -62,7 +70,7 @@ class AdminController extends Controller
             $total_user = $user->count();
             $real_user = $user->whereNotNull('email_verified_at')->count();
         }
-        return view('admin.index', compact('sent_sum', 'usd', 'get_sum', 'today_bitcoin', 'total_user', 'real_user'));
+        return view('admin.index', compact('sent_sum', 'usd', 'get_sum', 'today_bitcoin', 'total_user', 'real_user', 'win_of_prize1', 'win_of_prize2', 'win_of_prize3', 'lottery_running'));
     }
 
     public function user_manage(Request $request)

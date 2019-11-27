@@ -15,6 +15,7 @@ use CustomHelper;
 
 use Auth;
 use Session;
+use Mail;
 
 class FrontEndController extends Controller
 {
@@ -44,7 +45,7 @@ class FrontEndController extends Controller
         $more_flag = 0;
         if ($current_lottery->exists()) {
             $today_bitcoin = $current_lottery->first()->total_bitcoin;
-            if ($current_lottery->first()->time_of_prize2 == null) {
+            if ($current_lottery->first()->win_of_prize2 == null) {
                 $next_time = $current_lottery->first()->time_of_prize2;
             } else {
                 $next_time = $current_lottery->first()->time_of_prize3;
@@ -156,12 +157,13 @@ class FrontEndController extends Controller
             if ($paid_btc >= $price_btc) {
                 $invoice->is_paid = 1;
                 $invoice->save();
-    
-                for ($i=0; $i < $invoice->number_of_ticket; $i++) {
-    
+                $tickets = Ticket::where('lottery_id', null);
+                for ($i=0; $i < $invoice->number_of_ticket; $i++) {    
                     mt_srand();
-                    $random_number = mt_rand(1000000, 9999999);
-                    
+                    $current_tickets = $tickets->get()->pluck('number')->toArray();
+                    do {
+                        $random_number = mt_rand(1000000, 9999999);
+                    } while (in_array($random_number, $current_tickets));
                     Ticket::create([
                         'invoice_id' => $invoice->my_invoice_id,
                         'number' => $random_number,
@@ -210,6 +212,15 @@ class FrontEndController extends Controller
             $paid_btc = $invoice->invoice_payment()->get()->sum('value');
             $data['paid_btc'] = $paid_btc;
             if ($paid_btc >= $amount) {
+
+                $user = $invoice->user;
+                $user_name = $user->username;
+                $user_email = $user->email;
+                $data = array('name'=>$user_name, 'paid_btc'=>$paid_btc);
+                    Mail::send('emails.payment_confirm', $data, function($message) use($user_email, $user_name) {
+                    $message->to($user_email, $user_name)->subject('Payment Confirmed');
+                });
+
                 $data['status'] = 1;
                 return response()->json($data);
             }else if($invoice_pending->exists()){
@@ -250,9 +261,10 @@ class FrontEndController extends Controller
     {
         $lottery = Lottery::where('is_end', 1)->orderBy('created_at', 'desc');
         if ($lottery->exists() && ($id == 1 || $id == 2 || $id || 3)) {
-            $lottery = $lottery->get();
+            $usd = CustomHelper::get_usd();
+            $lottery = $lottery->paginate(20);
             $id = $id;
-            return view('more_view', compact('lottery', 'id'));
+            return view('more_view', compact('lottery', 'id', 'usd'));
         }else{
             return back();
         }

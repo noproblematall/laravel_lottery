@@ -57,9 +57,9 @@
                                     <td>{{ $item->email }}</td>
                                     <td>
                                         @if ($item->email_verified_at != null)
-                                            Yes ({{ $item->email_verified_at }})
+                                        <span class="badge badge-success">Yes ({{ $item->email_verified_at }})</span>
                                         @else
-                                            No
+                                        <span class="badge badge-danger">No</span>
                                         @endif
                                     </td>
                                     <td>

@@ -16,7 +16,7 @@ class CreateInvoicePaymentsTable extends Migration
         Schema::create('invoice_payments', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('transaction_hash');
-            $table->double('value');
+            $table->string('value');
             $table->string('invoice_id');
             $table->timestamps();
         });

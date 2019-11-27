@@ -1,5 +1,11 @@
 @extends('admin.layouts.app')
 
+@section('css')
+    <style>
+        .bg-teal-1{background-color: #1caf9a7a}
+        .bg-teal-2{background-color: #1caf9a1f}
+    </style>
+@endsection
 @section('content')
 
     <!-- ########## START: MAIN PANEL ########## -->
@@ -12,7 +18,69 @@
         </div>            
     </div><!-- d-flex -->
     
-    <div class="br-pagebody">            
+    <div class="br-pagebody">
+        @if ($lottery_running)
+            <div class="row row-sm mg-t-20">
+                <div class="col-md-4">
+                    <div class="card bg-teal">
+                        <div class="card-body">
+                            @if ($win_of_prize1 != null)
+                                <h5 class="card-title">Winner For Prize1: {{ \App\Ticket::find($win_of_prize1)->number }}</h5>
+                                <p class="card-subtitle">Wallet Address:</p>
+                                <p><a class="card-text" target="_blank" href="https://www.blockchain.com/btc/address/{{\App\Ticket::find($win_of_prize1)->invoice->wallet_address}}">{{\App\Ticket::find($win_of_prize1)->invoice->wallet_address}}</a></p>
+                                <span href="#" class="card-link">{{$today_bitcoin * 0.4}} BIT</span>
+                                <span href="#" class="card-link">{{$today_bitcoin * 0.4 * $usd}} USD</span>
+                            @else
+                                <h5 class="card-title">Winner For Prize1: ?</h5>
+                                <p class="card-subtitle">Wallet Address:</p>
+                                <p class="card-text">?</p>
+                                <span></span>
+                                <span href="#" class="card-link"></span> 
+                            @endif
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card bg-teal-1">
+                        <div class="card-body">
+                            @if ($win_of_prize2 != null)
+                                <h5 class="card-title">Winner For Prize2: {{ \App\Ticket::find($win_of_prize2)->number }}</h5>
+                                <p class="card-subtitle">Wallet Address:</p>
+                                <p><a class="card-text" target="_blank" href="https://www.blockchain.com/btc/address/{{\App\Ticket::find($win_of_prize2)->invoice->wallet_address}}">{{\App\Ticket::find($win_of_prize2)->invoice->wallet_address}}</a></p>
+                                <span href="#" class="card-link">{{$today_bitcoin * 0.15}} BIT</span>
+                                <span href="#" class="card-link">{{$today_bitcoin * 0.15 * $usd}} USD</span>
+                            @else
+                                <h5 class="card-title">Winner For Prize2: ?</h5>
+                                <p class="card-subtitle">Wallet Address:</p>
+                                <p class="card-text">?</p>
+                                <span href="#" class="card-link"></span>
+                                <span href="#" class="card-link"></span>
+                                
+                            @endif
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card bg-teal-2">
+                        <div class="card-body">
+                            @if ($win_of_prize3 != null)
+                                <h5 class="card-title">Winner For Prize3: {{ \App\Ticket::find($win_of_prize3)->number }}</h5>
+                                <p class="card-subtitle">Wallet Address:</p>
+                                <p><a class="card-text" target="_blank" href="https://www.blockchain.com/btc/address/{{\App\Ticket::find($win_of_prize3)->invoice->wallet_address}}">{{\App\Ticket::find($win_of_prize3)->invoice->wallet_address}}</a></p>
+                                <span href="#" class="card-link">{{$today_bitcoin * 0.05}} BIT</span>
+                                <span href="#" class="card-link">{{$today_bitcoin * 0.05 * $usd}} USD</span>
+                            @else
+                                <h5 class="card-title">Winner For Prize3: ?</h5>
+                                <p class="card-subtitle">Wallet Address:</p>
+                                <p class="card-text">?</p>
+                                <span href="#" class="card-link"></span>
+                                <span href="#" class="card-link"></span>                                
+                            @endif
+                        </div>
+                    </div>
+                </div>
+            </div>            
+        @endif
         <div class="row row-sm mg-t-20">            
             <div class="col-sm-6 col-lg-3 mg-t-20 mg-sm-t-0">
                 <div class="bg-purple rounded overflow-hidden">

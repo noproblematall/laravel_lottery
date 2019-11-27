@@ -64,15 +64,15 @@
                                     <td>{{ $item->price_in_bitcoin }}</td>
                                     <td>
                                         @if ($item->is_paid)
-                                            Paid
+                                        <span class="badge badge-success">Paid</span>
                                         @else
                                             @if (!$item->invoice_payment->isEmpty())
-                                                Pending
+                                            <span class="badge badge-warning">Pending</span>
                                             @else
                                                 @if (!$item->invoice_pending_payment->isEmpty())
-                                                    Pending
+                                                <span class="badge badge-warning">Pending</span>
                                                 @else
-                                                    Not Paid
+                                                <span class="badge badge-danger">Not Paid</span>
                                                 @endif
                                             @endif
                                         @endif    

@@ -18,7 +18,7 @@ class CreateSettingsTable extends Migration
             $table->string('time_of_prize1')->nullable();
             $table->string('time_of_prize2')->nullable();
             $table->string('time_of_prize3')->nullable();
-            $table->double('cost_of_ticket')->nullable();
+            $table->string('cost_of_ticket')->nullable();
             $table->timestamps();
         });
     }
