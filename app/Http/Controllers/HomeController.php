@@ -174,11 +174,13 @@ class HomeController extends Controller
             session()->forget('visit_flag');
             $invoice_id = $data['invoice_id'];
             $invoice = Invoice::where('my_invoice_id', $invoice_id)->first();
+            $usd = CustomHelper::get_usd();
             $secret = $invoice->secret;
             $amount = $invoice->price_in_bitcoin;
+            $amount_usd = $amount * $usd;
             if($invoice->address != null && $invoice->is_paid == 0){
                 $address = $invoice->address;
-                return view('payment', compact('address', 'amount', 'invoice_id'));
+                return view('payment', compact('address', 'amount', 'invoice_id', 'amount_usd'));
             }
             // else if (Invoice::where('is_paid', 0)->where('user_id', null)->exists()) {
             //     $temp_invoice = Invoice::where('is_paid', 0)->where('user_id', null)->first();
@@ -233,10 +235,12 @@ class HomeController extends Controller
 
         }else if($user->invoices()->exists()){
             if ($user->invoices()->orderBy('created_at', 'desc')->first()->address != null && $user->invoices()->orderBy('created_at', 'desc')->first()->is_paid == 0) {
+                $usd = CustomHelper::get_usd();
                 $invoice_id = $user->invoices()->orderBy('created_at', 'desc')->first()->my_invoice_id;
-                $amount = $user->invoices()->orderBy('created_at', 'desc')->first()->amount;
+                $amount = $user->invoices()->orderBy('created_at', 'desc')->first()->price_in_bitcoin;
+                $amount_usd = $amount * $usd;
                 $address = $user->invoices()->orderBy('created_at', 'desc')->first()->address;
-                return view('payment', compact('address', 'amount', 'invoice_id'));                
+                return view('payment', compact('address', 'amount', 'invoice_id', 'amount_usd'));                
             }else{
                 return redirect(route('home'));
             }
