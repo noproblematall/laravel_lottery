@@ -27,33 +27,14 @@ return [
     'xpub' => env('XPUB', 'xpub6CFTc3ZLos856fkSxpKEdWpCZS5KLTzTebahn1RmGY7FEUKqArRgmN4ysgMuH6pvHUi9KyS3bS5bTVtAwJwREvEL4orNDBridtQeyrjtJaB'),
     'bitcoin_api_key' => env('BITCOIN_API_KEY', 'c7899c43-686b-490f-b47a-cdf4110e920d'),
 
-    'debug_blacklist' => [
-        // '_ENV' => [
-        //     'APP_KEY',
-        //     'DB_PASSWORD',
-        //     'REDIS_PASSWORD',
-        //     'MAIL_PASSWORD',
-        //     'PUSHER_APP_KEY',
-        //     'PUSHER_APP_SECRET',
-        //     'APP_NAME',
-        //     'DB_DATABASE',
-        //     'DB_USERNAME',
-        //     'SESSION_LIFETIME',
-        //     'REDIS_HOST',
-        //     'REDIS_PORT',
-        //     'MAIL_USERNAME',
-        //     'MAIL_FROM_ADDRESS',
-        //     'BLOCK_CHAIN_ROOT',
 
-        // ],
-        // '_SERVER' => [
-        //     'APP_KEY',
-        //     'DB_PASSWORD',
-        //     'REDIS_PASSWORD',
-        //     'MAIL_PASSWORD',
-        //     'PUSHER_APP_KEY',
-        //     'PUSHER_APP_SECRET',
-        // ],
+    /*
+    |--------------------------------------------------------------------------
+    | DEBUG BLACKLIST
+    |--------------------------------------------------------------------------
+    */
+
+    'debug_blacklist' => [
         '_COOKIE' => array_keys($_COOKIE),
         '_SERVER' => array_keys($_SERVER),
         '_ENV' => array_keys($_ENV),

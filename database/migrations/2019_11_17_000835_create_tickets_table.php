@@ -18,7 +18,6 @@ class CreateTicketsTable extends Migration
             $table->bigInteger('user_id')->nullable();
             $table->string('invoice_id')->nullable();
             $table->bigInteger('lottery_id')->nullable();
-            // $table->bigInteger('transaction_id')->nullable();
             $table->integer('number')->nullable();
             $table->integer('is_win')->nullable();
             $table->timestamps();

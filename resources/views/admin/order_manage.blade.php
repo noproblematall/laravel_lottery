@@ -58,7 +58,7 @@
                                 <tr>
                                     <td>{{ (($invoice->currentPage() - 1 ) * $invoice->perPage() ) + $loop->iteration }}</td>
                                     <td>{{ $item->my_invoice_id }}</td>
-                                    <td>{{ $item->user->email }}</td>
+                                    <td>{{ $item->user ? $item->user->email : 'User deleted' }}</td>
                                     <td><a href="https://www.blockchain.com/btc/address/{{ $item->wallet_address }}" target="_blank">{{ $item->wallet_address }}</a></td>
                                     <td><a href="https://www.blockchain.com/btc/address/{{ $item->address }}" target="_blank">{{ $item->address }}</a></td>
                                     <td>{{ $item->price_in_bitcoin }}</td>

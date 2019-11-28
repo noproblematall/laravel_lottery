@@ -34,8 +34,8 @@
                 <h4>- Bitcoin Address </h4> <span><a href="https://www.blockchain.com/btc/address/{{ $invoice->address }}" target="_blank">{{ $invoice->address }}</a></span>
                 <h4>- Number Of Ticket </h4> <span>{{ $invoice->number_of_ticket }}</span>
                 <h4>- Wallet Address </h4> <span><a href="https://www.blockchain.com/btc/address/{{ $invoice->wallet_address }}" target="_blank">{{ $invoice->wallet_address }}</a></span>
-                <h4>- User ID</h4> <span>{{ $invoice->user->username }}</span>
-                <h4>- User Email</h4> <span>{{ $invoice->user->email }}</span>
+                <h4>- User ID</h4> <span>{{ $invoice->user ? $invoice->username : 'User Deleted' }}</span>
+                <h4>- User Email</h4> <span>{{ $invoice->user ? $invoice->user->email : 'User Deleted' }}</span>
             </div>
 
             <div class="col-md-6">
