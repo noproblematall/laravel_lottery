@@ -29,7 +29,7 @@
                                 <p class="card-subtitle">Wallet Address:</p>
                                 <p><a class="card-text" target="_blank" href="https://www.blockchain.com/btc/address/{{\App\Ticket::find($win_of_prize1)->invoice->wallet_address}}">{{\App\Ticket::find($win_of_prize1)->invoice->wallet_address}}</a></p>
                                 <span href="#" class="card-link">{{$today_bitcoin * 0.4}} BIT</span>
-                                <span href="#" class="card-link">{{$today_bitcoin * 0.4 * $usd}} USD</span>
+                                <span href="#" class="card-link">{{round($today_bitcoin * 0.4 * $usd, 2)}} USD</span>
                             @else
                                 <h5 class="card-title">Winner For Prize1: ?</h5>
                                 <p class="card-subtitle">Wallet Address:</p>
@@ -48,7 +48,7 @@
                                 <p class="card-subtitle">Wallet Address:</p>
                                 <p><a class="card-text" target="_blank" href="https://www.blockchain.com/btc/address/{{\App\Ticket::find($win_of_prize2)->invoice->wallet_address}}">{{\App\Ticket::find($win_of_prize2)->invoice->wallet_address}}</a></p>
                                 <span href="#" class="card-link">{{$today_bitcoin * 0.15}} BIT</span>
-                                <span href="#" class="card-link">{{$today_bitcoin * 0.15 * $usd}} USD</span>
+                                <span href="#" class="card-link">{{round($today_bitcoin * 0.15 * $usd, 2)}} USD</span>
                             @else
                                 <h5 class="card-title">Winner For Prize2: ?</h5>
                                 <p class="card-subtitle">Wallet Address:</p>
@@ -68,7 +68,7 @@
                                 <p class="card-subtitle">Wallet Address:</p>
                                 <p><a class="card-text" target="_blank" href="https://www.blockchain.com/btc/address/{{\App\Ticket::find($win_of_prize3)->invoice->wallet_address}}">{{\App\Ticket::find($win_of_prize3)->invoice->wallet_address}}</a></p>
                                 <span href="#" class="card-link">{{$today_bitcoin * 0.05}} BIT</span>
-                                <span href="#" class="card-link">{{$today_bitcoin * 0.05 * $usd}} USD</span>
+                                <span href="#" class="card-link">{{round($today_bitcoin * 0.05 * $usd, 2)}} USD</span>
                             @else
                                 <h5 class="card-title">Winner For Prize3: ?</h5>
                                 <p class="card-subtitle">Wallet Address:</p>
@@ -89,7 +89,7 @@
                         <div class="mg-l-20">
                         <p class="tx-10 tx-spacing-1 tx-mont tx-semibold tx-uppercase tx-white-8 mg-b-10">Total Bitcoin So Far</p>
                         <p class="tx-24 tx-white tx-lato tx-bold mg-b-0 lh-1">{{ $get_sum }} BIT</p>
-                        <span class="tx-14 tx-roboto tx-white-8">{{ $get_sum * $usd }} USD</span>
+                        <span class="tx-14 tx-roboto tx-white-8">{{ round($get_sum * $usd, 2) }} USD</span>
                         </div>
                     </div>
                     <div id="ch3" class="ht-50 tr-y-1 rickshaw_graph"></div>
@@ -102,7 +102,7 @@
                         <div class="mg-l-20">
                         <p class="tx-10 tx-spacing-1 tx-mont tx-semibold tx-uppercase tx-white-8 mg-b-10">Paid Bitcoin</p>
                         <p class="tx-24 tx-white tx-lato tx-bold mg-b-0 lh-1">{{ $sent_sum }} BIT</p>
-                        <span class="tx-14 tx-roboto tx-white-8">{{ $sent_sum * $usd }} USD</span>
+                        <span class="tx-14 tx-roboto tx-white-8">{{ round($sent_sum * $usd, 2) }} USD</span>
                         </div>
                     </div>
                     <div id="ch1" class="ht-50 tr-y-1 rickshaw_graph"></div>
@@ -115,7 +115,7 @@
                     <div class="mg-l-20">
                     <p class="tx-10 tx-spacing-1 tx-mont tx-semibold tx-uppercase tx-white-8 mg-b-10">Bitcoin for next lottery</p>
                     <p class="tx-24 tx-white tx-lato tx-bold mg-b-0 lh-1">{{ $today_bitcoin }} BIT</p>
-                    <span class="tx-14 tx-roboto tx-white-8">{{ $today_bitcoin * $usd }} USD</span>
+                    <span class="tx-14 tx-roboto tx-white-8">{{ round($today_bitcoin * $usd, 2) }} USD</span>
                     </div>
                 </div>
                 <div id="ch2" class="ht-50 tr-y-1 rickshaw_graph"></div>

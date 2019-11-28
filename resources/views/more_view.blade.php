@@ -118,7 +118,7 @@
                                                     @if (!empty($item->tickets()->find($item->win_of_prize1)))
                                                         <td>{{ date("d/m/Y", strtotime($item->date)) }}</td>
                                                         <td><a href="https://www.blockchain.com/btc/address/{{ $item->tickets()->find($item->win_of_prize1)->user->invoices()->first()->wallet_address }}" target="_blank">{{ $item->tickets()->find($item->win_of_prize1)->user->invoices()->first()->wallet_address }}</a></td>
-                                                        <td>{{ $item->total_bitcoin * 0.4 }} ({{ $item->total_bitcoin * 0.4 * $usd }}USD)</td>                                                    
+                                                        <td>{{ $item->total_bitcoin * 0.4 }} ({{ round($item->total_bitcoin * 0.4 * $usd, 2) }}USD)</td>                                                    
                                                     @endif
                                                 </tr>
                                             @endforeach
@@ -150,7 +150,7 @@
                                                     <tr>
                                                         <td>{{ date("d/m/Y", strtotime($item->date)) }}</td>
                                                         <td><a href="https://www.blockchain.com/btc/address/{{ $item->tickets()->find($item->win_of_prize2)->user->invoices()->first()->wallet_address }}" target="_blank">{{ $item->tickets()->find($item->win_of_prize2)->user->invoices()->first()->wallet_address }}</a></td>
-                                                        <td>{{ $item->total_bitcoin * 0.15 }} ({{ $item->total_bitcoin * 0.15 * $usd }}USD)</td>
+                                                        <td>{{ $item->total_bitcoin * 0.15 }} ({{ round($item->total_bitcoin * 0.15 * $usd, 2) }}USD)</td>
                                                     </tr>
                                                 @endif
                                             @endforeach
@@ -181,7 +181,7 @@
                                                     <tr>
                                                         <td>{{ date("d/m/Y", strtotime($item->date)) }}</td>
                                                         <td><a href="https://www.blockchain.com/btc/address/{{ $item->tickets()->find($item->win_of_prize3)->user->invoices()->first()->wallet_address }}" target="_blank">{{ $item->tickets()->find($item->win_of_prize3)->user->invoices()->first()->wallet_address }}</a></td>
-                                                        <td>{{ $item->total_bitcoin * 0.05 }} ({{ $item->total_bitcoin * 0.05 * $usd }}USD)</td>
+                                                        <td>{{ $item->total_bitcoin * 0.05 }} ({{ round($item->total_bitcoin * 0.05 * $usd, 2) }}USD)</td>
                                                     </tr>
                                                 @endif
                                             @endforeach

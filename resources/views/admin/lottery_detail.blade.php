@@ -25,7 +25,7 @@
         <div class="row row-sm mg-t-20 card card-body">
             <div class="col-md-12">
                <h3 class="text-center">Total bitcoin for this lottery</h3>
-               <h4 class="text-center">{{ $lottery->total_bitcoin }} BIT ({{ $lottery->total_bitcoin * $usd }} USD)</h4>
+               <h4 class="text-center">{{ $lottery->total_bitcoin }} BIT ({{ round($lottery->total_bitcoin * $usd, 2) }} USD)</h4>
             </div>           
         </div><!-- row -->
 
@@ -33,7 +33,7 @@
             <div class="col-md-4">
                 <div class="card bd-0">
                     <div class="card-header tx-medium bd-0 tx-white bg-indigo">
-                        Prize 40% [{{ $lottery->total_bitcoin * 0.4 }} BIT ({{ $lottery->total_bitcoin * 0.4 * $usd }} USD)]
+                        Prize 40% [{{ $lottery->total_bitcoin * 0.4 }} BIT ({{ round($lottery->total_bitcoin * 0.4 * $usd, 2) }} USD)]
                     </div><!-- card-header -->
                     <div class="card-body bd bd-t-0 rounded-bottom">
                         <p class="mg-b-0">Ticket Number: <b>{{ $lottery->tickets()->find($lottery->win_of_prize1)->number }}</b></p>
@@ -46,7 +46,7 @@
             <div class="col-md-4">
                 <div class="card bd-0">
                     <div class="card-header tx-medium bd-0 tx-white bg-purple">
-                        Prize 15% [{{ $lottery->total_bitcoin * 0.15 }} BIT ({{ $lottery->total_bitcoin * 0.15 * $usd }} USD)]
+                        Prize 15% [{{ $lottery->total_bitcoin * 0.15 }} BIT ({{ round($lottery->total_bitcoin * 0.15 * $usd, 2) }} USD)]
                     </div><!-- card-header -->
                     <div class="card-body bd bd-t-0 rounded-bottom">
                         <p class="mg-b-0">Ticket Number: <b>{{ $lottery->tickets()->find($lottery->win_of_prize2)->number }}</b></p>
@@ -58,7 +58,7 @@
             <div class="col-md-4">
                 <div class="card bd-0">
                     <div class="card-header tx-medium bd-0 tx-white bg-mantle">
-                        Prize 5% [{{ $lottery->total_bitcoin * 0.05 }} BIT ({{ $lottery->total_bitcoin * 0.05 * $usd }} USD)]
+                        Prize 5% [{{ $lottery->total_bitcoin * 0.05 }} BIT ({{ round($lottery->total_bitcoin * 0.05 * $usd, 2) }} USD)]
                     </div><!-- card-header -->
                     <div class="card-body bd bd-t-0 rounded-bottom">
                         <p class="mg-b-0">Ticket Number: <b>{{ $lottery->tickets()->find($lottery->win_of_prize3)->number }}</b></p>
@@ -72,7 +72,7 @@
         <div class="row row-sm mg-t-20 card card-body">
             <div class="col-md-12">
                 <h3 class="text-center">Pure Revenue</h3>
-                <h4 class="text-center">{{ $lottery->total_bitcoin * 0.4 }} BIT ({{ $lottery->total_bitcoin * 0.4 * $usd }} USD)</h4>
+                <h4 class="text-center">{{ $lottery->total_bitcoin * 0.4 }} BIT ({{ round($lottery->total_bitcoin * 0.4 * $usd, 2) }} USD)</h4>
             </div>           
         </div><!-- row -->
     </div><!-- br-pagebody -->

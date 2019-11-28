@@ -60,7 +60,7 @@
                                     <td>{{ $item->tickets()->where('id', $item->win_of_prize1)->first()->number }}</td>
                                     <td>{{ $item->tickets()->where('id', $item->win_of_prize2)->first()->number }}</td>
                                     <td>{{ $item->tickets()->where('id', $item->win_of_prize3)->first()->number }}</td>
-                                    <td>{{ $item->total_bitcoin }} BIT ({{ $item->total_bitcoin * $usd }} USD)</td>
+                                    <td>{{ $item->total_bitcoin }} BIT ({{ round($item->total_bitcoin * $usd, 2) }} USD)</td>
                                     <td>
                                         <a href="{{ route('admin.lottery_detail', $item->id) }}">&nbsp;<i class="fa fa-eye" style="color:#24126A;">&nbsp;</i></a>
                                         <a href="{{ route('admin.lottery_delete', $item->id) }}" onclick="return confirm('Are you sure?');">&nbsp;<i class="fa fa-trash" style="color:#24126A;">&nbsp;</i></a>
