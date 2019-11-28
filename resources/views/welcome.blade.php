@@ -99,7 +99,7 @@
                     <div class="col-md-12">
                         <p class="mt-2">Next Prize</p>
                         <h1>{{$today_bitcoin}} btc</h1>
-                        <p class="usd_now">( {{$today_bitcoin * $usd}} USD )</p>
+                        <p class="usd_now">( {{round($today_bitcoin * $usd, 2)}} USD )</p>
                         <p>Total accumulated so for</p>
                     </div>
                 </div>
@@ -109,7 +109,7 @@
                             <p>Prize one - SuperBit</p>
                             <div>
                                 <p>{{$today_bitcoin * 0.4}} btc</p>
-                                <p>( {{$today_bitcoin * 0.4 * $usd}} USD )</p>
+                                <p>( {{round($today_bitcoin * 0.4 * $usd, 2)}} USD )</p>
                             </div>                            
                         </div>
                     </div>
@@ -118,7 +118,7 @@
                             <p>Prize one - SuperBit</p>
                             <div>
                                 <p>{{$today_bitcoin * 0.15}} btc</p>
-                                <p>( {{$today_bitcoin * 0.15 * $usd}} USD )</p>
+                                <p>( {{round($today_bitcoin * 0.15 * $usd, 2)}} USD )</p>
                             </div>                            
                         </div>
                     </div>
@@ -127,7 +127,7 @@
                             <p>Prize one - SuperBit</p>
                             <div>
                                 <p>{{$today_bitcoin * 0.05}} btc</p>
-                                <p>( {{$today_bitcoin * 0.05 * $usd}} USD )</p>
+                                <p>( {{round($today_bitcoin * 0.05 * $usd, 2)}} USD )</p>
                             </div>                            
                         </div>
                     </div>
@@ -203,7 +203,7 @@
                         <h4>Last Winners</h4>
                         @if ($last_lottery->exists())
                             <h2>{{$last_lottery->first()->total_bitcoin}} btc</h2>
-                            <h3>( {{$last_lottery->first()->total_bitcoin * $usd}} USD )</h3>                            
+                            <h3>( {{round($last_lottery->first()->total_bitcoin * $usd, 2)}} USD )</h3>                            
                         @endif
                         <h4>Total accumulated</h4>
                     </div>
@@ -215,7 +215,7 @@
                             <div class="prize">
                                 @if ($last_lottery->exists())
                                     <h2>{{$last_lottery->first()->total_bitcoin * 0.4}}btc</h2>
-                                    <p>( {{$last_lottery->first()->total_bitcoin * 0.4 * $usd}} USD )</p>
+                                    <p>( {{round($last_lottery->first()->total_bitcoin * 0.4 * $usd, 2)}} USD )</p>
                                 @else
                                     <h2>Not yet</h2>
                                     <p>Not yet</p>
@@ -240,7 +240,7 @@
                             <div class="prize">
                                 @if ($last_lottery->exists())
                                     <h2>{{$last_lottery->first()->total_bitcoin * 0.15}}btc</h2>
-                                    <p>( {{$last_lottery->first()->total_bitcoin * 0.15 * $usd}} USD )</p>
+                                    <p>( {{round($last_lottery->first()->total_bitcoin * 0.15 * $usd, 2)}} USD )</p>
                                 @else
                                     <h2>Not yet</h2>
                                     <p>Not yet</p>
@@ -265,7 +265,7 @@
                             <div class="prize">
                                 @if ($last_lottery->exists())
                                     <h2>{{$last_lottery->first()->total_bitcoin * 0.05}}btc</h2>
-                                    <p>( {{$last_lottery->first()->total_bitcoin * 0.05 * $usd}} USD )</p>
+                                    <p>( {{round($last_lottery->first()->total_bitcoin * 0.05 * $usd, 2)}} USD )</p>
                                 @else
                                     <h2>Not yet</h2>
                                     <p>Not yet</p>
@@ -312,7 +312,7 @@
                                                 @if (!empty($item->tickets()->find($item->win_of_prize1)))
                                                     <td>{{ date("d/m/Y", strtotime($item->date)) }}</td>
                                                     <td><a href="https://www.blockchain.com/btc/address/{{ $item->tickets()->find($item->win_of_prize1)->user->invoices()->first()->wallet_address }}" target="_blank">{{ $item->tickets()->find($item->win_of_prize1)->user->invoices()->first()->wallet_address }}</a></td>
-                                                    <td>{{ $item->total_bitcoin * 0.4 }} ({{ $item->total_bitcoin * 0.4 * $usd }}USD)</td>                                                    
+                                                    <td>{{ $item->total_bitcoin * 0.4 }} ({{ round($item->total_bitcoin * 0.4 * $usd, 2) }}USD)</td>                                                    
                                                 @endif
                                             </tr>
                                         @endforeach
@@ -345,7 +345,7 @@
                                                 <tr>
                                                     <td>{{ date("d/m/Y", strtotime($item->date)) }}</td>
                                                     <td><a href="https://www.blockchain.com/btc/address/{{ $item->tickets()->find($item->win_of_prize2)->user->invoices()->first()->wallet_address }}" target="_blank">{{ $item->tickets()->find($item->win_of_prize2)->user->invoices()->first()->wallet_address }}</a></td>
-                                                    <td>{{ $item->total_bitcoin * 0.15 }} ({{ $item->total_bitcoin * 0.15 * $usd }}USD)</td>
+                                                    <td>{{ $item->total_bitcoin * 0.15 }} ({{ round($item->total_bitcoin * 0.15 * $usd, 2) }}USD)</td>
                                                 </tr>
                                             @endif
                                         @endforeach
@@ -377,7 +377,7 @@
                                                 <tr>
                                                     <td>{{ date("d/m/Y", strtotime($item->date)) }}</td>
                                                     <td><a href="https://www.blockchain.com/btc/address/{{ $item->tickets()->find($item->win_of_prize3)->user->invoices()->first()->wallet_address }}" target="_blank">{{ $item->tickets()->find($item->win_of_prize3)->user->invoices()->first()->wallet_address }}</a></td>
-                                                    <td>{{ $item->total_bitcoin * 0.05 }} ({{ $item->total_bitcoin * 0.05 * $usd }}USD)</td>
+                                                    <td>{{ $item->total_bitcoin * 0.05 }} ({{ round($item->total_bitcoin * 0.05 * $usd, 2) }}USD)</td>
                                                 </tr>
                                             @endif
                                         @endforeach
@@ -398,7 +398,7 @@
                     <div class="col-md-12 text-center">
                         <div class="">
                             <h2>{{$sent_sum}}btc</h2>
-                            <h3>{{$sent_sum * $usd}}USD</h3>
+                            <h3>{{round($sent_sum * $usd, 2)}}USD</h3>
                             <p>amount paid</p>
                         </div>
                     </div>
