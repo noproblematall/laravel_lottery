@@ -108,9 +108,11 @@ class LotteryController extends Controller
         ]);
 
         $users = User::where('role_id', 2)->whereNotNull('email_verified_at')->get();
-        // foreach ($users as $user) {
-        //     $this->lottery_start_email($user->username, $user->email, 'prize1');
-        // }
+        foreach ($users as $user) {
+            if($user->email_verified_at != null){
+                $this->lottery_start_email($user->username, $user->email, 'prize1');
+            }
+        }
         $tickets = Ticket::where('lottery_id', $lottery->id);
         // ------ Win Ticket algothrism ---------   
         $ticket_number = $tickets->count();
@@ -132,13 +134,13 @@ class LotteryController extends Controller
         ]);
         $result = 'The winner of prize1 is => ' . $prize1_ticket->number . ' -- ' . $now;
         
-        // $ticket = Ticket::find($prize1_ticket->id);
-        // $winner_email = $ticket->user->email;
-        // $winner_name = $ticket->user->name;
-        // $data = array('name'=>$winner_name, 'prize'=>'prize1', 'amount_bit'=>$total_bitcoin * 0.4);
-        // Mail::send('emails.winner', $data, function($message) use($winner_email, $winner_name) {
-        //    $message->to($winner_email, $winner_name)->subject('You are winner.');
-        // });
+        $ticket = Ticket::find($prize1_ticket->id);
+        $winner_email = $ticket->user->email;
+        $winner_name = $ticket->user->name;
+        $data = array('name'=>$winner_name, 'prize'=>'prize1', 'amount_bit'=>$total_bitcoin * 0.4);
+        Mail::send('emails.winner', $data, function($message) use($winner_email, $winner_name) {
+           $message->to($winner_email, $winner_name)->subject('You are winner.');
+        });
         return $result;
     }
 
@@ -149,10 +151,12 @@ class LotteryController extends Controller
         // $this->dataLog($result);
         $lottery = Lottery::whereDate('created_at', '=', date('Y-m-d'))->where('is_end', 0)->orderBy('created_at', 'desc')->first();
         $users = User::where('role_id', 2)->whereNotNull('email_verified_at')->get();
-        // foreach ($users as $user) {
-        //     // $this->dataLog($user->email . '  email sent');
-        //     $this->lottery_start_email($user->username, $user->email, 'prize2');
-        // }
+        foreach ($users as $user) {
+            // $this->dataLog($user->email . '  email sent');
+            if($user->email_verified_at != null){
+                $this->lottery_start_email($user->username, $user->email, 'prize2');
+            }
+        }
 
         $tickets = Ticket::where('lottery_id', $lottery->id)->where('id', '!=', $lottery->win_of_prize1);
         
@@ -178,13 +182,13 @@ class LotteryController extends Controller
         $result = 'The winner of prize1 is => ' . $prize2_ticket->number . ' -- ' . $now;
         // $this->dataLog($result);
         
-        // $ticket = Ticket::find($prize2_ticket->id);
-        // $winner_email = $ticket->user->email;
-        // $winner_name = $ticket->user->name;
-        // $data = array('name'=>$winner_name, 'prize'=>'prize2', 'amount_bit'=>$lottery->total_bitcoin * 0.15);
-        // Mail::send('emails.winner', $data, function($message) use($winner_email, $winner_name) {
-        //    $message->to($winner_email, $winner_name)->subject('You are winner.');
-        // });
+        $ticket = Ticket::find($prize2_ticket->id);
+        $winner_email = $ticket->user->email;
+        $winner_name = $ticket->user->name;
+        $data = array('name'=>$winner_name, 'prize'=>'prize2', 'amount_bit'=>$lottery->total_bitcoin * 0.15);
+        Mail::send('emails.winner', $data, function($message) use($winner_email, $winner_name) {
+           $message->to($winner_email, $winner_name)->subject('You are winner.');
+        });
         return $result;
     }
 
@@ -196,9 +200,11 @@ class LotteryController extends Controller
         $now = date('Y-m-d H:i:s');
         $lottery = Lottery::whereDate('created_at', '=', date('Y-m-d'))->where('is_end', 0)->orderBy('created_at', 'desc')->first();
         $users = User::where('role_id', 2)->whereNotNull('email_verified_at')->get();
-        // foreach ($users as $user) {
-        //     $this->lottery_start_email($user->username, $user->email, 'prize3');
-        // }
+        foreach ($users as $user) {
+            if($user->email_verified_at != null){
+                $this->lottery_start_email($user->username, $user->email, 'prize3');
+            }
+        }
 
         $tickets = Ticket::where('lottery_id', $lottery->id)->where('id', '!=', $lottery->win_of_prize1)->where('id', '!=', $lottery->win_of_prize2);
 
@@ -223,13 +229,13 @@ class LotteryController extends Controller
         $result = 'The winner of prize3 is => ' . $prize3_ticket->number . ' -- ' . $now;
         // $this->dataLog($result);
 
-        // $ticket = Ticket::find($prize3_ticket->id);
-        // $winner_email = $ticket->user->email;
-        // $winner_name = $ticket->user->name;
-        // $data = array('name'=>$winner_name, 'prize'=>'prize3', 'amount_bit'=>$lottery->total_bitcoin * 0.15);
-        // Mail::send('emails.winner', $data, function($message) use($winner_email, $winner_name) {
-        //    $message->to($winner_email, $winner_name)->subject('You are winner.');
-        // });
+        $ticket = Ticket::find($prize3_ticket->id);
+        $winner_email = $ticket->user->email;
+        $winner_name = $ticket->user->name;
+        $data = array('name'=>$winner_name, 'prize'=>'prize3', 'amount_bit'=>$lottery->total_bitcoin * 0.15);
+        Mail::send('emails.winner', $data, function($message) use($winner_email, $winner_name) {
+           $message->to($winner_email, $winner_name)->subject('You are winner.');
+        });
         return $result;
     }
 

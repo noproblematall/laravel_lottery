@@ -27,6 +27,28 @@ return [
     'xpub' => env('XPUB', 'xpub6CFTc3ZLos856fkSxpKEdWpCZS5KLTzTebahn1RmGY7FEUKqArRgmN4ysgMuH6pvHUi9KyS3bS5bTVtAwJwREvEL4orNDBridtQeyrjtJaB'),
     'bitcoin_api_key' => env('BITCOIN_API_KEY', 'c7899c43-686b-490f-b47a-cdf4110e920d'),
 
+    'debug_blacklist' => [
+        '_ENV' => [
+            'APP_KEY',
+            'DB_PASSWORD',
+            'REDIS_PASSWORD',
+            'MAIL_PASSWORD',
+            'PUSHER_APP_KEY',
+            'PUSHER_APP_SECRET',
+        ],
+        '_SERVER' => [
+            'APP_KEY',
+            'DB_PASSWORD',
+            'REDIS_PASSWORD',
+            'MAIL_PASSWORD',
+            'PUSHER_APP_KEY',
+            'PUSHER_APP_SECRET',
+        ],
+        '_POST' => [
+            'password',
+        ],
+    ],
+
     /*
     |--------------------------------------------------------------------------
     | Application Environment
