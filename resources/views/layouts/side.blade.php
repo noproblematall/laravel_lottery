@@ -3,8 +3,7 @@
 @endphp
   <div class="br-logo">
     <a href="{{route('welcome')}}">
-      {{-- <img src="{{asset('img/logo.png')}}" alt="LOGO" width="45" srcset=""> --}}
-      LOGO
+        <img src="{{asset('img/Logo-Flowy-Lottery-05.png')}}" alt="LOGO" width="150" srcset="">
     </a>
   </div>
 

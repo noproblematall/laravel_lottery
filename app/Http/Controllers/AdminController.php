@@ -118,6 +118,7 @@ class AdminController extends Controller
             'time_of_prize2' => 'required',
             'time_of_prize3' => 'required',
             'cost_of_ticket' => 'required',
+            'min_of_btc' => 'required'
         ]);
 
         if (!Setting::first()) {

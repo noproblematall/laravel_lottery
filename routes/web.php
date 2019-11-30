@@ -23,6 +23,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'admin']],function (
     Route::any('lottery_manage', 'LotteryController@lottery_manage')->name('admin.lottery_manage');
     Route::get('lottery_detail/{id}', 'LotteryController@lottery_detail')->name('admin.lottery_detail');
     Route::get('lottery_delete/{id}', 'LotteryController@lottery_delete')->name('admin.lottery_delete');
+    Route::post('win_payment', 'LotteryController@win_payment')->name('admin.win_payment');
     // Route::get('lottery_edit/{id}', 'LotteryController@lottery_edit')->name('admin.lottery_edit');
     // Route::post('lottery_update', 'LotteryController@lottery_update')->name('admin.lottery_update');
     // Route::get('lottery_new', 'LotteryController@lottery_new')->name('admin.lottery_new');

@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <link rel='icon' href='{{asset('img/lottory.ico')}}' type='image/x-icon'/>
     
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="{{asset('css/app.css')}}">
@@ -17,6 +18,8 @@
     <style>
         .invalid-feedback {color: #fdb702;display: block;}
         .more_view {background-color:#FDB702;margin-top: 20px;font-size: 16px;padding: 5px 50px;border: none;border-radius: 20px;color:#3F1268;font-weight: bold;}
+        .logo {position: relative;}
+        div.desktop_menu .logo > a {position: absolute; top: -7px; left: 0;}
     </style>
 </head>
 <body>
@@ -25,7 +28,7 @@
             <div class="real_container container-fluid">
                 <div class="row header_menu desktop_menu">
                     <div class="col-md-5 left_menu">
-                        <div class="logo float-left"><a href="{{ route('welcome') }}" id="logo">LOGO</a></div>
+                        <div class="logo"><a href="{{ route('welcome') }}" id="logo"><img src="{{ asset('img/Logo-Flowy-Lottery-dark-background2.png') }}" alt="LOGO" width="200" srcset=""></a></div>
                         <ul class="float-right">
                             <li><a href="#how_work">How it Works</a></li>
                             <li><a href="#last_prize">Last prizes</a></li>
@@ -62,7 +65,7 @@
                 </div>
                 <div class="row mobile_menu">
                     <div class="mobile_nav">
-                        <div class="logo"><a href="{{asset('/')}}" >LOGO</a></div>
+                        <div class="logo"><a href="{{asset('/')}}" ><img src="{{ asset('img/Logo-Flowy-Lottery-light-background2.png') }}" alt="LOGO" width="70" srcset=""></a></div>
                         <div class="bit_price"><svg aria-hidden="true" focusable="false" data-prefix="fab" data-icon="btc" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512" class="svg-inline--fa fa-btc fa-w-12 fa-2x"><path fill="currentColor" d="M310.204 242.638c27.73-14.18 45.377-39.39 41.28-81.3-5.358-57.351-52.458-76.573-114.85-81.929V0h-48.528v77.203c-12.605 0-25.525.315-38.444.63V0h-48.528v79.409c-17.842.539-38.622.276-97.37 0v51.678c38.314-.678 58.417-3.14 63.023 21.427v217.429c-2.925 19.492-18.524 16.685-53.255 16.071L3.765 443.68c88.481 0 97.37.315 97.37.315V512h48.528v-67.06c13.234.315 26.154.315 38.444.315V512h48.528v-68.005c81.299-4.412 135.647-24.894 142.895-101.467 5.671-61.446-23.32-88.862-69.326-99.89zM150.608 134.553c27.415 0 113.126-8.507 113.126 48.528 0 54.515-85.71 48.212-113.126 48.212v-96.74zm0 251.776V279.821c32.772 0 133.127-9.138 133.127 53.255-.001 60.186-100.355 53.253-133.127 53.253z" class=""></path></svg>&nbsp;1 = {{$usd}}USD</div>
                         <div class="menu_icon" id="menu_icon">
                             <div class="bar1"></div>
@@ -98,8 +101,8 @@
                 <div class="row banner text-center">
                     <div class="col-md-12">
                         <p class="mt-2">Next Prize</p>
-                        <h1>{{$today_bitcoin}} btc</h1>
-                        <p class="usd_now">( {{round($today_bitcoin * $usd, 2)}} USD )</p>
+                        <h1>{{$next_prize}} btc</h1>
+                        <p class="usd_now">( {{round($next_prize * $usd, 2)}} USD )</p>
                         <p>Total accumulated so for</p>
                     </div>
                 </div>
@@ -108,26 +111,26 @@
                         <div class="prize_one item">
                             <p>Prize one - SuperBit</p>
                             <div>
-                                <p>{{$today_bitcoin * 0.4}} btc</p>
-                                <p>( {{round($today_bitcoin * 0.4 * $usd, 2)}} USD )</p>
+                                <p>{{$prize1}} btc</p>
+                                <p>( {{round($prize1 * $usd, 2)}} USD )</p>
                             </div>                            
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="prize_two item">
-                            <p>Prize one - SuperBit</p>
+                            <p>Prize two - SuperBit</p>
                             <div>
-                                <p>{{$today_bitcoin * 0.15}} btc</p>
-                                <p>( {{round($today_bitcoin * 0.15 * $usd, 2)}} USD )</p>
+                                <p>{{$prize2}} btc</p>
+                                <p>( {{round($prize2 * $usd, 2)}} USD )</p>
                             </div>                            
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="prize_three item">
-                            <p>Prize one - SuperBit</p>
+                            <p>Prize three - SuperBit</p>
                             <div>
-                                <p>{{$today_bitcoin * 0.05}} btc</p>
-                                <p>( {{round($today_bitcoin * 0.05 * $usd, 2)}} USD )</p>
+                                <p>{{$prize3}} btc</p>
+                                <p>( {{round($prize3 * $usd, 2)}} USD )</p>
                             </div>                            
                         </div>
                     </div>
@@ -136,12 +139,16 @@
                     @csrf
                     <div class="row ticket_buy mb-4">
                         <div class="col-md-3">
-                            <input type="email" name="email" id="email" class="form-control" value="{{ old('email') }}" placeholder="E-mail">
-                            @error('email')
-                                <span class="invalid-feedback" style="display: block;margin-left: 10px;" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                            @enderror
+                            @auth
+                                <input type="email" name="email" id="email" class="form-control" value="" placeholder="E-mail" disabled readonly>                                
+                            @else
+                                <input type="email" name="email" id="email" class="form-control" value="{{ old('email') }}" placeholder="E-mail">
+                                @error('email')
+                                    <span class="invalid-feedback" style="display: block;margin-left: 10px;" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            @endauth
                             
                         </div>
                         <div class="col-md-3">
@@ -159,8 +166,8 @@
                             <select name="bit_number" id="bit_number" class="custom-select custom-select2">
                                 <option value="1">1 Number of tickets</option>
                                 <option value="2">2 Number of tickets</option>
-                                <option value="3">3 Number of tickets</option>
-                                <option value="4">4 Number of tickets</option>
+                                <option value="7">7 Number of tickets</option>
+                                <option value="20">20 Number of tickets</option>
                             </select>
                         </div>
                         <div class="col-md-3">
@@ -181,7 +188,7 @@
                         </div>
                         <p class="today_date">{{$result}}</p>
                         <p class="grinich">Currently Greenwich Mean Time (GMT), UTC +0</p>
-                        <a href="#header" class="btn btn-primary btn-sm">Buy tickets</a>
+                        <a href="#form_submit" class="btn btn-primary btn-sm">Buy tickets</a>
                     </div>
                 </div>
             </div>
@@ -285,7 +292,7 @@
                 </div>
                 <div class="row mt-5">
                     <div class="col-md-12 text-center">
-                        <a href="#header" class="btn btn-sm buy_ticket">Buy tickets</a>
+                        <a href="#form_submit" class="btn btn-sm buy_ticket">Buy tickets</a>
                     </div>
                 </div>
             </div>
@@ -300,8 +307,8 @@
                                 <thead>
                                     <tr>
                                         <th>Data</th>
-                                        <th>Ganhador</th>
-                                        <th>Valor</th>
+                                        <th>Winner</th>
+                                        <th>Prize</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -333,8 +340,8 @@
                                 <thead>
                                     <tr>
                                         <th>Data</th>
-                                        <th>Ganhador</th>
-                                        <th>Valor</th>
+                                        <th>Winner</th>
+                                        <th>Prize</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -366,8 +373,8 @@
                                 <thead>
                                     <tr>
                                         <th>Data</th>
-                                        <th>Ganhador</th>
-                                        <th>Valor</th>
+                                        <th>Winner</th>
+                                        <th>Prize</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -466,7 +473,7 @@
                 </div>
                 <div class="row mt-5">
                     <div class="col-md-12 text-center">
-                        <a href="#header" class="btn btn-sm">Buy tickets</a>
+                        <a href="#form_submit" class="btn btn-sm">Buy tickets</a>
                     </div>
                 </div>
             </div>
@@ -481,14 +488,16 @@
                                 <div class="card-header" id="headingOne">
                                     <h2 class="mb-0">
                                         <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                            Questions and answers ?
+                                            <h5>1. How its works?</h5>
                                         </button>
                                     </h2>
                                 </div>
                             
                                 <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#question_accordian">
                                 <div class="card-body">
-                                    Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+                                    <p>The Bitcoin Lottery is the most amazing lottery and the most exciting ever seen.  Yes, the most! Cause in it there will always be a winner since the draw will be based on the tickets, rather than in a random number.</p> 
+                                    <p>It is fully in Bitcoin, that means you buy your tickets paying with bitcoin and you also receive your prize in bitcoin.</p>
+                                    <p>The basics are, you buy tickets, each tickets allow you to participate once on each category of the lottery. After you bought the tickets you wait for the next draw. If you win your prize will be sent to your wallet within 24 hours, and you will be happy 😊!</p>
                                 </div>
                                 </div>
                             </div>
@@ -496,13 +505,16 @@
                                 <div class="card-header" id="headingTwo">
                                     <h2 class="mb-0">
                                         <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                                            Questions and answers ?
+                                            <h5>2. What is the difference between traditional Lotteries and The Bitcoin Lottery? And why it is better?</h5>
                                         </button>
                                     </h2>
                                 </div>
                                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#question_accordian">
                                 <div class="card-body">
-                                    Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+                                    <p>Well, First of all we do not track the user identity here and you will not have to pay any tax on the bitcoin amount, although if you decide to convert the bitcoin amount on any FIAT currency your country may apply some charges.</p>
+                                    <p>Bitcoin Lottery, has the ideal system where you can concur to awesome prizes, capable of giving your life a 180 degrees change, just buying a very cheap ticket.</p>
+                                    <p>And the most amazing hing of it is that your chnaces of winning are much more real than any traditional lottery. Why is that?  Simple answer: Cause the traditional lottery make their draws based on randomly chosen number and you are supposed to guess it. The number of combinations is pharaonic and you are supposed to guess it, so your chances on those lotteries are really small, as small as one chance in a billion.  But here, thing are a lot different, your chances will be always way bigger.</p>
+                                    <p>In Bitcoin Lottery your chances are always:  The number of tickets you bought devised by the total number of participants. So even if we get one million participants, your chances will be at least 99 million times bigger than the traditional lottery.</p>
                                 </div>
                                 </div>
                             </div>
@@ -510,27 +522,138 @@
                                 <div class="card-header" id="headingThree">
                                     <h2 class="mb-0">
                                         <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                                            Questions and answers ?
+                                            <h5>3. How are the tickets?</h5>
                                         </button>
                                     </h2>
                                 </div>
                                 <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#question_accordian">
                                 <div class="card-body">
-                                    Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+                                    <p>Price of the tickets can vary depending on the availability of the tickets. The more tickets are available, the smaller is the price. The opposite is also true. The less tickets are available, the higher will be the price.</p> 
+                                    <p>But in general, the ticket price is around 10,00 USD (Ten dolars ) each. And you get discount if you buy big quantities.</p>
                                 </div>
                                 </div>
                             </div>
                             <div class="card card_4">
                                 <div class="card-header" id="headingfour">
                                     <h2 class="mb-0">
-                                        <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapsefour" aria-expanded="false" aria-controls="collapseThree">
-                                            Questions and answers ?
+                                        <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapsefour" aria-expanded="false" aria-controls="collapsefour">
+                                            <h5>4. When do ticket sales close?</h5>
                                         </button>
                                     </h2>
                                 </div>
                                 <div id="collapsefour" class="collapse" aria-labelledby="headingfour" data-parent="#question_accordian">
                                 <div class="card-body">
-                                    Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+                                    <p>They don`t.  In fact, this is a fully automated system, that means, even in the least second before the lottery you can place your ticket. However, it is important to advice that the blockchain payments may not be instantaneous, so we advise you that it is possible that if you buy your tickets in less than 1 hour for the next draw, than you may not take part on it.</p>
+                                    <p>What happen than?</p>
+                                    <p>Every time you place a ticket order, it will be standing until we get confirmation that bitcoin was received. So, if the payment of your order is confirmed after the run of the current lottery, you will take part on the next one.</p>
+                                </div>
+                                </div>
+                            </div>
+                            <div class="card card_5">
+                                <div class="card-header" id="headingfive">
+                                    <h2 class="mb-0">
+                                        <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapsefive" aria-expanded="false" aria-controls="collapsefive">
+                                            <h5>5. Who can participate?</h5>
+                                        </button>
+                                    </h2>
+                                </div>
+                                <div id="collapsefive" class="collapse" aria-labelledby="headingfive" data-parent="#question_accordian">
+                                <div class="card-body">
+                                    <p>Any adult can participate. There is no requirements.</p>
+                                </div>
+                                </div>
+                            </div>
+                            <div class="card card_6">
+                                <div class="card-header" id="headingsix">
+                                    <h2 class="mb-0">
+                                        <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapsesix" aria-expanded="false" aria-controls="collapsesix">
+                                            <h5>6. When are the draws?</h5>
+                                        </button>
+                                    </h2>
+                                </div>
+                                <div id="collapsesix" class="collapse" aria-labelledby="headingsix" data-parent="#question_accordian">
+                                <div class="card-body">
+                                    <p>Draws occurs daily, except if the minimum amount per category is not achieved.</p>
+                                    <p>Since there are three category of lottery,  each of them has one minimum amount necessary to allow the draw to take place:</p>
+                                    <ul>
+                                        <li>● SuperBit I: Minimum amount for the draw is the Bitcoin amount that in the day of the draw corresponds to 5.000,00 USD (five thousand dollars).</li>
+                                        <li>● SuperBit II: Minimum amount for the draw is the Bitcoin amount that in the day of the draw corresponds to 30.000,00 USD (thirty thousand dollars).</li>
+                                        <li>● SuperBit III: Minimum amount for the draw is the Bitcoin amount that in the day of the draw corresponds to 50.000,00 USD (fifty thousand dollars).</li>
+                                    </ul>
+                                    <p>Note:  IF on your dashboard, when logged in the information of minimum and maximum Is different than that information here you must consider that on your dashboard over the given information here.</p>
+                                </div>
+                                </div>
+                            </div>
+                            <div class="card card_7">
+                                <div class="card-header" id="headingseven">
+                                    <h2 class="mb-0">
+                                        <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseseven" aria-expanded="false" aria-controls="collapseseven">
+                                            <h5>7. Do I participate in all the draws with just one ticket?</h5>
+                                        </button>
+                                    </h2>
+                                </div>
+                                <div id="collapseseven" class="collapse" aria-labelledby="headingseven" data-parent="#question_accordian">
+                                <div class="card-body">
+                                    <p>Your ticket gives you the right to participate on all the categories of the next draw.</p>
+                                    <p>It is important to be attentive to what was said on the item 4, as its is possible that your ticket to not get the confirmation of payment in blockchain within the necessary time to participate of the immediate next draw. In that case, your ticket will participate of the firsts draws happened after its payment confirmation.</p>
+                                </div>
+                                </div>
+                            </div>
+                            <div class="card card_8">
+                                <div class="card-header" id="headingeight">
+                                    <h2 class="mb-0">
+                                        <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseeight" aria-expanded="false" aria-controls="collapseeight">
+                                            <h5>8. What procedure determinates the winner on each draw?</h5>
+                                        </button>
+                                    </h2>
+                                </div>
+                                <div id="collapseeight" class="collapse" aria-labelledby="headingeight" data-parent="#question_accordian">
+                                <div class="card-body">
+                                    <p>The draw is automated an it’s carried out by an algorithm that will randomly choose an existent ticket between the full number of them.</p>
+                                </div>
+                                </div>
+                            </div>
+                            <div class="card card_9">
+                                <div class="card-header" id="headingnine">
+                                    <h2 class="mb-0">
+                                        <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapsenine" aria-expanded="false" aria-controls="collapsenine">
+                                            <h5>9. How many tickets can I buy?</h5>
+                                        </button>
+                                    </h2>
+                                </div>
+                                <div id="collapsenine" class="collapse" aria-labelledby="headingnine" data-parent="#question_accordian">
+                                <div class="card-body">
+                                    <p>Practically, there is no limit. The more tickets you buy, the more chances you have. But there is a limit per order. The maximum one can buy at once (on an order) is 1000 (one thousand) tickets and you get a nice discount for that.</p>
+                                    <p>If you want to buy more than that, you need to place one order for each 1000 (one thousand) tickets.</p>
+                                </div>
+                                </div>
+                            </div>
+                            <div class="card card_10">
+                                <div class="card-header" id="headingTen">
+                                    <h2 class="mb-0">
+                                        <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseTen" aria-expanded="false" aria-controls="collapseTen">
+                                            <h5>10. Is Flowy Lottery – The Bitcoin Lottery safe?</h5>
+                                        </button>
+                                    </h2>
+                                </div>
+                                <div id="collapseTen" class="collapse" aria-labelledby="headingTen" data-parent="#question_accordian">
+                                <div class="card-body">
+                                    <p>Yes, it is!</p>
+                                    <p>Flowy Lottery is totally safe on all points of view. We use cold wallets, and we make the payments manually, since there will be maximum three draws a day (one per category). That means our wallets do not stay online at any moment, with meant no hacker or anything can still their from us.  The physical copies are very well hidden and they are also encrypted so only the mentors of the project knows the secrets to decrypt them.</p>
+                                </div>
+                                </div>
+                            </div>
+                            <div class="card card_11">
+                                <div class="card-header" id="headingele">
+                                    <h2 class="mb-0">
+                                        <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseele" aria-expanded="false" aria-controls="collapseele">
+                                            <h5>11. Will I pay tax for the Bitcoin Lotter?</h5>
+                                        </button>
+                                    </h2>
+                                </div>
+                                <div id="collapseele" class="collapse" aria-labelledby="headingheadingelefour" data-parent="#question_accordian">
+                                <div class="card-body">
+                                    <p>It depends on your country`s jurisdiction. In most of the countries the answer is still no, but it is your responsibility to find out about the current laws of your country regarding Bitcoin and lotteries. We hereby advice you that the law of your country is major and must be taken as the valid terms evening if in this terms we affirmed differently.</p>
                                 </div>
                                 </div>
                             </div>
@@ -550,12 +673,12 @@
                                 <li><a href="#" target="_blank"><img src="https://public-images.flowybusinesses.com/img/Instagram.png" alt="Instagram"></a></li>
                                 <li><a href="#" target="_blank"><img src="https://public-images.flowybusinesses.com/img/youtube.png" alt="Youtube"></a></li>
                             </ul>
-                            <h3 class="mt-2">About us</h3>
+                            <h3 class="mt-2"><a href="#how_work">About us</a></h3>
                         </div>
                         <div class="clearfix"></div>
                     </div>
                     <div class="col-4">
-                        <h3>LOGO</h3>
+                        <a href="{{ route('welcome') }}"><img src="{{ asset('img/Logo-Flowy-Lottery-light-background2.png') }}" alt="LOGO" width="110" srcset=""></a>
                     </div>
                     <div class="col-4 text-left">
                         <h3>Support</h3>
@@ -565,7 +688,7 @@
                 </div>
                 <div class="row text-center mobile_footer">
                     <div class="col-12 text-left mb-3">
-                        <h3>LOGO</h3>
+                        <a href="{{ route('welcome') }}"><img src="{{ asset('img/Logo-Flowy-Lottery-light-background2.png') }}" alt="LOGO" width="70" srcset=""></a>
                     </div>
                     <div class="col-12">
                         <div class="text-left">
@@ -575,7 +698,7 @@
                                 <li><a href="#" target="_blank"><img src="https://public-images.flowybusinesses.com/img/Instagram.png" alt="Instagram"></a></li>
                                 <li><a href="#" target="_blank"><img src="https://public-images.flowybusinesses.com/img/youtube.png" alt="Youtube"></a></li>
                             </ul>
-                            <h3 class="mt-2">About us</h3>
+                            <h3 class="mt-2"><a href="#how_work">About us</a></h3>
                         </div>
                         <div class="clearfix"></div>
                     </div>                    

@@ -81,60 +81,92 @@
                 </div>
             </div>            
         @endif
-        <div class="row row-sm mg-t-20">            
-            <div class="col-sm-6 col-lg-3 mg-t-20 mg-sm-t-0">
-                <div class="bg-purple rounded overflow-hidden">
-                    <div class="pd-x-20 pd-t-20 d-flex align-items-center">
-                        <i class="ion ion-earth tx-60 lh-0 tx-white-8"></i>
-                        <div class="mg-l-20">
-                        <p class="tx-10 tx-spacing-1 tx-mont tx-semibold tx-uppercase tx-white-8 mg-b-10">Total Bitcoin So Far</p>
-                        <p class="tx-24 tx-white tx-lato tx-bold mg-b-0 lh-1">{{ $get_sum }} BIT</p>
-                        <span class="tx-14 tx-roboto tx-white-8">{{ round($get_sum * $usd, 2) }} USD</span>
+
+        <div class="row mg-t-20">
+            <div class="col-lg-4 col-12">
+                <div class="card bg-teal mg-t-5">
+                    <div class="card-body">
+                        <i class="ion ion-bag tx-60 lh-0 tx-white-8 float-left"></i>
+                        <div class="float-right">
+                            <h5 class="card-title">Current BTC For Prize1</h5>
+                            <p class="card-subtitle tx-white-8">{{ $today_bitcoin * 0.05 }} BTC</p>
+                            <p class="tx-white-8">{{ round($today_bitcoin * 0.05 * $usd, 2) }} USD</p>
                         </div>
+                        <div class="clearfix"></div>
                     </div>
-                    <div id="ch3" class="ht-50 tr-y-1 rickshaw_graph"></div>
                 </div>
-            </div><!-- col-3 -->
-            <div class="col-sm-6 col-lg-3">
-                <div class="bg-info rounded overflow-hidden">
-                    <div class="pd-x-20 pd-t-20 d-flex align-items-center">
-                        <i class="ion ion-bag tx-60 lh-0 tx-white-8"></i>
-                        <div class="mg-l-20">
-                        <p class="tx-10 tx-spacing-1 tx-mont tx-semibold tx-uppercase tx-white-8 mg-b-10">Paid Bitcoin</p>
-                        <p class="tx-24 tx-white tx-lato tx-bold mg-b-0 lh-1">{{ $sent_sum }} BIT</p>
-                        <span class="tx-14 tx-roboto tx-white-8">{{ round($sent_sum * $usd, 2) }} USD</span>
+            </div>
+            <div class="col-lg-4 col-12">
+                <div class="card bg-primary mg-t-5">
+                    <div class="card-body">
+                        <i class="ion ion-bag tx-60 lh-0 tx-white-8 float-left"></i>
+                        <div class="float-right">
+                            <h5 class="card-title">Current BTC For Prize2</h5>
+                            <p class="card-subtitle tx-white-8">{{ $today_bitcoin * 0.15 }} BTC</p>
+                            <p class="tx-white-8">{{ round($today_bitcoin * 0.15 * $usd, 2) }} USD</p>
                         </div>
-                    </div>
-                    <div id="ch1" class="ht-50 tr-y-1 rickshaw_graph"></div>
-                </div>
-            </div><!-- col-3 -->
-            <div class="col-sm-6 col-lg-3 mg-t-20 mg-lg-t-0">
-                <div class="bg-teal rounded overflow-hidden">
-                <div class="pd-x-20 pd-t-20 d-flex align-items-center">
-                    <i class="ion ion-clock tx-60 lh-0 tx-white-8"></i>
-                    <div class="mg-l-20">
-                    <p class="tx-10 tx-spacing-1 tx-mont tx-semibold tx-uppercase tx-white-8 mg-b-10">Bitcoin for next lottery</p>
-                    <p class="tx-24 tx-white tx-lato tx-bold mg-b-0 lh-1">{{ $today_bitcoin }} BIT</p>
-                    <span class="tx-14 tx-roboto tx-white-8">{{ round($today_bitcoin * $usd, 2) }} USD</span>
+                        <div class="clearfix"></div>
                     </div>
                 </div>
-                <div id="ch2" class="ht-50 tr-y-1 rickshaw_graph"></div>
-                </div>
-            </div><!-- col-3 -->
-            <div class="col-sm-6 col-lg-3 mg-t-20 mg-lg-t-0">
-                <div class="bg-primary rounded overflow-hidden">
-                <div class="pd-x-20 pd-t-20 d-flex align-items-center">
-                    <i class="ion ion-monitor tx-60 lh-0 tx-white-8"></i>
-                    <div class="mg-l-20">
-                    <p class="tx-10 tx-spacing-1 tx-mont tx-semibold tx-uppercase tx-white-8 mg-b-10">Registered All User</p>
-                    <p class="tx-24 tx-white tx-lato tx-bold mg-b-0 lh-1">{{ $total_user }}</p>
-                    <span class="tx-14 tx-roboto tx-white-8">{{ $real_user }} (Email Verified Users) </span>
+            </div>
+            <div class="col-lg-4 col-12">
+                <div class="card bg-purple mg-t-5">
+                    <div class="card-body">
+                        <i class="ion ion-bag tx-60 lh-0 tx-white-8 float-left"></i>
+                        <div class="float-right">
+                            <h5 class="card-title">Current BTC For Prize3</h5>
+                            <p class="card-subtitle tx-white-8">{{ $today_bitcoin * 0.4 }} BTC</p>
+                            <p class="tx-white-8">{{ round($today_bitcoin * 0.4 * $usd, 2) }} USD</p>
+                        </div>
+                        <div class="clearfix"></div>
                     </div>
                 </div>
-                <div id="ch4" class="ht-50 tr-y-1 rickshaw_graph"></div>
-                </div>
-            </div><!-- col-3 -->
+            </div>
         </div>
+
+        <div class="row mg-t-10">
+            <div class="col-md-4">
+                <div class="card bg-purple mg-t-5">
+                    <div class="card-body">
+                        <i class="ion ion-earth tx-60 lh-0 tx-white-8 float-left"></i>
+                        <div class="float-right">
+                            <h5 class="card-title">Total Bitcoin So Far</h5>
+                            <p class="card-subtitle">{{ $get_sum }} BTC</p>
+                            <p>{{ round($get_sum * $usd, 2) }} USD</p>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card bg-info mg-t-5">
+                    <div class="card-body">
+                        <i class="ion ion-clock tx-60 lh-0 tx-white-8 float-left"></i>
+                        <div class="float-right">
+                            <h5 class="card-title">Paid Bitcoin So Far</h5>
+                            <p class="card-subtitle">{{ $sent_sum }} BTC</p>
+                            <p>{{ round($sent_sum * $usd, 2) }} USD</p>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card bg-teal mg-t-5">
+                    <div class="card-body">
+                        <i class="ion ion-monitor tx-60 lh-0 tx-white-8 float-left"></i>
+                        <div class="float-right">
+                            <h5 class="card-title">Registered All User</h5>
+                            <p class="card-subtitle">{{ $total_user }}</p>
+                            <p>{{ $real_user }} (Email Verified Users)</p>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+        
             
     </div>
 @endsection

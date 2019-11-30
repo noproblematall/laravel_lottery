@@ -23,8 +23,8 @@
         <input type="hidden" name="" id="home_url" value="{{ route('home') }}">
         
         <div class="login-wrapper wd-500 wd-xs-350 pd-25 pd-xs-40 bg-white rounded shadow-base text-center" style="padding-top:20px;" v-if="ready_flag">
-            <div class="signin-logo tx-center tx-28 tx-bold tx-inverse" style="margin-bottom:15px;"><a href="{{route('welcome')}}">LOGO</a></div>
-            <div class="tx-center mg-b-10">Please send <b>{{ $amount_usd }}</b> USD({{ $amount }} BIT) to </div>
+            <div class="signin-logo tx-center tx-28 tx-bold tx-inverse" style="margin-bottom:15px;"><a href="{{route('welcome')}}"><img src="{{asset('img/Logo-Flowy-Lottery-05.png')}}" alt="LOGO" width="200" srcset=""></a></div>
+            <div class="tx-center mg-b-10">Please send <b>{{ $amount_usd }}</b> USD({{ $amount }} BTC) to </div>
             <p><b>{{ $address }}</b></p>
             <img src="{{ config('app.block_chain_root') }}qr?data={{ $address }}&size=125" alt="" srcset="">
             <hr>
@@ -42,8 +42,8 @@
         </div><!-- login-wrapper -->
 
         <div class="login-wrapper wd-500 wd-xs-350 pd-25 pd-xs-40 bg-white rounded shadow-base text-center" style="padding-top:20px;" v-if="waiting_flag">
-            <div class="signin-logo tx-center tx-28 tx-bold tx-inverse" style="margin-bottom:15px;"><a href="javascript:void(0);">LOGO</a></div>
-            <div class="tx-center mg-b-10">Please send <b>{{ $amount_usd }}</b> USD({{ $amount }} BIT) to </div>
+            <div class="signin-logo tx-center tx-28 tx-bold tx-inverse" style="margin-bottom:15px;"><a href="javascript:void(0);"><img src="{{asset('img/Logo-Flowy-Lottery-05.png')}}" alt="LOGO" width="200" srcset=""></a></div>
+            <div class="tx-center mg-b-10">Please send <b>{{ $amount_usd }}</b> USD({{ $amount }} BTC) to </div>
             <p><b>{{ $address }}</b></p>
             <img src="{{ config('app.block_chain_root') }}qr?data={{ $address }}&size=125" alt="" srcset="">
             <hr>
@@ -69,7 +69,7 @@
         </div><!-- login-wrapper -->
 
         <div class="login-wrapper wd-500 wd-xs-350 pd-25 pd-xs-40 bg-white rounded shadow-base text-center" style="padding-top:20px;" v-if="paid_flag">
-            <div class="signin-logo tx-center tx-28 tx-bold tx-inverse" style="margin-bottom:15px;"><a href="{{route('welcome')}}">LOGO</a></div>
+            <div class="signin-logo tx-center tx-28 tx-bold tx-inverse" style="margin-bottom:15px;"><a href="{{route('welcome')}}"><img src="{{asset('img/Logo-Flowy-Lottery-05.png')}}" alt="LOGO" width="200" srcset=""></a></div>
             <div class="tx-center mg-b-10">Invoice ID: <b>@{{ invoice_id }}</b></div>
             <p>Amount Confirmed: <b>@{{ amount }}</b></p>
             <p>Thank you for your purchase!<b>&nbsp;@{{ count }}</b></p>

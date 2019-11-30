@@ -49,7 +49,8 @@
                             <th>Win Ticket for prize 1</th>
                             <th>Win Ticket for prize 2</th>
                             <th>Win Ticket for prize 3</th>
-                            <th>Total Bitcoin(USD)</th>
+                            {{-- <th>Total Bitcoin(USD)</th> --}}
+                            <th>Is Paid</th>
                             <th>Action</th>
                         </thead>
                         <tbody>                           
@@ -60,7 +61,14 @@
                                     <td>{{ $item->tickets()->where('id', $item->win_of_prize1)->first()->number }}</td>
                                     <td>{{ $item->tickets()->where('id', $item->win_of_prize2)->first()->number }}</td>
                                     <td>{{ $item->tickets()->where('id', $item->win_of_prize3)->first()->number }}</td>
-                                    <td>{{ $item->total_bitcoin }} BIT ({{ round($item->total_bitcoin * $usd, 2) }} USD)</td>
+                                    {{-- <td>{{ $item->total_bitcoin }} BIT ({{ round($item->total_bitcoin * $usd, 2) }} USD)</td> --}}
+                                    <td>
+                                        @if ($item->is_paid)
+                                            <span class="badge badge-success">Paid</span>
+                                        @else
+                                            <span class="badge badge-danger">Pending</span>
+                                        @endif
+                                    </td>
                                     <td>
                                         <a href="{{ route('admin.lottery_detail', $item->id) }}">&nbsp;<i class="fa fa-eye" style="color:#24126A;">&nbsp;</i></a>
                                         <a href="{{ route('admin.lottery_delete', $item->id) }}" onclick="return confirm('Are you sure?');">&nbsp;<i class="fa fa-trash" style="color:#24126A;">&nbsp;</i></a>

@@ -39,6 +39,10 @@ class FrontEndController extends Controller
         $usd = CustomHelper::get_usd();
         $today_bitcoin = 0;
         $next_time = Setting::first()->time_of_prize1;
+        $next_prize = 0;
+        $prize1 = 0;
+        $prize2 = 0;
+        $prize3 = 0;
         $bit_per_ticket = Setting::first()->cost_of_ticket;
         $current_lottery = Lottery::where('is_end', 0)->orderBy('created_at', 'desc');
         $date = date('m/d/Y') . ' - Today at ';
@@ -47,13 +51,22 @@ class FrontEndController extends Controller
             $today_bitcoin = $current_lottery->first()->total_bitcoin;
             if ($current_lottery->first()->win_of_prize2 == null) {
                 $next_time = $current_lottery->first()->time_of_prize2;
+                $next_prize = $today_bitcoin * 0.15;
+                $prize2 = $next_prize;
+                $prize3 = $today_bitcoin * 0.4;
             } else {
                 $next_time = $current_lottery->first()->time_of_prize3;
+                $next_prize = $today_bitcoin * 0.4;
+                $prize3 = $next_prize;
             }
         }else {
             $current_tickets = Ticket::whereNull('lottery_id');
             if ($current_tickets->exists()) {
                 $today_bitcoin = $bit_per_ticket * $current_tickets->count();
+                $next_prize = $today_bitcoin * 0.05;
+                $prize1 = $next_prize;
+                $prize2 = $today_bitcoin * 0.15;
+                $prize3 = $today_bitcoin * 0.4;
             }
             if(Lottery::where('is_end', 1)->whereDate('created_at', '=', date('Y-m-d'))->exists()){
                 $date = date("m/d/Y", strtotime("+1 day")) . ' - Tomorrow at ';
@@ -80,28 +93,31 @@ class FrontEndController extends Controller
             }
         }
         $result = $date  . date('h:i a', strtotime($next_time));
-        return view('welcome', compact('usd', 'today_bitcoin', 'next_time', 'last_lottery', 'last_four_lottery', 'sent_sum', 'prize_number', 'result', 'more_flag'));
+        return view('welcome', compact('usd', 'next_prize', 'prize1', 'prize2', 'prize3', 'today_bitcoin', 'next_time', 'last_lottery', 'last_four_lottery', 'sent_sum', 'prize_number', 'result', 'more_flag'));
     }    
     
     public function post_home(Request $request)
     {
-        $request->validate([
-            'email' => 'required|email',
+        $rule = [
             'wallet_address' => 'required',
             'bit_number' => 'required'
-        ]);
+        ];
+        if (!Auth::user()) {
+            $rule['email'] = 'required|email';
+        }
+        $request->validate($rule);
 
         $data = $request->all();
-        $email = $data['email'];
+        
 
-        $amount = $data['bit_number'] * Setting::first()->cost_of_ticket;
+        $amount = (int)$data['bit_number'] * Setting::first()->cost_of_ticket;
         $wallet_address = $data['wallet_address'];
         $invoice_id = uniqid();
         $secret = md5(uniqid());
         Invoice::create([
             'secret' => $secret,
             'my_invoice_id' => $invoice_id,
-            'price_in_bitcoin' => $amount,
+            'price_in_bitcoin' => round($amount, 8),
             'number_of_ticket' => $data['bit_number'],
             'wallet_address' => $wallet_address,
         ]);
@@ -115,6 +131,7 @@ class FrontEndController extends Controller
         if($auth_user) {
             return redirect(route('payment'));
         } else {
+            $email = $data['email'];
             $user = User::whereEmail($email)->first();
             if($user) {
                 return redirect(route('login'));
@@ -157,6 +174,7 @@ class FrontEndController extends Controller
             if ($paid_btc >= $price_btc) {
                 $invoice->is_paid = 1;
                 $invoice->save();
+                $current_tickets = array();
                 $tickets = Ticket::where('lottery_id', null);
                 for ($i=0; $i < $invoice->number_of_ticket; $i++) {    
                     mt_srand();
@@ -169,15 +187,11 @@ class FrontEndController extends Controller
                         'number' => $random_number,
                         'user_id' => $invoice->user_id,
                     ]);
+                    array_push($current_tickets, $random_number);
                 }
             }
 
 
-            // $temp_address = TempAddress::where('invoice_id', $invoice_id);
-            // if ($temp_address->exists()) {
-            //     $temp_address->delete();
-            // }
-            
             $pending_payment = InvoicePendingPayment::where('invoice_id', $invoice_id)->where('transaction_hash', $transaction_hash);
             if ($pending_payment->exists()) {
                 $pending_payment->delete();

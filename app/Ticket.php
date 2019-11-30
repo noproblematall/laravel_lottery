@@ -24,4 +24,9 @@ class Ticket extends Model
     {
         return $this->belongsTo(Invoice::class, 'invoice_id', 'my_invoice_id');
     }
+
+    public function payment()
+    {
+        return $this->hasOne(Payment::class);
+    }
 }

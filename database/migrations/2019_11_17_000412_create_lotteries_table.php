@@ -26,6 +26,7 @@ class CreateLotteriesTable extends Migration
             $table->bigInteger('win_of_prize3')->nullable();
             $table->string('total_bitcoin')->nullable();
             $table->integer('is_end')->default(0);
+            $table->boolean('is_paid')->default(0);
             $table->timestamps();
         });
     }

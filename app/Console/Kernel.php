@@ -2,6 +2,7 @@
 
 namespace App\Console;
 
+use App\Helper\CustomHelper;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -29,6 +30,13 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         if (Setting::first()) {
+            if (Setting::first()->is_ready1) {
+                $schedule->command('prize1:start')->everyMinute();
+            }else if (Setting::first()->is_ready2) {
+                $schedule->command('prize2:start')->everyMinute();
+            }else if (Setting::first()->is_ready3) {
+                $schedule->command('prize3:start')->everyMinute();
+            }
             $time_prize1 = Setting::first()->time_of_prize1;
             $time_prize2 = Setting::first()->time_of_prize2;
             $time_prize3 = Setting::first()->time_of_prize3;

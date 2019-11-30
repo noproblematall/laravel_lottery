@@ -12,45 +12,54 @@
         </div>            
     </div><!-- d-flex -->
 
-    <div class="br-pagebody">
+    <div class="br-pagebody" id="home_page">
         @if ($unpaid_flag)
-            <div class="row row-sm mg-t-20">
-                <div class="col-md-6 offset-md-3">
-                    <div class="alert-warning rounded overflow-hidden" style="height: 120px;background-color: #ffce87;">
-                        <div class="pd-x-20 pd-t-20 d-flex align-items-center">
-                            <i class="icon ion-alert-circled tx-60 lh-0 tx-white-8"></i>
-                            <div class="mg-l-20">
-                            <p class="tx-12 tx-spacing-1 tx-mont tx-semibold tx-uppercase tx-white-8 mg-b-10" style="color: #24126A;">You have unpaid orders now. plesae manage it.</p>
-                            <p class="tx-24 tx-white tx-lato tx-bold mg-b-0 lh-1"><a href="{{ route('payment') }}" style="box-shadow: 5px 5px 10px;" class="btn btn-custom">Manage Order</a></p>       
+            <div class="row mg-t-20 unpaid">
+                <div class="col-lg-6 offset-lg-3">
+                    <div class="card mg-t-5" style="background-color: #ffce87;">
+                        <div class="card-body">
+                            <i class="ion ion-alert-circled tx-60 lh-0 tx-white-8 custom_icon"></i>
+                            <div class="custom_content">
+                                <h5 class="card-title" style="color: #24126A;">You have unpaid orders now. plesae manage it.</h5>
+                                <p class="card-subtitle"><a href="{{ route('payment') }}" style="box-shadow: 5px 5px 10px;" class="btn btn-custom">Manage Order</a></p>
                             </div>
+                            <div class="clearfix"></div>
                         </div>
                     </div>
+
                 </div>
             </div>            
         @endif
-        <div class="row row-sm mg-t-20">
-            <div class="col-sm-6 col-lg-6 mg-t-20 mg-lg-t-0">
-                <div class="bg-primary rounded overflow-hidden" style="height: 160px;">
-                    <div class="pd-x-20 pd-t-20 d-flex align-items-center">
-                        <i class="icon ion-archive tx-60 lh-0 tx-white-8"></i>
-                        <div class="mg-l-20">
-                        <p class="tx-12 tx-spacing-1 tx-mont tx-semibold tx-uppercase tx-white-8 mg-b-10">Current Available Tickets (Incoming Lottery {{$income_lottery}} of {{$current_bitcoin}})</p>
-                        <p class="tx-24 tx-white tx-lato tx-bold mg-b-0 lh-1">{{$available_number}}</p>                        
+        <div class="row mg-t-20">
+            <div class="col-lg-6 mg-t-20 mg-lg-t-0 more_ticket">
+                <div class="card mg-t-5 bg-primary">
+                    <div class="card-body">
+                        <i class="ion ion-archive tx-60 lh-0 tx-white-8 custom_icon"></i>
+                        <div class="custom_content">
+                            <h5 class="card-title" style="color: #fff;">Current Available Tickets.</h5>
+                            @if ($available_number == '')
+                                <p class="card-subtitle" style="color: #fff;">You have not any tickets yet. Please purchase tickets.</p>
+                            @else
+                                <p class="card-subtitle" style="color: #fff;">{{$available_number}}</p>
+                            @endif
                         </div>
+                        <div class="clearfix"></div>
                     </div>
                 </div>
             </div><!-- col-3 -->
 
+            <div class="col-lg-6 mg-t-20 mg-lg-t-0">
 
-            <div class="col-sm-6 col-lg-6 mg-t-20 mg-lg-t-0">
-                <div class="bg-purple rounded overflow-hidden" style="height: 160px;">
-                <div class="pd-x-20 pd-t-20 d-flex align-items-center">
-                    <i class="ion ion-bag tx-60 lh-0 tx-white-8"></i>
-                    <div class="mg-l-20">
-                    <p class="tx-12 tx-spacing-1 tx-mont tx-semibold tx-uppercase tx-white-8 mg-b-10">Do you want more lucky? ({{$cost_of_ticket}} bit per ticket)</p>
-                    <p class="tx-24 tx-white tx-lato tx-bold mg-b-0 lh-1"><a href="{{ route('welcome') }}" style="box-shadow: 5px 5px 10px;" class="btn btn-custom">Please click here for more tickets</a></p>
+                <div class="card mg-t-5 bg-purple">
+                    <div class="card-body">
+                        <i class="ion ion-bag tx-60 lh-0 tx-white-8 custom_icon"></i>
+                        <div class="custom_content">
+                            <h5 class="card-title" style="color: #fff;">Do you want more lucky? ({{$cost_of_ticket}} bit per ticket)</h5>
+                            <p style="color: #fff;">Please click here for more tickets</p>
+                            <p class="card-subtitle"><a href="{{ route('welcome') }}" style="box-shadow: 5px 5px 10px;" class="btn btn-custom">More Tickets</a></p>
+                        </div>
+                        <div class="clearfix"></div>
                     </div>
-                </div>
                 </div>
             </div><!-- col-3 -->    
         </div>      

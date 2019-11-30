@@ -25,7 +25,7 @@
         <form action="{{ route('register') }}" method="post" id="register_form">
             @csrf
             <div class="login-wrapper wd-300 wd-xs-350 pd-25 pd-xs-40 bg-white rounded shadow-base">
-                <div class="signin-logo tx-center tx-28 tx-bold tx-inverse"><a href="{{ asset('/') }}"><span class="tx-normal">[ LOGO ]</span></a></div>
+                <div class="signin-logo tx-center tx-28 tx-bold tx-inverse"><a href="{{ asset('/') }}"><img src="{{asset('img/Logo-Flowy-Lottery-05.png')}}" alt="LOGO" width="200" srcset=""></a></div>
                 <div class="tx-center mg-b-30">Please enter your info</div>
 
                 <div class="form-group">

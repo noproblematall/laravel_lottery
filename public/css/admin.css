@@ -48,3 +48,13 @@ input[type="email"]::-webkit-input-placeholder {
   }
 
 /* --------------------- Login --------------------- */
+
+#home_page .custom_icon {float: left;}
+#home_page .custom_content {float: left;margin-left: 15px;}
+#home_page .more_ticket div.card-body {min-height: 160px;}
+@media (max-width: 500px)
+{
+  #home_page {text-align: center;}
+  #home_page .custom_icon {float: unset;}
+  #home_page .custom_content {float: unset;}
+}

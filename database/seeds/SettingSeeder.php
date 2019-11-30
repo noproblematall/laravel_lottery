@@ -17,6 +17,7 @@ class SettingSeeder extends Seeder
             'time_of_prize2' => '15:00',
             'time_of_prize3' => '16:00',
             'cost_of_ticket' => 0.02,
+            'min_of_btc' => 1.2,
         ]);
     }
 }

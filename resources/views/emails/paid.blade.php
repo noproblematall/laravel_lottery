@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Payment Confirmed</title>
+    <title>We paid for you.</title>
 </head>
 <body>
     <body style="background:#f1f1f1;padding-top:20px;padding-bottom:20px;">
@@ -18,19 +18,20 @@
                     
                     <tr>
                         <td style="padding-left:20px;" align="center">
-                            <p style="margin:5px 0px 5px 0px;font-weight:600;font-size:36px;"><span style="color:#004000;">Payment Confirmed</span></p>
+                            <p style="margin:5px 0px 5px 0px;font-weight:600;font-size:36px;"><span style="color:#004000;">We paid for you.</span></p>
                         </td>
                     </tr>
                     <tr>
                         <td height="10"></td>
                     </tr>
                     <tr>
-                        <td style="text-align:center;">Hello! {{$name}}</td>
+                        <td style="text-align:center;">Hello! {{$name}} Congratulation!</td>
                     </tr>
                     <tr>
                         <td style="padding-left:20px;">                                
-                            <h4>Now, We have confirmed your payment {{ $paid_btc }} BTC</h4>
-                            <p>Thank you for your paitent.</p>
+                            <h4>We sent {{$amount}} BTC for lottery prize({{$prize}}%) to your wallet({{$wallet}}).</h4>
+                            <p>Transaction code: {{$hash_code}}.</p>
+                            <p>Please check this.</p>
                         </td>        
                     </tr>         
                     <tr>

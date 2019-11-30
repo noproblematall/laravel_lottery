@@ -16,4 +16,9 @@ class Lottery extends Model
         return $this->hasMany(Ticket::class);
     }
 
+    public function payments()
+    {
+        return $this->hasMany(Payment::class);
+    }
+
 }

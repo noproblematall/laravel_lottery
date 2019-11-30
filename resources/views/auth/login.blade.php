@@ -22,7 +22,7 @@
         <form action="{{ route('login') }}" method="post">
             @csrf
             <div class="login-wrapper wd-300 wd-xs-350 pd-25 pd-xs-40 bg-white rounded shadow-base" style="padding-top:20px;">
-                <div class="signin-logo tx-center tx-28 tx-bold tx-inverse" style="margin-bottom:15px;"><a href="{{route('welcome')}}">LOGO</a></div>
+                <div class="signin-logo tx-center tx-28 tx-bold tx-inverse" style="margin-bottom:15px;"><a href="{{route('welcome')}}"><img src="{{asset('img/Logo-Flowy-Lottery-05.png')}}" alt="LOGO" width="200" srcset=""></a></div>
                 <div class="tx-center mg-b-30">Please enter your credentials</div>
 
                 <div class="form-group">

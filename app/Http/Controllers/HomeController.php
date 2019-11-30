@@ -63,11 +63,11 @@ class HomeController extends Controller
                     $income_lottery = '15%';
                     $user_id = Ticket::find($lottery->win_of_prize1)->user_id;
                     if ($user->id == $user_id) {
-                        $ticket_for_prize1 = '40';
+                        $ticket_for_prize1 = '5';
                     }
 
                 }else if($lottery->win_of_prize3 == null){
-                    $income_lottery = '5%';
+                    $income_lottery = '40%';
                     $user_id = Ticket::find($lottery->win_of_prize2)->user_id;
                     if ($user->id == $user_id) {
                         $ticket_for_prize2 = '15';
@@ -79,7 +79,7 @@ class HomeController extends Controller
                 }
                 $current_bitcoin = $lottery->tickets()->count() * $lottery->cost_of_ticket;
             }else{
-                $income_lottery = '40%';
+                $income_lottery = '5%';
                 $current_bitcoin = Ticket::where('lottery_id', null)->count() * $cost_of_ticket;
                 $today_ticket = $user->tickets()->where('lottery_id', null);
                 if ($today_ticket->exists()) {
@@ -91,7 +91,7 @@ class HomeController extends Controller
             if ($lottery->exists()) {
                 $user_id = Ticket::find($lottery->first()->win_of_prize1)->user_id;
                 if ($user->id == $user_id) {
-                    $ticket_for_prize1 = '40';
+                    $ticket_for_prize1 = '5';
                 }
                 $user_id = Ticket::find($lottery->first()->win_of_prize2)->user_id;
                 if ($user->id == $user_id) {
@@ -99,7 +99,7 @@ class HomeController extends Controller
                 }
                 $user_id = Ticket::find($lottery->first()->win_of_prize3)->user_id;
                 if ($user->id == $user_id) {
-                    $ticket_for_prize3 = '5';
+                    $ticket_for_prize3 = '40';
                 }
             }
             $unpaid_flag = 0;
@@ -245,7 +245,7 @@ class HomeController extends Controller
                         'user_id' => Auth::id(),
                     ]);
                     $address = $response->address;
-                    return view('payment', compact('address', 'amount', 'invoice_id'));
+                    return view('payment', compact('address', 'amount', 'invoice_id', 'amount_usd'));
                 }
             }
 

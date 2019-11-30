@@ -11,6 +11,7 @@
     <title>{{config('app.name')}}</title>
     
     <!-- vendor css -->
+    {{-- <link href="{{asset('css/app.css')}}" rel="stylesheet"> --}}
     <link href="{{asset('css/all.min.css')}}" rel="stylesheet">
     <link href="{{asset('css/ionicons.min.css')}}" rel="stylesheet">
     <link href="{{asset('css/select2.min.css')}}" rel="stylesheet">

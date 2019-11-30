@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Helper\CustomHelper;
 use Illuminate\Console\Command;
 use App\Http\Controllers\LotteryController;
 

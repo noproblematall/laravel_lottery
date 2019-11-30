@@ -19,6 +19,10 @@ class CreateSettingsTable extends Migration
             $table->string('time_of_prize2')->nullable();
             $table->string('time_of_prize3')->nullable();
             $table->string('cost_of_ticket')->nullable();
+            $table->string('min_of_btc')->nullable();
+            $table->boolean('is_ready1')->default(0);
+            $table->boolean('is_ready2')->default(0);
+            $table->boolean('is_ready3')->default(0);
             $table->timestamps();
         });
     }

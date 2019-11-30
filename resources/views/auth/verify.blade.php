@@ -20,7 +20,7 @@
     <div class="d-flex align-items-center justify-content-center bg-custom ht-100v">
         
         <div class="login-wrapper wd-500 wd-xs-350 pd-25 pd-xs-40 bg-white rounded shadow-base" style="padding-top:20px;">
-            <div class="signin-logo tx-center tx-28 tx-bold tx-inverse" style="margin-bottom:15px;"><a href="{{route('welcome')}}">LOGO</a></div>
+            <div class="signin-logo tx-center tx-28 tx-bold tx-inverse" style="margin-bottom:15px;"><a href="{{route('welcome')}}"><img src="{{asset('img/Logo-Flowy-Lottery-05.png')}}" alt="LOGO" width="200" srcset=""></a></div>
             @if (isset($response))
               @if (property_exists($response, 'message'))
                 <div class="alert alert-danger" role="alert">                
