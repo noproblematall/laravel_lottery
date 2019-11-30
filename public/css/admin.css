@@ -46,7 +46,8 @@ input[type="email"]::-webkit-input-placeholder {
   .sk-three-bounce .sk-child {
       background-color: #FDB702 !important;
   }
-
+  small{display: none;}
+  .display_show{display: block;}
 /* --------------------- Login --------------------- */
 
 #home_page .custom_icon {float: left;}
