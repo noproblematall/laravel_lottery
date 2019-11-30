@@ -407,4 +407,7 @@ footer ul li{display: inline-block;margin-right: 15px;}
     .question div.card div.card-body p {font-size: 14px;}
     .question div.card div.card-body ul li {font-size: 14px;}
     .question button {background-size: 14px; padding-right: 25px;}
+    /* --------------------------------------------------- */
+    #how_work p {font-size: 16px;}
+    .last_winner a {font-size: 12px;}
 }
