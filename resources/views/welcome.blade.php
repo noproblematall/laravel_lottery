@@ -221,8 +221,8 @@
                             <h4>Prize one - SuperBit</h4>
                             <div class="prize">
                                 @if ($last_lottery->exists())
-                                    <h2>{{$last_lottery->first()->total_bitcoin * 0.4}}btc</h2>
-                                    <p>( {{round($last_lottery->first()->total_bitcoin * 0.4 * $usd, 2)}} USD )</p>
+                                    <h2>{{$last_lottery->first()->total_bitcoin * 0.05}}btc</h2>
+                                    <p>( {{round($last_lottery->first()->total_bitcoin * 0.05 * $usd, 2)}} USD )</p>
                                 @else
                                     <h2>Not yet</h2>
                                     <p>Not yet</p>
@@ -271,13 +271,14 @@
                             <h4>Prize three - SuperBit</h4>
                             <div class="prize">
                                 @if ($last_lottery->exists())
-                                    <h2>{{$last_lottery->first()->total_bitcoin * 0.05}}btc</h2>
-                                    <p>( {{round($last_lottery->first()->total_bitcoin * 0.05 * $usd, 2)}} USD )</p>
+                                    <h2>{{$last_lottery->first()->total_bitcoin * 0.4}}btc</h2>
+                                    <p>( {{round($last_lottery->first()->total_bitcoin * 0.4 * $usd, 2)}} USD )</p>
                                 @else
                                     <h2>Not yet</h2>
                                     <p>Not yet</p>
                                 @endif
                             </div>
+                            
                         </div>
                         <div class="clearfix"></div>
                     </div>
@@ -315,13 +316,13 @@
                                     @if (!$last_four_lottery->isEmpty())
                                     
                                         @foreach ($last_four_lottery as $item)
-                                            <tr>
-                                                @if (!empty($item->tickets()->find($item->win_of_prize1)))
+                                            @if (!empty($item->tickets()->find($item->win_of_prize1)))
+                                                <tr>
                                                     <td>{{ date("d/m/Y", strtotime($item->date)) }}</td>
-                                                    <td><a href="https://www.blockchain.com/btc/address/{{ $item->tickets()->find($item->win_of_prize1)->user->invoices()->first()->wallet_address }}" target="_blank">{{ $item->tickets()->find($item->win_of_prize1)->user->invoices()->first()->wallet_address }}</a></td>
-                                                    <td>{{ $item->total_bitcoin * 0.4 }} ({{ round($item->total_bitcoin * 0.4 * $usd, 2) }}USD)</td>                                                    
-                                                @endif
-                                            </tr>
+                                                    <td><a href="https://www.blockchain.com/btc/address/{{ $item->tickets()->find($item->win_of_prize3)->user->invoices()->first()->wallet_address }}" target="_blank">{{ $item->tickets()->find($item->win_of_prize3)->user->invoices()->first()->wallet_address }}</a></td>
+                                                    <td>{{ $item->total_bitcoin * 0.05 }} ({{ round($item->total_bitcoin * 0.05 * $usd, 2) }}USD)</td>
+                                                </tr>
+                                            @endif
                                         @endforeach
                                     @endif                                    
                                 </tbody>
@@ -380,15 +381,15 @@
                                 <tbody>
                                     @if (!$last_four_lottery->isEmpty())
                                         @foreach ($last_four_lottery as $item)
-                                            @if (!empty($item->tickets()->find($item->win_of_prize1)))
-                                                <tr>
+                                            <tr>
+                                                @if (!empty($item->tickets()->find($item->win_of_prize1)))
                                                     <td>{{ date("d/m/Y", strtotime($item->date)) }}</td>
-                                                    <td><a href="https://www.blockchain.com/btc/address/{{ $item->tickets()->find($item->win_of_prize3)->user->invoices()->first()->wallet_address }}" target="_blank">{{ $item->tickets()->find($item->win_of_prize3)->user->invoices()->first()->wallet_address }}</a></td>
-                                                    <td>{{ $item->total_bitcoin * 0.05 }} ({{ round($item->total_bitcoin * 0.05 * $usd, 2) }}USD)</td>
-                                                </tr>
-                                            @endif
+                                                    <td><a href="https://www.blockchain.com/btc/address/{{ $item->tickets()->find($item->win_of_prize1)->user->invoices()->first()->wallet_address }}" target="_blank">{{ $item->tickets()->find($item->win_of_prize1)->user->invoices()->first()->wallet_address }}</a></td>
+                                                    <td>{{ $item->total_bitcoin * 0.4 }} ({{ round($item->total_bitcoin * 0.4 * $usd, 2) }}USD)</td>                                                    
+                                                @endif
+                                            </tr>                                            
                                         @endforeach
-                                        @endif 
+                                    @endif
                                     </tbody>
                                 </table>
                                 @if ($more_flag)
