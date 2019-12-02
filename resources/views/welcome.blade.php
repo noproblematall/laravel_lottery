@@ -111,7 +111,7 @@
                 <div class="row prizes text-center">
                     <div class="col-md-4">
                         <div class="prize_one item">
-                            <p>MegaBitcoins</p>
+                            <p>SuperFlowy</p>
                             <div>
                                 <p>{{round($prize1, 8)}} btc</p>
                                 <p>( {{round($prize1 * $usd, 2)}} USD )</p>
@@ -120,7 +120,7 @@
                     </div>
                     <div class="col-md-4">
                         <div class="prize_two item">
-                            <p>SuperFlowy</p>
+                            <p>MegaBitcoins</p>
                             <div>
                                 <p>{{round($prize2, 8)}} btc</p>
                                 <p>( {{round($prize2 * $usd, 2)}} USD )</p>
@@ -229,7 +229,7 @@
                 <div class="row prize_1 mt-5">
                     <div class="col-md-6">
                         <div class="float-right text-center">
-                            <h4>MegaBitcoins - SuperBit</h4>
+                            <h4>SuperFlowy</h4>
                             <div class="prize">
                                 @if ($last_lottery->exists())
                                     <h2>{{round($last_lottery->first()->total_bitcoin * 0.05, 8)}}btc</h2>
@@ -254,7 +254,7 @@
                 <div class="row prize_2 mt-4">
                     <div class="col-md-6">
                         <div class="float-right text-center mr-3">
-                            <h4>SuperFlowy - SuperBit</h4>
+                            <h4>MegaBitcoins</h4>
                             <div class="prize">
                                 @if ($last_lottery->exists())
                                     <h2>{{round($last_lottery->first()->total_bitcoin * 0.15, 8)}}btc</h2>
@@ -279,7 +279,7 @@
                 <div class="row prize_3 mt-4">
                     <div class="col-md-6">
                         <div class="float-right text-center mr-3">
-                            <h4>LuckyBitcoin - SuperBit</h4>
+                            <h4>LuckyBitcoin</h4>
                             <div class="prize">
                                 @if ($last_lottery->exists())
                                     <h2>{{round($last_lottery->first()->total_bitcoin * 0.4, 8)}}btc</h2>
@@ -314,7 +314,7 @@
                 <div class="row">
                     <div class="col-md-12 text-left">
                         <div class="custom_table table-responsive">
-                            <h3>Winners table MegaBitcoins</h3>
+                            <h3>Winners table SuperFlowy</h3>
                             <table class="table">
                                 <thead>
                                     <tr>
@@ -347,7 +347,7 @@
                 <div class="row">
                     <div class="col-md-12 text-left">
                         <div class="custom_table table-responsive">
-                            <h3>Winners table SuperFlowy</h3>
+                            <h3>Winners table MegaBitcoins</h3>
                             <table class="table">
                                 <thead>
                                     <tr>
@@ -588,8 +588,8 @@
                                     <p>Draws occur daily, except if the minimum amount per category is not achieved.</p>
                                     <p>Since there are three categories of the lottery, each of them has one minimum amount necessary to allow the draw to take place:</p>
                                     <ul>
-                                        <li>● MegaBitcoins: The minimum amount for the draw is the Bitcoin amount that in the day of the draw corresponds to 50.000,00 USD (fifty thousand dollars).</li>
-                                        <li>● SuperFlowy: The minimum amount for the draw is the Bitcoin amount that in the day of the draw corresponds to 30.000,00 USD (thirty thousand dollars).</li>
+                                        <li>● SuperFlowy: The minimum amount for the draw is the Bitcoin amount that in the day of the draw corresponds to 50.000,00 USD (fifty thousand dollars).</li>
+                                        <li>● MegaBitcoins: The minimum amount for the draw is the Bitcoin amount that in the day of the draw corresponds to 30.000,00 USD (thirty thousand dollars).</li>
                                         <li>● LuckyBitcoin: The minimum amount for the draw is the Bitcoin amount that in the day of the draw corresponds to 5.000,00 USD (five thousand dollars).</li>
                                     </ul>
                                     <p>Note: IF on your dashboard, when logged in the information of minimum and maximum Is different than that information here you must consider that one on your dashboard over the given information here.</p>
