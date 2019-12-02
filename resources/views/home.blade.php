@@ -54,7 +54,7 @@
                     <div class="card-body">
                         <i class="ion ion-bag tx-60 lh-0 tx-white-8 custom_icon"></i>
                         <div class="custom_content">
-                            <h5 class="card-title" style="color: #fff;">Do you want more lucky? ({{$cost_of_ticket}} bit per ticket)</h5>
+                            <h5 class="card-title" style="color: #fff;">Do you want more lucky? ({{$cost_of_ticket}} USD per ticket)</h5>
                             <p style="color: #fff;">Please click here for more tickets</p>
                             <p class="card-subtitle"><a href="{{ route('welcome') }}" style="box-shadow: 5px 5px 10px;" class="btn btn-custom">More Tickets</a></p>
                         </div>

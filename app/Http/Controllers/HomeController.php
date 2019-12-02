@@ -50,7 +50,7 @@ class HomeController extends Controller
             session(['page' => 'home']);
             $success_ticket = null;
             $income_lottery = '';
-            $current_bitcoin = '';
+            $current_bitcoin = 0;
             $available_number = '';
             $ticket_for_prize1 = '';
             $ticket_for_prize2 = '';
@@ -77,10 +77,15 @@ class HomeController extends Controller
                 if ($today_ticket->exists()) {
                     $available_number = implode(', ', $today_ticket->get()->pluck('number')->toArray());
                 }
-                $current_bitcoin = $lottery->tickets()->count() * $lottery->cost_of_ticket;
+                $current_bitcoin = $lottery->first()->total_bitcoin;
             }else{
                 $income_lottery = '5%';
-                $current_bitcoin = Ticket::where('lottery_id', null)->count() * $cost_of_ticket;
+                $ticket = Ticket::where('lottery_id', null);
+                if ($ticket->exists()) {
+                    $invoice_array = $ticket->get()->pluck('invoice_id')->toArray();
+                    $current_bitcoin = Invoice::whereIn('my_invoice_id', $invoice_array)->get()->sum('price_in_bitcoin');
+                }
+                // $current_bitcoin = Ticket::where('lottery_id', null)->count() * $cost_of_ticket;
                 $today_ticket = $user->tickets()->where('lottery_id', null);
                 if ($today_ticket->exists()) {
                     $available_number = implode(', ', $today_ticket->get()->pluck('number')->toArray());
@@ -191,9 +196,13 @@ class HomeController extends Controller
             $invoice_id = $data['invoice_id'];
             $invoice = Invoice::where('my_invoice_id', $invoice_id)->first();
             $usd = CustomHelper::get_usd();
+            $btc = 1/$usd;
             $secret = $invoice->secret;
-            $amount = $invoice->price_in_bitcoin;
-            $amount_usd = $amount * $usd;
+            $amount_usd = $invoice->price_in_usd;
+            
+            $amount = round($amount_usd * $btc, 8);
+            $invoice->price_in_bitcoin = $amount;
+            $invoice->save();
             if($invoice->address != null && $invoice->is_paid == 0){
                 $address = $invoice->address;
                 return view('payment', compact('address', 'amount', 'invoice_id', 'amount_usd'));
@@ -252,11 +261,15 @@ class HomeController extends Controller
         }else if($user->invoices()->exists()){
             if ($user->invoices()->orderBy('created_at', 'desc')->first()->address != null && $user->invoices()->orderBy('created_at', 'desc')->first()->is_paid == 0) {
                 $usd = CustomHelper::get_usd();
+                $btc = 1/$usd;
                 $invoice_id = $user->invoices()->orderBy('created_at', 'desc')->first()->my_invoice_id;
-                $amount = $user->invoices()->orderBy('created_at', 'desc')->first()->price_in_bitcoin;
-                $amount_usd = $amount * $usd;
+                $amount_usd = $user->invoices()->orderBy('created_at', 'desc')->first()->price_in_usd;
+                $amount = round($amount_usd * $btc, 8);
+                $invoice = Invoice::where('my_invoice_id', $invoice_id)->first();
+                $invoice->price_in_bitcoin = $amount;
+                $invoice->save();
                 $address = $user->invoices()->orderBy('created_at', 'desc')->first()->address;
-                return view('payment', compact('address', 'amount', 'invoice_id', 'amount_usd'));                
+                return view('payment', compact('address', 'amount', 'invoice_id', 'amount_usd'));
             }else{
                 return redirect(route('home'));
             }

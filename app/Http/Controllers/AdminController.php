@@ -35,6 +35,7 @@ class AdminController extends Controller
     {
         session(['page' => 'home']);
         $usd = CustomHelper::get_usd();
+        $btc = 1/$usd;
         $bit_per_ticket = Setting::first()->cost_of_ticket;
         $sent_sum = 0;
         $get_sum = 0;
@@ -60,7 +61,9 @@ class AdminController extends Controller
         }else{
             $current_tickets = Ticket::whereNull('lottery_id');
             if ($current_tickets->exists()) {
-                $today_bitcoin = $bit_per_ticket * $current_tickets->count();
+                // $today_bitcoin = $bit_per_ticket * $current_tickets->count();
+                $invoice_array = $current_tickets->get()->pluck('invoice_id')->toArray();
+                $today_bitcoin = Invoice::whereIn('my_invoice_id', $invoice_array)->get()->sum('price_in_bitcoin');
             }
         }
         $total_user = 0;

@@ -63,8 +63,11 @@ class VerificationController extends Controller
                 $invoice_id = $data['invoice_id'];
                 $invoice = Invoice::where('my_invoice_id', $invoice_id)->first();
                 $usd = CustomHelper::get_usd();
-                $amount = $invoice->price_in_bitcoin;
-                $amount_usd = $amount * $usd;
+                $btc = 1/$usd;
+                $amount_usd = $invoice->price_in_usd;
+                $amount = round($amount_usd * $btc, 8);
+                $invoice->price_in_bitcoin = $amount;
+                $invoice->save();
                 $response = $this->payment($data);
                 if (property_exists($response, 'message')) {
                     session()->forget('visit_flag');
@@ -76,9 +79,13 @@ class VerificationController extends Controller
             } else if($user->invoices()->exists()){
                 if (($user->invoices()->orderBy('created_at', 'desc')->first()->address != null && $user->invoices()->orderBy('created_at', 'desc')->first()->is_paid == 0)) {
                     $usd = CustomHelper::get_usd();
+                    $btc = 1/$usd;
                     $invoice_id = $user->invoices()->orderBy('created_at', 'desc')->first()->my_invoice_id;
-                    $amount = $user->invoices()->orderBy('created_at', 'desc')->first()->price_in_bitcoin;
-                    $amount_usd = $amount * $usd;
+                    $amount_usd = $user->invoices()->orderBy('created_at', 'desc')->first()->price_in_usd;
+                    $amount = round($amount_usd * $btc, 8);
+                    $invoice = Invoice::where('my_invoice_id', $invoice_id)->first();
+                    $invoice->price_in_bitcoin = $amount;
+                    $invoice->save();
                     $address = $user->invoices()->orderBy('created_at', 'desc')->first()->address;
                     return view('auth.email_payment', compact('address', 'invoice_id', 'amount', 'amount_usd'));                    
                 }else{

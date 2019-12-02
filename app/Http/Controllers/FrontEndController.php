@@ -11,6 +11,7 @@ use App\InvoicePayment;
 use App\InvoicePendingPayment;
 use App\Ticket;
 use App\Lottery;
+use DB;
 use CustomHelper;
 
 use Auth;
@@ -37,6 +38,7 @@ class FrontEndController extends Controller
     public function index()
     {
         $usd = CustomHelper::get_usd();
+        $btc = 1/$usd;
         $today_bitcoin = 0;
         $next_time = Setting::first()->time_of_prize1;
         $next_prize = 0;
@@ -62,7 +64,9 @@ class FrontEndController extends Controller
         }else {
             $current_tickets = Ticket::whereNull('lottery_id');
             if ($current_tickets->exists()) {
-                $today_bitcoin = $bit_per_ticket * $current_tickets->count();
+                $invoice_array = $current_tickets->get()->pluck('invoice_id')->toArray();
+                $today_bitcoin = Invoice::whereIn('my_invoice_id', $invoice_array)->get()->sum('price_in_bitcoin');
+                // $today_bitcoin = $bit_per_ticket * $current_tickets->count();
                 $next_prize = $today_bitcoin * 0.05;
                 $prize1 = $next_prize;
                 $prize2 = $today_bitcoin * 0.15;
@@ -93,7 +97,7 @@ class FrontEndController extends Controller
             }
         }
         $result = $date  . date('h:i a', strtotime($next_time));
-        return view('welcome', compact('usd', 'next_prize', 'prize1', 'prize2', 'prize3', 'today_bitcoin', 'next_time', 'last_lottery', 'last_four_lottery', 'sent_sum', 'prize_number', 'result', 'more_flag'));
+        return view('welcome', compact('usd','bit_per_ticket', 'next_prize', 'prize1', 'prize2', 'prize3', 'today_bitcoin', 'next_time', 'last_lottery', 'last_four_lottery', 'sent_sum', 'prize_number', 'result', 'more_flag'));
     }    
     
     public function post_home(Request $request)
@@ -110,15 +114,41 @@ class FrontEndController extends Controller
 
         $data = $request->all();
         
+        $usd = CustomHelper::get_usd();
+        $btc = 1/$usd;
+        $price_per_ticket = Setting::first()->cost_of_ticket;
+        // $amount_usd = (int)$data['bit_number'] * $price_per_ticket;
+        // $amount_btc = $amount_usd * $btc;
 
-        $amount = (int)$data['bit_number'] * Setting::first()->cost_of_ticket;
+        if ($data['bit_number'] == 1) {
+            $amount_usd = $price_per_ticket;
+        }else if($data['bit_number'] == 5){
+            $amount_usd = (int)$data['bit_number'] * $price_per_ticket - ((int)$data['bit_number'] * $price_per_ticket * 0.02);
+        }else if($data['bit_number'] == 10){
+            $amount_usd = (int)$data['bit_number'] * $price_per_ticket - ((int)$data['bit_number'] * $price_per_ticket * 0.05);
+        }else if($data['bit_number'] == 50){
+            $amount_usd = (int)$data['bit_number'] * $price_per_ticket - ((int)$data['bit_number'] * $price_per_ticket * 0.075);
+        }else if($data['bit_number'] == 100){
+            $amount_usd = (int)$data['bit_number'] * $price_per_ticket - ((int)$data['bit_number'] * $price_per_ticket * 0.1);
+        }else if($data['bit_number'] == 250){
+            $amount_usd = (int)$data['bit_number'] * $price_per_ticket - ((int)$data['bit_number'] * $price_per_ticket * 0.15);
+        }else if($data['bit_number'] == 500){
+            $amount_usd = (int)$data['bit_number'] * $price_per_ticket - ((int)$data['bit_number'] * $price_per_ticket * 0.2);
+        }else if($data['bit_number'] == 1000){
+            $amount_usd = (int)$data['bit_number'] * $price_per_ticket - ((int)$data['bit_number'] * $price_per_ticket * 0.25);
+        }else{
+            return back();
+        }
+        
+        $amount_btc = $amount_usd * $btc;
         $wallet_address = $data['wallet_address'];
         $invoice_id = uniqid();
         $secret = md5(uniqid());
         Invoice::create([
             'secret' => $secret,
             'my_invoice_id' => $invoice_id,
-            'price_in_bitcoin' => round($amount, 8),
+            'price_in_bitcoin' => round($amount_btc, 8),
+            'price_in_usd' => $amount_usd,
             'number_of_ticket' => $data['bit_number'],
             'wallet_address' => $wallet_address,
         ]);
@@ -177,19 +207,21 @@ class FrontEndController extends Controller
                 $invoice->save();
                 $current_tickets = array();
                 $tickets = Ticket::where('lottery_id', null);
-                for ($i=0; $i < $invoice->number_of_ticket; $i++) {    
-                    mt_srand();
-                    $current_tickets = $tickets->get()->pluck('number')->toArray();
-                    do {
-                        $random_number = mt_rand(1000000, 9999999);
-                    } while (in_array($random_number, $current_tickets));
-                    Ticket::create([
-                        'invoice_id' => $invoice->my_invoice_id,
-                        'number' => $random_number,
-                        'user_id' => $invoice->user_id,
-                    ]);
-                    array_push($current_tickets, $random_number);
-                }
+                DB::transaction(function () use($invoice, $tickets, $current_tickets) {
+                    for ($i=0; $i < $invoice->number_of_ticket; $i++) {
+                        mt_srand();
+                        $current_tickets = $tickets->get()->pluck('number')->toArray();
+                        do {
+                            $random_number = mt_rand(1000000, 9999999);
+                        } while (in_array($random_number, $current_tickets));
+                        Ticket::create([
+                            'invoice_id' => $invoice->my_invoice_id,
+                            'number' => $random_number,
+                            'user_id' => $invoice->user_id,
+                        ]);
+                        array_push($current_tickets, $random_number);
+                    }
+                });
             }
 
 

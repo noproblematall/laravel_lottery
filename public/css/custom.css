@@ -410,4 +410,7 @@ footer ul li{display: inline-block;margin-right: 15px;}
     /* --------------------------------------------------- */
     #how_work p {font-size: 16px;}
     .last_winner a {font-size: 12px;}
+    /* ------------------------------------------- */
+    .last_time div.time {padding: 10px 20px;}
+    #last_prize .time h2 {font-size: 34px;}
 }

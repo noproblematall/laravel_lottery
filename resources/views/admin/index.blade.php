@@ -28,8 +28,8 @@
                                 <h5 class="card-title">Winner For Prize1: {{ \App\Ticket::find($win_of_prize1)->number }}</h5>
                                 <p class="card-subtitle">Wallet Address:</p>
                                 <p><a class="card-text" target="_blank" href="https://www.blockchain.com/btc/address/{{\App\Ticket::find($win_of_prize1)->invoice->wallet_address}}">{{\App\Ticket::find($win_of_prize1)->invoice->wallet_address}}</a></p>
-                                <span href="#" class="card-link">{{$today_bitcoin * 0.4}} BIT</span>
-                                <span href="#" class="card-link">{{round($today_bitcoin * 0.4 * $usd, 2)}} USD</span>
+                                <span href="#" class="card-link">{{$today_bitcoin * 0.05}} BTC</span>
+                                <span href="#" class="card-link">{{round($today_bitcoin * 0.05 * $usd, 2)}} USD</span>
                             @else
                                 <h5 class="card-title">Winner For Prize1: ?</h5>
                                 <p class="card-subtitle">Wallet Address:</p>
@@ -67,8 +67,8 @@
                                 <h5 class="card-title">Winner For Prize3: {{ \App\Ticket::find($win_of_prize3)->number }}</h5>
                                 <p class="card-subtitle">Wallet Address:</p>
                                 <p><a class="card-text" target="_blank" href="https://www.blockchain.com/btc/address/{{\App\Ticket::find($win_of_prize3)->invoice->wallet_address}}">{{\App\Ticket::find($win_of_prize3)->invoice->wallet_address}}</a></p>
-                                <span href="#" class="card-link">{{$today_bitcoin * 0.05}} BIT</span>
-                                <span href="#" class="card-link">{{round($today_bitcoin * 0.05 * $usd, 2)}} USD</span>
+                                <span href="#" class="card-link">{{$today_bitcoin * 0.4}} BTC</span>
+                                <span href="#" class="card-link">{{round($today_bitcoin * 0.4 * $usd, 2)}} USD</span>
                             @else
                                 <h5 class="card-title">Winner For Prize3: ?</h5>
                                 <p class="card-subtitle">Wallet Address:</p>

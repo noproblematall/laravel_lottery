@@ -29,7 +29,7 @@
                     </tr>
                     <tr>
                         <td style="padding-left:20px;">                                
-                            <h4>You are winner of {{ $prize }}. so, you earned {{ $amount_bit }}</h4>
+                            <h4>You are winner of {{ $prize }}. so, you earned {{ round($amount_bit, 8) }} BTC</h4>
                         </td>        
                     </tr>         
                     <tr>

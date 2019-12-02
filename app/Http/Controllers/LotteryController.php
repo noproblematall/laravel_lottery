@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Invoice;
 use Illuminate\Http\Request;
 
 use Mail;
@@ -81,89 +82,95 @@ class LotteryController extends Controller
     {
         $setting = Setting::first();
         $tickets = Ticket::whereNull('lottery_id');
-        $total_bitcoin = $tickets->count() * $setting->cost_of_ticket;
-        $min_of_btc = $setting->min_of_btc;
-        if ($total_bitcoin < $min_of_btc) {
-            // $this->dataLog('hey not ready');
-            $setting->is_ready1 = 1;
-            $setting->save();
-            return;
-        }
-        $now = date('Y-m-d H:i:s');
-        $result = "Let's start today lottery prize 1 " . " --- " . $now;
-        // $this->dataLog($result);
-        
-        if (!$setting) {
-            $result = 'You have to set time and cost.' . ' -- ' . $now;
-            // $this->dataLog($result);
-            return $result;
-        }
-        $lottery = Lottery::create([
-            'date' => date('Y-m-d'),
-            'cost_of_ticket' => $setting->cost_of_ticket,
-            'time_of_prize1' => $setting->time_of_prize1,
-            'time_of_prize2' => $setting->time_of_prize2,
-            'time_of_prize3' => $setting->time_of_prize3,
-        ]);
         // $tickets = Ticket::where('lottery_id', 1);
-        if (!$tickets->exists()) {
-            $result = 'There are not any tickets.' . ' -- ' . $now;
-            // $this->dataLog($result);
-            return $result;
-        }
-        $total_bitcoin = $tickets->count() * $setting->cost_of_ticket;
-        $tickets->update([
-            'lottery_id' => $lottery->id,            
-        ]);
-
-        $users = User::where('role_id', 2)->whereNotNull('email_verified_at')->get();
-        foreach ($users as $user) {
-            if($user->email_verified_at != null){
-                $this->lottery_start_email($user->username, $user->email, 'prize1');
+        if ($tickets->exists()) {
+            $invoice_array = $tickets->get()->pluck('invoice_id')->toArray();
+            $total_bitcoin = Invoice::whereIn('my_invoice_id', $invoice_array)->get()->sum('price_in_bitcoin');
+            // $total_bitcoin = $tickets->count() * $setting->cost_of_ticket;
+            $min_of_btc = $setting->min_of_btc;
+            if ($total_bitcoin < $min_of_btc) {
+                // $this->dataLog('hey not ready');
+                $setting->is_ready1 = 1;
+                $setting->save();
+                return;
             }
-        }
-        $tickets = Ticket::where('lottery_id', $lottery->id);
-        // ------ Win Ticket algothrism ---------   
-        $ticket_number = $tickets->count();
-        if ($ticket_number == 1) {
-            $result = 'There is only one ticket.' . ' -- ' . $now;
+            $now = date('Y-m-d H:i:s');
+            $result = "Let's start today lottery prize 1 " . " --- " . $now;
             // $this->dataLog($result);
+            
+            if (!$setting) {
+                $result = 'You have to set time and cost.' . ' -- ' . $now;
+                // $this->dataLog($result);
+                return $result;
+            }
+            $lottery = Lottery::create([
+                'date' => date('Y-m-d'),
+                'cost_of_ticket' => $setting->cost_of_ticket,
+                'time_of_prize1' => $setting->time_of_prize1,
+                'time_of_prize2' => $setting->time_of_prize2,
+                'time_of_prize3' => $setting->time_of_prize3,
+            ]);
+            // $tickets = Ticket::where('lottery_id', 1);
+            if (!$tickets->exists()) {
+                $result = 'There are not any tickets.' . ' -- ' . $now;
+                // $this->dataLog($result);
+                return $result;
+            }
+            // $total_bitcoin = $tickets->count() * $setting->cost_of_ticket;
+            $tickets->update([
+                'lottery_id' => $lottery->id,            
+            ]);
+    
+            $users = User::where('role_id', 2)->whereNotNull('email_verified_at')->get();
+            foreach ($users as $user) {
+                if($user->email_verified_at != null){
+                    $this->lottery_start_email($user->username, $user->email, 'prize1');
+                }
+            }
+            $tickets = Ticket::where('lottery_id', $lottery->id);
+            // ------ Win Ticket algothrism ---------   
+            $ticket_number = $tickets->count();
+            if ($ticket_number == 1) {
+                $result = 'There is only one ticket.' . ' -- ' . $now;
+                // $this->dataLog($result);
+                return $result;
+            }
+            mt_srand();
+            $random_number = mt_rand(1, $ticket_number);
+            $temp_tickets = $tickets->get()->random($random_number);
+            $prize1_ticket = $temp_tickets->random();
+            // ---------------------------------------
+            $prize1_ticket->is_win = 5;
+            $prize1_ticket->save();
+            $lottery->update([
+                'win_of_prize1' => $prize1_ticket->id,
+                'total_bitcoin' => $total_bitcoin
+            ]);
+            $result = 'The winner of prize1 is => ' . $prize1_ticket->number . ' -- ' . $now;
+            
+            Payment::create([
+                'ticket_id' => $prize1_ticket->id,
+                'lottery_id' => $lottery->id,
+                'prize_type' => '5',
+                'amount' => $lottery->total_bitcoin * 0.05,
+            ]);
+            if ($setting->is_ready1) {
+                $setting->is_ready1 = 0;
+                $setting->is_ready2 = 1;
+                $setting->save();
+            }
+            
+    
+            $ticket = Ticket::find($prize1_ticket->id);
+            $winner_email = $ticket->user->email;
+            $winner_name = $ticket->user->name;
+            $data = array('name'=>$winner_name, 'prize'=>'prize1', 'amount_bit'=>$total_bitcoin * 0.05);
+            Mail::send('emails.winner', $data, function($message) use($winner_email, $winner_name) {
+               $message->to($winner_email, $winner_name)->subject('You are winner.');
+            });
             return $result;
+            
         }
-        mt_srand();
-        $random_number = mt_rand(1, $ticket_number);
-        $temp_tickets = $tickets->get()->random($random_number);
-        $prize1_ticket = $temp_tickets->random();
-        // ---------------------------------------
-        $prize1_ticket->is_win = 5;
-        $prize1_ticket->save();
-        $lottery->update([
-            'win_of_prize1' => $prize1_ticket->id,
-            'total_bitcoin' => $total_bitcoin
-        ]);
-        $result = 'The winner of prize1 is => ' . $prize1_ticket->number . ' -- ' . $now;
-        
-        Payment::create([
-            'ticket_id' => $prize1_ticket->id,
-            'lottery_id' => $lottery->id,
-            'prize_type' => '5',
-            'amount' => $lottery->total_bitcoin * 0.05,
-        ]);
-        if ($setting->is_ready1) {
-            $setting->is_ready1 = 0;
-            $setting->is_ready2 = 1;
-            $setting->save();
-        }
-        
-
-        $ticket = Ticket::find($prize1_ticket->id);
-        $winner_email = $ticket->user->email;
-        $winner_name = $ticket->user->name;
-        $data = array('name'=>$winner_name, 'prize'=>'prize1', 'amount_bit'=>$total_bitcoin * 0.05);
-        Mail::send('emails.winner', $data, function($message) use($winner_email, $winner_name) {
-           $message->to($winner_email, $winner_name)->subject('You are winner.');
-        });
-        return $result;
     }
 
     public function lottery_prize2()

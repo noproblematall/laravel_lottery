@@ -40,7 +40,7 @@
                             </tr>
                             <tr>
                                 <td>Amount Of Bitcoin:</td>
-                                <td style="padding-left: 20px;">{{ $price_in_bitcoin }}</td>
+                                <td style="padding-left: 20px;">{{ $price_in_bitcoin }} BTC</td>
                             </tr>
                             <tr>
                                 <td>Address:</td>

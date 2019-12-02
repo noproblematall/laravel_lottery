@@ -20,6 +20,7 @@ class CreateInvoicesTable extends Migration
             $table->string('secret')->nullable();
             $table->string('my_invoice_id')->unique();
             $table->string('price_in_bitcoin')->nullable();
+            $table->string('price_in_usd')->nullable();
             $table->string('address')->nullable();
             $table->integer('number_of_ticket')->nullable();
             $table->string('wallet_address')->nullable();

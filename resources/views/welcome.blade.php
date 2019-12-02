@@ -103,35 +103,35 @@
                 <div class="row banner text-center">
                     <div class="col-md-12">
                         <p class="mt-2">Next Prize</p>
-                        <h1>{{$next_prize}} btc</h1>
+                        <h1>{{round($next_prize, 8)}} btc</h1>
                         <p class="usd_now">( {{round($next_prize * $usd, 2)}} USD )</p>
-                        <p>Total accumulated so for</p>
+                        <p>Accumulated Value</p>
                     </div>
                 </div>
                 <div class="row prizes text-center">
                     <div class="col-md-4">
                         <div class="prize_one item">
-                            <p>Prize one - SuperBit</p>
+                            <p>MegaBitcoins</p>
                             <div>
-                                <p>{{$prize1}} btc</p>
+                                <p>{{round($prize1, 8)}} btc</p>
                                 <p>( {{round($prize1 * $usd, 2)}} USD )</p>
                             </div>                            
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="prize_two item">
-                            <p>Prize two - SuperBit</p>
+                            <p>SuperFlowy</p>
                             <div>
-                                <p>{{$prize2}} btc</p>
+                                <p>{{round($prize2, 8)}} btc</p>
                                 <p>( {{round($prize2 * $usd, 2)}} USD )</p>
                             </div>                            
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="prize_three item">
-                            <p>Prize three - SuperBit</p>
+                            <p>LuckyBitcoin</p>
                             <div>
-                                <p>{{$prize3}} btc</p>
+                                <p>{{round($prize3, 8)}} btc</p>
                                 <p>( {{round($prize3 * $usd, 2)}} USD )</p>
                             </div>                            
                         </div>
@@ -166,10 +166,14 @@
                         </div>
                         <div class="col-md-3">
                             <select name="bit_number" id="bit_number" class="custom-select custom-select2">
-                                <option value="1">1 Number of tickets</option>
-                                <option value="2">2 Number of tickets</option>
-                                <option value="7">7 Number of tickets</option>
-                                <option value="20">20 Number of tickets</option>
+                                <option value="1">1 Ticket - ({{$bit_per_ticket}} USD)</option>
+                                <option value="5">5 Ticket - 2% Off({{$bit_per_ticket * 5 - ($bit_per_ticket * 5 * 0.02)}} USD)</option>
+                                <option value="10">10 Ticket - 5% Off({{$bit_per_ticket * 10 - ($bit_per_ticket * 10 * 0.05)}} USD)</option>
+                                <option value="50">50 Ticket - 7.5% Off({{$bit_per_ticket * 50 - ($bit_per_ticket * 50 * 0.075)}} USD)</option>
+                                <option value="100">100 Ticket - 10% Off({{$bit_per_ticket * 100 - ($bit_per_ticket * 100 * 0.1)}} USD)</option>
+                                <option value="250">250 Ticket - 15% Off({{$bit_per_ticket * 250 - ($bit_per_ticket * 250 * 0.15)}} USD)</option>
+                                <option value="500">500 Ticket - 20% Off({{$bit_per_ticket * 500 - ($bit_per_ticket * 500 * 0.2)}} USD)</option>
+                                <option value="1000">1000 Ticket - 25% Off({{$bit_per_ticket * 1000 - ($bit_per_ticket * 1000 * 0.25)}} USD)</option>
                             </select>
                         </div>
                         <div class="col-md-3">
@@ -194,7 +198,7 @@
                             <h2>{{$next_time}}</h2>
                         </div>
                         <p class="today_date">{{$result}}</p>
-                        <p class="grinich">Currently Greenwich Mean Time (GMT), UTC +0</p>
+                        <p class="grinich">Local time</p>
                         <a href="#form_submit" class="btn btn-primary btn-sm">Buy tickets</a>
                     </div>
                 </div>
@@ -205,7 +209,7 @@
                 <div class="row chart">
                     <div class="col-md-12">
                         <div class="" id="chart"></div>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                        <p>Graphic of accumulated value of lasts prize</p>
                     </div>
                 </div>
             </div>
@@ -216,8 +220,8 @@
                     <div class="col-md-12 text-center">
                         <h4>Last Winners</h4>
                         @if ($last_lottery->exists())
-                            <h2>{{$last_lottery->first()->total_bitcoin}} btc</h2>
-                            <h3>( {{round($last_lottery->first()->total_bitcoin * $usd, 2)}} USD )</h3>                            
+                            <h2>{{round($last_lottery->first()->total_bitcoin, 8)}} btc</h2>
+                            <h3>( {{round($last_lottery->first()->total_bitcoin * $usd, 2)}} USD )</h3>
                         @endif
                         <h4>Total accumulated</h4>
                     </div>
@@ -225,10 +229,10 @@
                 <div class="row prize_1 mt-5">
                     <div class="col-md-6">
                         <div class="float-right text-center">
-                            <h4>Prize one - SuperBit</h4>
+                            <h4>MegaBitcoins - SuperBit</h4>
                             <div class="prize">
                                 @if ($last_lottery->exists())
-                                    <h2>{{$last_lottery->first()->total_bitcoin * 0.05}}btc</h2>
+                                    <h2>{{round($last_lottery->first()->total_bitcoin * 0.05, 8)}}btc</h2>
                                     <p>( {{round($last_lottery->first()->total_bitcoin * 0.05 * $usd, 2)}} USD )</p>
                                 @else
                                     <h2>Not yet</h2>
@@ -240,7 +244,7 @@
                     </div>
                     <div class="col-md-6 text-left">
                         <div>
-                            <p>Address bitcoin:</p>
+                            <p>Bitcoin address:</p>
                             @if ($last_lottery->exists())
                                 <p><a href="https://www.blockchain.com/btc/address/{{ $last_lottery->first()->tickets()->find($last_lottery->first()->win_of_prize1)->user->invoices()->first()->wallet_address }}" target="_blank">{{ $last_lottery->first()->tickets()->find($last_lottery->first()->win_of_prize1)->user->invoices()->first()->wallet_address }}</a></p>                                
                             @endif
@@ -250,10 +254,10 @@
                 <div class="row prize_2 mt-4">
                     <div class="col-md-6">
                         <div class="float-right text-center mr-3">
-                            <h4>Prize two - SuperBit</h4>
+                            <h4>SuperFlowy - SuperBit</h4>
                             <div class="prize">
                                 @if ($last_lottery->exists())
-                                    <h2>{{$last_lottery->first()->total_bitcoin * 0.15}}btc</h2>
+                                    <h2>{{round($last_lottery->first()->total_bitcoin * 0.15, 8)}}btc</h2>
                                     <p>( {{round($last_lottery->first()->total_bitcoin * 0.15 * $usd, 2)}} USD )</p>
                                 @else
                                     <h2>Not yet</h2>
@@ -265,7 +269,7 @@
                     </div>
                     <div class="col-md-6 text-left">
                         <div>
-                            <p>Address bitcoin:</p>
+                            <p>Bitcoin address:</p>
                             @if ($last_lottery->exists())
                                 <p><a href="https://www.blockchain.com/btc/address/{{ $last_lottery->first()->tickets()->find($last_lottery->first()->win_of_prize2)->user->invoices()->first()->wallet_address }}" target="_blank">{{ $last_lottery->first()->tickets()->find($last_lottery->first()->win_of_prize2)->user->invoices()->first()->wallet_address }}</a></p>                            
                             @endif
@@ -275,10 +279,10 @@
                 <div class="row prize_3 mt-4">
                     <div class="col-md-6">
                         <div class="float-right text-center mr-3">
-                            <h4>Prize three - SuperBit</h4>
+                            <h4>LuckyBitcoin - SuperBit</h4>
                             <div class="prize">
                                 @if ($last_lottery->exists())
-                                    <h2>{{$last_lottery->first()->total_bitcoin * 0.4}}btc</h2>
+                                    <h2>{{round($last_lottery->first()->total_bitcoin * 0.4, 8)}}btc</h2>
                                     <p>( {{round($last_lottery->first()->total_bitcoin * 0.4 * $usd, 2)}} USD )</p>
                                 @else
                                     <h2>Not yet</h2>
@@ -291,7 +295,7 @@
                     </div>
                     <div class="col-md-6 text-left">
                         <div>
-                            <p>Address bitcoin:</p>
+                            <p>Bitcoin address:</p>
                             @if ($last_lottery->exists())
                                 <p><a href="https://www.blockchain.com/btc/address/{{ $last_lottery->first()->tickets()->find($last_lottery->first()->win_of_prize3)->user->invoices()->first()->wallet_address }}" target="_blank">{{ $last_lottery->first()->tickets()->find($last_lottery->first()->win_of_prize3)->user->invoices()->first()->wallet_address }}</a></p>
                             @endif
@@ -310,11 +314,11 @@
                 <div class="row">
                     <div class="col-md-12 text-left">
                         <div class="custom_table table-responsive">
-                            <h3>Winners table Superbit1</h3>
+                            <h3>Winners table MegaBitcoins</h3>
                             <table class="table">
                                 <thead>
                                     <tr>
-                                        <th>Data</th>
+                                        <th>Date</th>
                                         <th>Winner</th>
                                         <th>Prize</th>
                                     </tr>
@@ -343,11 +347,11 @@
                 <div class="row">
                     <div class="col-md-12 text-left">
                         <div class="custom_table table-responsive">
-                            <h3>Winners table Superbit2</h3>
+                            <h3>Winners table SuperFlowy</h3>
                             <table class="table">
                                 <thead>
                                     <tr>
-                                        <th>Data</th>
+                                        <th>Date</th>
                                         <th>Winner</th>
                                         <th>Prize</th>
                                     </tr>
@@ -376,11 +380,11 @@
                 <div class="row">
                     <div class="col-md-12 text-left">
                         <div class="custom_table table-responsive">
-                            <h3>Winners table Superbit3</h3>
+                            <h3>Winners table LuckyBitcoin</h3>
                             <table class="table">
                                 <thead>
                                     <tr>
-                                        <th>Data</th>
+                                        <th>Date</th>
                                         <th>Winner</th>
                                         <th>Prize</th>
                                     </tr>
@@ -412,9 +416,9 @@
                 <div class="row">
                     <div class="col-md-12 text-center">
                         <div class="">
-                            <h2>{{$sent_sum}}btc</h2>
+                            <h2>{{round($sent_sum, 8)}}btc</h2>
                             <h3>{{round($sent_sum * $usd, 2)}}USD</h3>
-                            <p>amount paid</p>
+                            <p>Amount Paid</p>
                         </div>
                     </div>
                 </div>
@@ -427,7 +431,7 @@
                         <div class="col-md-12 text-center">
                             <div class="">
                                 <h2>30%</h2>
-                                <p>probability</p>
+                                <p>Probability of winning</p>
                             </div>
                         </div>
                     </div>
@@ -440,7 +444,7 @@
                     <div class="col-md-12 text-center">
                         <div class="">
                             <h2>{{ $prize_number }}</h2>
-                            <p>Number of prizes </p>
+                            <p>Number of prizes already paid</p>
                         </div>
                     </div>
                 </div>
@@ -464,7 +468,7 @@
                         <div class="clearfix"></div>
                     </div>
                     <div class="col-md-8 pl-30 col-12 text-left">
-                        <p>The lottery system will be based on tickets. You can get as many tickest as you want. Each ticket gives one chance. For instance, you can buy just one ticket, in that case, this you gets one chnace in the loterry. Other one maybe will prefer to buy 10 tickets, what will make him to have 10 chances, and so on.</p>
+                        <p>The lottery system will be based on tickets. You can get as many tickets as you want. Each ticket gives one chance. For instance, you can buy just one ticket, in that case, this you get one chance in the lottery. Another might prefer to buy 10 tickets, which will make him have 10 chances and so on.</p>
                     </div>
                 </div>
                 <div class="row mt-5">
@@ -473,10 +477,10 @@
                         <div class="clearfix"></div>
                     </div>
                     <div class="col-md-8 pl-30 col-12 text-left">
-                        <p> The system will run the lottery every day, and there will be three prizes. Yes you have three chances to win.</p>
+                        <p>There will be three winners every day. Yes, you have three chances to win with the same ticket</p>
                         <br>
-                        <p>- For each prize there will be a different lottery separetely. That means, three lotteries in the same day.</p>
-                        <p>- Only one lotery per.</p>
+                        <p>- For each prize, there will be a different lottery separately. That means three lotteries on the same day.</p>
+                        <p>- Only one lottery per.</p>
                     </div>
                 </div>
                 <div class="row mt-5">
@@ -503,9 +507,9 @@
                             
                                 <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#question_accordian">
                                 <div class="card-body">
-                                    <p>The Bitcoin Lottery is the most amazing lottery and the most exciting ever seen.  Yes, the most! Cause in it there will always be a winner since the draw will be based on the tickets, rather than in a random number.</p> 
-                                    <p>It is fully in Bitcoin, that means you buy your tickets paying with bitcoin and you also receive your prize in bitcoin.</p>
-                                    <p>The basics are, you buy tickets, each tickets allow you to participate once on each category of the lottery. After you bought the tickets you wait for the next draw. If you win your prize will be sent to your wallet within 24 hours, and you will be happy 😊!</p>
+                                    <p>The Bitcoin Lottery is the most amazing lottery and the most exciting ever seen. Yes, the most! Cause in it there will always be a winner since the draw will be based on the tickets, rather than in a random number.</p> 
+                                    <p>It is fully in Bitcoin, which means you buy your tickets paying with bitcoin and you also receive your prize in bitcoin.</p>
+                                    <p>The basics are, you buy tickets, each ticket allows you to participate once on each category of the lottery. After you bought the tickets you wait for the next draw. If you win your prize will be sent to your wallet within 24 hours, and you will be happy 😊!</p>
                                 </div>
                                 </div>
                             </div>
@@ -519,9 +523,9 @@
                                 </div>
                                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#question_accordian">
                                 <div class="card-body">
-                                    <p>Well, First of all we do not track the user identity here and you will not have to pay any tax on the bitcoin amount, although if you decide to convert the bitcoin amount on any FIAT currency your country may apply some charges.</p>
-                                    <p>Bitcoin Lottery, has the ideal system where you can concur to awesome prizes, capable of giving your life a 180 degrees change, just buying a very cheap ticket.</p>
-                                    <p>And the most amazing hing of it is that your chnaces of winning are much more real than any traditional lottery. Why is that?  Simple answer: Cause the traditional lottery make their draws based on randomly chosen number and you are supposed to guess it. The number of combinations is pharaonic and you are supposed to guess it, so your chances on those lotteries are really small, as small as one chance in a billion.  But here, thing are a lot different, your chances will be always way bigger.</p>
+                                    <p>Well, first of all, we do not track the user identity here and you will not have to pay any tax on the bitcoin amount, although if you decide to convert the bitcoin amount on any FIAT currency your country may apply some changes.</p>
+                                    <p>Bitcoin Lottery has the ideal system where you can concur to awesome prizes, capable of giving your life 180 degrees change, just buying a very cheap ticket.</p>
+                                    <p>And the most amazing thing about it is that your chances of winning are much more real than any traditional lottery. Why is that?  Simple answer: Cause the traditional lottery makes their draws based on the randomly chosen numbers and you are supposed to guess it. The number of combinations is pharaonic and you are supposed to guess it, so your chances on those lotteries are really small, as small as one chance in a billion.  But here, the things are a lot different. Your chances will be always way bigger.</p>
                                     <p>In Bitcoin Lottery your chances are always:  The number of tickets you bought devised by the total number of participants. So even if we get one million participants, your chances will be at least 99 million times bigger than the traditional lottery.</p>
                                 </div>
                                 </div>
@@ -536,8 +540,8 @@
                                 </div>
                                 <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#question_accordian">
                                 <div class="card-body">
-                                    <p>Price of the tickets can vary depending on the availability of the tickets. The more tickets are available, the smaller is the price. The opposite is also true. The less tickets are available, the higher will be the price.</p> 
-                                    <p>But in general, the ticket price is around 10,00 USD (Ten dolars ) each. And you get discount if you buy big quantities.</p>
+                                    <p>The price of the tickets can vary depending on the availability of the tickets. The more tickets are available, the smaller is the price. The opposite is also true. The fewer tickets are available, the higher will be the price.</p> 
+                                    <p>But in general, the ticket price is around 10,00 USD (Ten dollars) each. And you get a discount if you buy big quantities.</p>
                                 </div>
                                 </div>
                             </div>
@@ -551,9 +555,9 @@
                                 </div>
                                 <div id="collapsefour" class="collapse" aria-labelledby="headingfour" data-parent="#question_accordian">
                                 <div class="card-body">
-                                    <p>They don`t.  In fact, this is a fully automated system, that means, even in the least second before the lottery you can place your ticket. However, it is important to advice that the blockchain payments may not be instantaneous, so we advise you that it is possible that if you buy your tickets in less than 1 hour for the next draw, than you may not take part on it.</p>
-                                    <p>What happen than?</p>
-                                    <p>Every time you place a ticket order, it will be standing until we get confirmation that bitcoin was received. So, if the payment of your order is confirmed after the run of the current lottery, you will take part on the next one.</p>
+                                    <p>They don`t. This is a fully automated system, that means, even in the least second before the lottery you can place your ticket. However, it is important to advise you that the blockchain payments may not be instantaneous, so we advise you that it is possible that if you buy your tickets in less than 1 hour for the next draw, than you may not take part on it.</p>
+                                    <p>What happens next?</p>
+                                    <p>Every time you place a ticket order, it will be standing until we get confirmation that bitcoin was received. So, if the payment of your order is confirmed after the run of the current lottery, you will take part in the next one.</p>
                                 </div>
                                 </div>
                             </div>
@@ -567,7 +571,7 @@
                                 </div>
                                 <div id="collapsefive" class="collapse" aria-labelledby="headingfive" data-parent="#question_accordian">
                                 <div class="card-body">
-                                    <p>Any adult can participate. There is no requirements.</p>
+                                    <p>Any adult can participate. There are no requirements.</p>
                                 </div>
                                 </div>
                             </div>
@@ -581,14 +585,14 @@
                                 </div>
                                 <div id="collapsesix" class="collapse" aria-labelledby="headingsix" data-parent="#question_accordian">
                                 <div class="card-body">
-                                    <p>Draws occurs daily, except if the minimum amount per category is not achieved.</p>
-                                    <p>Since there are three category of lottery,  each of them has one minimum amount necessary to allow the draw to take place:</p>
+                                    <p>Draws occur daily, except if the minimum amount per category is not achieved.</p>
+                                    <p>Since there are three categories of the lottery, each of them has one minimum amount necessary to allow the draw to take place:</p>
                                     <ul>
-                                        <li>● SuperBit I: Minimum amount for the draw is the Bitcoin amount that in the day of the draw corresponds to 5.000,00 USD (five thousand dollars).</li>
-                                        <li>● SuperBit II: Minimum amount for the draw is the Bitcoin amount that in the day of the draw corresponds to 30.000,00 USD (thirty thousand dollars).</li>
-                                        <li>● SuperBit III: Minimum amount for the draw is the Bitcoin amount that in the day of the draw corresponds to 50.000,00 USD (fifty thousand dollars).</li>
+                                        <li>● MegaBitcoins: The minimum amount for the draw is the Bitcoin amount that in the day of the draw corresponds to 50.000,00 USD (fifty thousand dollars).</li>
+                                        <li>● SuperFlowy: The minimum amount for the draw is the Bitcoin amount that in the day of the draw corresponds to 30.000,00 USD (thirty thousand dollars).</li>
+                                        <li>● LuckyBitcoin: The minimum amount for the draw is the Bitcoin amount that in the day of the draw corresponds to 5.000,00 USD (five thousand dollars).</li>
                                     </ul>
-                                    <p>Note:  IF on your dashboard, when logged in the information of minimum and maximum Is different than that information here you must consider that on your dashboard over the given information here.</p>
+                                    <p>Note: IF on your dashboard, when logged in the information of minimum and maximum Is different than that information here you must consider that one on your dashboard over the given information here.</p>
                                 </div>
                                 </div>
                             </div>
@@ -602,8 +606,8 @@
                                 </div>
                                 <div id="collapseseven" class="collapse" aria-labelledby="headingseven" data-parent="#question_accordian">
                                 <div class="card-body">
-                                    <p>Your ticket gives you the right to participate on all the categories of the next draw.</p>
-                                    <p>It is important to be attentive to what was said on the item 4, as its is possible that your ticket to not get the confirmation of payment in blockchain within the necessary time to participate of the immediate next draw. In that case, your ticket will participate of the firsts draws happened after its payment confirmation.</p>
+                                    <p>Your ticket gives you the right to participate in all the categories of the next draw.</p>
+                                    <p>It is important to be attentive to what was said on item 4, as it is possible that your tickets do not get the confirmation of payment in blockchain within the necessary time to participate in the immediate next draw. In that case, your ticket will participate in the first draw that happened after its payment confirmation.</p>
                                 </div>
                                 </div>
                             </div>
@@ -617,7 +621,7 @@
                                 </div>
                                 <div id="collapseeight" class="collapse" aria-labelledby="headingeight" data-parent="#question_accordian">
                                 <div class="card-body">
-                                    <p>The draw is automated an it’s carried out by an algorithm that will randomly choose an existent ticket between the full number of them.</p>
+                                    <p>The draw is automated it’s carried out by an algorithm that will randomly choose an existent ticket between the full number of them.</p>
                                 </div>
                                 </div>
                             </div>
@@ -631,7 +635,7 @@
                                 </div>
                                 <div id="collapsenine" class="collapse" aria-labelledby="headingnine" data-parent="#question_accordian">
                                 <div class="card-body">
-                                    <p>Practically, there is no limit. The more tickets you buy, the more chances you have. But there is a limit per order. The maximum one can buy at once (on an order) is 1000 (one thousand) tickets and you get a nice discount for that.</p>
+                                    <p>Practically, there is no limit. The more tickets you buy, the more chances you have. But there is a limit per order. The maximum that one can buy at once (some order) is 1000 (one thousand) tickets and you get a nice discount for that.</p>
                                     <p>If you want to buy more than that, you need to place one order for each 1000 (one thousand) tickets.</p>
                                 </div>
                                 </div>
@@ -647,7 +651,7 @@
                                 <div id="collapseTen" class="collapse" aria-labelledby="headingTen" data-parent="#question_accordian">
                                 <div class="card-body">
                                     <p>Yes, it is!</p>
-                                    <p>Flowy Lottery is totally safe on all points of view. We use cold wallets, and we make the payments manually, since there will be maximum three draws a day (one per category). That means our wallets do not stay online at any moment, with meant no hacker or anything can still their from us.  The physical copies are very well hidden and they are also encrypted so only the mentors of the project knows the secrets to decrypt them.</p>
+                                    <p>Flowy Lottery is totally safe on all points of view. We use cold wallets, and we make the payments manually since there will be a maximum of three draws a day (one per category). That means our wallets do not stay online at any moment, with means no hacker or anything can still them from us. The physical copies are very well hidden, and they are also encrypted so only the mentors of the project know the secrets to decrypt them.</p>
                                 </div>
                                 </div>
                             </div>
@@ -661,7 +665,7 @@
                                 </div>
                                 <div id="collapseele" class="collapse" aria-labelledby="headingheadingelefour" data-parent="#question_accordian">
                                 <div class="card-body">
-                                    <p>It depends on your country`s jurisdiction. In most of the countries the answer is still no, but it is your responsibility to find out about the current laws of your country regarding Bitcoin and lotteries. We hereby advice you that the law of your country is major and must be taken as the valid terms evening if in this terms we affirmed differently.</p>
+                                    <p>It depends on your country`s jurisdiction. In most countries, the answer is still no, but it is your responsibility to find out about the current laws of your country regarding Bitcoin and lotteries. We hereby advise you that the law of your country is major and must be taken as the valid terms evening if in these terms we affirmed differently.</p>
                                 </div>
                                 </div>
                             </div>
