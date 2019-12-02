@@ -20,7 +20,9 @@
         .more_view {background-color:#FDB702;margin-top: 20px;font-size: 16px;padding: 5px 50px;border: none;border-radius: 20px;color:#3F1268;font-weight: bold;}
         .logo {position: relative;}
         div.desktop_menu .logo > a {position: absolute; top: -7px; left: 0;}
+        .buy_tickets {background-color:#fdb702;font-weight:bold;border-radius: 20px;color: #24126A;border: none;}
     </style>
+    {!! htmlScriptTagJsApi() !!}
 </head>
 <body>
     <div class="custom-container">
@@ -135,7 +137,7 @@
                         </div>
                     </div>
                 </div>
-                <form action="{{route('post_home')}}" id="form_submit" method="post">
+                <form action="{{route('post_home')}}" method="post" id="{{ getFormId() }}">
                     @csrf
                     <div class="row ticket_buy mb-4">
                         <div class="col-md-3">
@@ -171,7 +173,12 @@
                             </select>
                         </div>
                         <div class="col-md-3">
-                            <input type="button" name="submit_btn" id="submit_btn" class="form-control" style="background-color:#fdb702;font-weight:bold;" value="Buy tickets">
+                            {!! htmlFormButton('Buy tickets', [
+                                'class' => 'form-control buy_tickets',
+                                'id' => 'submit_btn',
+                                // 'type' => 'button',
+                            ]) !!}
+                            {{-- <input type="button" name="submit_btn" id="submit_btn" class="form-control buy_tickets" style="background-color:#fdb702;font-weight:bold;" value="Buy tickets"> --}}
                         </div>
                     </div>
                 </form>
@@ -725,19 +732,23 @@
     <script src="{{asset('library/wallet_validation/dist/wallet-address-validator.min.js')}}"></script>
     <script>
         $(document).ready(function(){
-            $('#submit_btn').click(function(){
-                let wallet = $('#wallet_address').val();
-                var valid = WAValidator.validate(wallet, 'bitcoin');
-                if(!valid){
-                    console.log('ok')
-                    $('.wallet_invalid').removeClass('display_none');
-                    return
-                }
-                $('.loader_container').removeClass('display_none');
-                $(this).attr('disabled', 'disabled');
-                $('#form_submit').submit();
+            
+            // $('#submit_btn').click(function(e){
+            //     e.preventDefault()
+            //     $('.loader_container').removeClass('display_none');
+            //     let wallet = $('#wallet_address').val();
+            //     var valid = WAValidator.validate(wallet, 'bitcoin');
+            //     if(!valid){
+            //         console.log('ok')
+            //         $('.wallet_invalid').removeClass('display_none');
+            //         return
+            //     }
+            //     $('.loader_container').removeClass('display_none');
+            //     $(this).attr('disabled', 'disabled');
+            //     // location.reload()
+            //     // $('#form_submit').submit();
                 
-            })
+            // })
         })
     </script>
 </body>

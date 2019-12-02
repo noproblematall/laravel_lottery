@@ -76,7 +76,7 @@
                             </span>
                         @enderror
                         <div class="form-group">
-                            <label for="prize3_time">Cost of ticket (BTC)</label>
+                            <label for="prize3_time">Cost of ticket (USD)</label>
                             <input type="text" name="cost_of_ticket" value="{{ $flag == 1 ? $setting->cost_of_ticket : old('cost_of_ticket') }}" class="form-control" id="cost_of_ticket">
                             @error('cost_of_ticket')
                                 <span class="invalid-feedback" role="alert">

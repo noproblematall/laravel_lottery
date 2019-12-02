@@ -99,8 +99,9 @@ class FrontEndController extends Controller
     public function post_home(Request $request)
     {
         $rule = [
-            'wallet_address' => 'required',
-            'bit_number' => 'required'
+            'wallet_address' => 'required|regex:/^[13][a-km-zA-HJ-NP-Z0-9]{26,33}$/im',
+            'bit_number' => 'required',
+            'g-recaptcha-response' => 'recaptcha',
         ];
         if (!Auth::user()) {
             $rule['email'] = 'required|email';
