@@ -103,8 +103,10 @@
                 <div class="row banner text-center">
                     <div class="col-md-12">
                         <p class="mt-2">Next Prize</p>
-                        <h1>{{round($next_prize, 8)}} btc</h1>
-                        <p class="usd_now">( {{round($next_prize * $usd, 2)}} USD )</p>
+                        <h1>{{round($today_bitcoin, 8)}} btc</h1>
+                        <p class="usd_now">( {{round($today_bitcoin * $usd, 2)}} USD )</p>
+                        {{-- <h1>{{round($next_prize, 8)}} btc</h1>
+                        <p class="usd_now">( {{round($next_prize * $usd, 2)}} USD )</p> --}}
                         <p>Accumulated Value</p>
                     </div>
                 </div>
