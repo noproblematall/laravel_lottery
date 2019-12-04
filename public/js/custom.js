@@ -9,8 +9,9 @@
           url: '/get_wallet_data',
           type: 'get',
           data: {a:1},
+          beforeSend: function () { $('.loader_container').removeClass('display_none'); },
           success: function(data){
-              console.log(data.btc_in);
+            //   console.log(data.btc_in);
 
               var options = {
                 chart: {
@@ -89,7 +90,15 @@
               }  
               var chart = new ApexCharts(document.querySelector("#chart"), options);  
               chart.render();
+              $('.loader_container').addClass('display_none');
 
-          }
-      })
+          },
+        error:function(xhr, status, error){
+            var err = eval("(" + xhr.responseText + ")");
+            console.log(err.errors)
+            $('.loader_container').addClass('display_none');
+        }
+      }).done(function () {
+        $('.loader_container').addClass('display_none');
+    })
   })
