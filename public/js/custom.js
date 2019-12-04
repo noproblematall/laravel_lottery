@@ -50,16 +50,18 @@
                     }
                 ],
                 xaxis: {
-                  categories: data.key_display,
-                  labels: {
-                      show: true,
-                  },
-                  axisTicks: {
-                      show: true,
-                  },
-                  tooltip: {
-                      enabled: false,
-                  }
+                    type: 'category',
+                    categories: data.key_display,
+                    labels: {
+                        show: true,
+                    },
+                    axisTicks: {
+                        show: true,
+                    },
+                    tooltip: {
+                        enabled: false,
+                    },
+                    tickPlacement: 'between'
                 },
                 yaxis: {
                     labels: {
