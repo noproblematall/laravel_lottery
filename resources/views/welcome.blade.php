@@ -21,6 +21,8 @@
         .logo {position: relative;}
         div.desktop_menu .logo > a {position: absolute; top: -7px; left: 0;}
         .buy_tickets {background-color:#fdb702;font-weight:bold;border-radius: 20px;color: #24126A;border: none;}
+        #last_prize .time h2{position: relative;}
+        
     </style>
     {!! htmlScriptTagJsApi() !!}
 </head>
@@ -197,10 +199,10 @@
                         <p class="normal_text">Last for next prize</p>
                         <div class="time mt-2">
                             <img src="{{asset('img/clock.png')}}" alt="CLOCK" srcset="">
-                            <h2>{{$next_time}}</h2>
+                            <h2><span id="count_hour"></span>&nbsp;<span id="count_second">:</span>&nbsp;<span id="count_min"></span></h2>
                         </div>
                         <p class="today_date">{{$result}}</p>
-                        <p class="grinich">Local time</p>
+                        <p class="grinich">Currently Greenwich Mean Time (GMT), UTC +0</p>
                         <a href="#form_submit" class="btn btn-primary btn-sm">Buy tickets</a>
                     </div>
                 </div>
@@ -211,7 +213,7 @@
                 <div class="row chart">
                     <div class="col-md-12">
                         <div class="" id="chart"></div>
-                        <p>Graphic of accumulated value of lasts prize</p>
+                        <p>Our wallet's timeline</p>
                     </div>
                 </div>
             </div>
@@ -725,7 +727,7 @@
             </div>
         </footer>
     </div>
-
+    <input type="hidden" name="" value="{{$remaing_time}}" id="remain_time">
     <div class="loader_container display_none">
         <div class="sk-three-bounce">
             <div class="sk-child sk-bounce1 bg-gray-800"></div>
@@ -738,6 +740,44 @@
     <script src="{{asset('library/wallet_validation/dist/wallet-address-validator.min.js')}}"></script>
     <script>
         $(document).ready(function(){
+            var difference = Number($('#remain_time').val());
+            
+            var count_down = setInterval(function() {
+                // var target = new Date("December 04 2019 13:30:00 GMT+0100"); //replace with YOUR DATE
+                // var now = new Date();
+                // var difference = Math.floor((target.getTime() - now.getTime()) / 1000);
+                difference--;
+
+                var seconds = fixIntegers(difference % 60);
+                min_difference = Math.floor(difference / 60);
+                
+
+                var minutes = fixIntegers(min_difference % 60);
+                hour_difference = Math.floor(min_difference / 60);
+
+                var hours = fixIntegers(hour_difference % 24);
+                // difference = Math.floor(difference / 24);
+                // console.log(hours +':'+ minutes +':'+ seconds);
+                // var days = difference;
+            
+                $("#count_second").toggleClass('display_none');
+                $("#count_min").html(minutes);
+                $("#count_hour").html(hours);
+                // $(".countdown #days").html(days);
+                if (difference <= 0) {
+                    clearInterval(count_down);
+                    $("#count_second").toggleClass('display_none');
+                    console.log(difference)
+                }
+            }, 1000); 
+            function fixIntegers(integer) {
+                if (integer < 0)
+                    integer = 0;
+                if (integer < 10)
+                    return "0" + integer;
+                return "" + integer;
+            }
+
             
             // $('#submit_btn').click(function(e){
             //     e.preventDefault()

@@ -125,6 +125,10 @@ div.bit_price {color: #24126a;}
 .last_time p.grinich {font-size: 13px;}
 .last_time a {background-color: #FDB702;margin-top: 20px;font-size: 16px;padding: 5px 50px;border: none;border-radius: 20px;color: #3F1268;font-weight: bold;}
 .last_time a:hover{background-color: #3f1268;}
+
+#count_hour {position: absolute;left: 0;}
+#count_second {position: absolute; top: -8px; left: calc(50% - 13.6px);}
+#count_min {position: absolute; right: 0;}
 /* ------------------------ Chart -------------------------------------- */
 .apexcharts-datalabel {font-weight: bold;}
 .chart p{color: #24126A; margin-left: 125px; font-size: 11px;}
@@ -310,6 +314,7 @@ footer ul li{display: inline-block;margin-right: 15px;}
     .last_time h2 {font-size: 50px;}
     .last_time div.time {width: 170px;padding: 10px 20px 20px;}
     .last_time div.time img {left: -80px;top: 22px;width: 50px;}
+    #count_second {position: absolute; top: -4px; left: calc(50% - 7.6px);}
     /* ----------------------------------------------- */
     .last_winner {border-bottom-left-radius: 30px;border-bottom-right-radius: 30px;}
     .last_winner .accumulated h2 {font-size: 60px;}
@@ -413,4 +418,7 @@ footer ul li{display: inline-block;margin-right: 15px;}
     /* ------------------------------------------- */
     .last_time div.time {padding: 10px 20px;}
     #last_prize .time h2 {font-size: 34px;}
+    #count_hour {position: absolute;left: 13px;}
+    #count_second {position: absolute; top: -3px; left: calc(50% - 8.6px);}
+    #count_min {position: absolute; right: 20px;}
 }

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 use App\User;
 use App\Invoice;
+use App\Payment;
 use App\Setting;
 use App\InvoicePayment;
 use App\InvoicePendingPayment;
@@ -13,6 +14,8 @@ use App\Ticket;
 use App\Lottery;
 use DB;
 use CustomHelper;
+use Carbon\Carbon;
+use Carbon\CarbonPeriod;
 
 use Auth;
 use Session;
@@ -45,6 +48,11 @@ class FrontEndController extends Controller
         $prize1 = 0;
         $prize2 = 0;
         $prize3 = 0;
+        $remaing_time = 0;
+        $today_date = date('Y-m-d');
+        // dd(time());
+        // dd($today);
+        // dd(date('Y-m-d H:i:s', strtotime($today . '14:20')));
         $bit_per_ticket = Setting::first()->cost_of_ticket;
         $current_lottery = Lottery::where('is_end', 0)->orderBy('created_at', 'desc');
         $date = date('m/d/Y') . ' - Today at ';
@@ -56,14 +64,20 @@ class FrontEndController extends Controller
                 $next_prize = $today_bitcoin * 0.15;
                 $prize2 = $next_prize;
                 $prize3 = $today_bitcoin * 0.4;
+                $remaing_time = strtotime($today_date . $next_time) - time();
             } else {
                 $next_time = $current_lottery->first()->time_of_prize3;
                 $next_prize = $today_bitcoin * 0.4;
                 $prize3 = $next_prize;
+                $remaing_time = strtotime($today_date . $next_time) - time();
             }
         }else {
             $current_tickets = Ticket::whereNull('lottery_id');
-            if ($current_tickets->exists()) {
+            if(Lottery::where('is_end', 1)->whereDate('created_at', '=', date('Y-m-d'))->exists()){
+                $date = date("m/d/Y", strtotime("+1 day")) . ' - Tomorrow at ';
+                $remaing_time = strtotime(date("m/d/Y", strtotime("+1 day")) . $next_time) - time();
+                
+            }else if($current_tickets->exists()){
                 $invoice_array = $current_tickets->get()->pluck('invoice_id')->toArray();
                 $today_bitcoin = Invoice::whereIn('my_invoice_id', $invoice_array)->get()->sum('price_in_bitcoin');
                 // $today_bitcoin = $bit_per_ticket * $current_tickets->count();
@@ -71,10 +85,10 @@ class FrontEndController extends Controller
                 $prize1 = $next_prize;
                 $prize2 = $today_bitcoin * 0.15;
                 $prize3 = $today_bitcoin * 0.4;
+                $remaing_time = strtotime($today_date . $next_time) - time();
+                
             }
-            if(Lottery::where('is_end', 1)->whereDate('created_at', '=', date('Y-m-d'))->exists()){
-                $date = date("m/d/Y", strtotime("+1 day")) . ' - Tomorrow at ';
-            }
+            
         }
 
         $last_lottery = Lottery::where('is_end', 1)->orderBy('created_at', 'desc');
@@ -97,7 +111,7 @@ class FrontEndController extends Controller
             }
         }
         $result = $date  . date('h:i a', strtotime($next_time));
-        return view('welcome', compact('usd','bit_per_ticket', 'next_prize', 'prize1', 'prize2', 'prize3', 'today_bitcoin', 'next_time', 'last_lottery', 'last_four_lottery', 'sent_sum', 'prize_number', 'result', 'more_flag'));
+        return view('welcome', compact('usd','bit_per_ticket', 'remaing_time', 'next_prize', 'prize1', 'prize2', 'prize3', 'today_bitcoin', 'next_time', 'last_lottery', 'last_four_lottery', 'sent_sum', 'prize_number', 'result', 'more_flag'));
     }    
     
     public function post_home(Request $request)
@@ -315,5 +329,28 @@ class FrontEndController extends Controller
         }else{
             return back();
         }
+    }
+
+    public function get_wallet_data()
+    {
+        $chart_end = Carbon::now();
+        $chart_start = $chart_end->copy()->subDays(7);
+        $period = CarbonPeriod::create($chart_start,$chart_end);
+        $key_array = $btc_in =  $btc_out = array();
+        foreach ($period as $date) {
+            $key = $date->format('Y-m-d');
+            $key_display = $date->format('d/m/Y');
+            array_push($key_array, $key_display);
+            // $tweet = Tweet::where('date',$key)->get()->count();
+            $in = Invoice::whereDate('updated_at', $key)->where('is_paid', 1)->get()->sum('price_in_bitcoin');
+            array_push($btc_in,$in);
+            $out = Payment::whereDate('updated_at', $key)->where('hash_code', '!=', 'null')->sum('amount');
+            array_push($btc_out,$out);
+        }
+        return response()->json([
+            'btc_in' => $btc_in,
+            'btc_out' => $btc_out,
+            'key_display' => $key_array
+        ]);
     }
 }

@@ -50,3 +50,5 @@ Route::post('/clear_seesion', 'FrontEndController@clear_seesion')->name('clear_s
 
 Route::get('more_view/{id}', 'FrontEndController@more_view')->name('more_view');
 
+Route::get('/get_wallet_data', 'FrontEndController@get_wallet_data')->name('get_wallet_data');
+
