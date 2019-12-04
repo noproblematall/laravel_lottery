@@ -67,7 +67,7 @@
                 yaxis: {
                     labels: {
                         show: true,
-                        formatter: (value) => { return value.toFixed(2); },
+                        formatter: (value) => { return value.toFixed(8); },
                     },
                 },
                 tooltip: {
