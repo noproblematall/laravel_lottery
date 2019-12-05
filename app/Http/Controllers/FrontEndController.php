@@ -342,14 +342,14 @@ class FrontEndController extends Controller
             $key_display = $date->format('d/m/Y');
             array_push($key_array, $key_display);
             // $tweet = Tweet::where('date',$key)->get()->count();
-            $in = Invoice::whereDate('updated_at', $key)->where('is_paid', 1)->get()->sum('price_in_bitcoin');
-            array_push($btc_in,$in);
-            $out = Payment::whereDate('updated_at', $key)->where('hash_code', '!=', 'null')->sum('amount');
-            array_push($btc_out,$out);
+            $in = Invoice::whereDate('updated_at', '<=', $key)->where('is_paid', 1)->get()->sum('price_in_bitcoin');
+            $out = Payment::whereDate('updated_at', '<=',  $key)->where('hash_code', '!=', 'null')->sum('amount');
+            array_push($btc_in, round($in - $out, 8));
+            // array_push($btc_out,$out);
         }
         return response()->json([
             'btc_in' => $btc_in,
-            'btc_out' => $btc_out,
+            // 'btc_out' => $btc_out,
             'key_display' => $key_array
         ]);
     }

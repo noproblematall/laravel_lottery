@@ -343,48 +343,6 @@ class LotteryController extends Controller
 
     }
 
-    // public function lottery_new()
-    // {
-    //     return view('admin.lottery_new');
-    // }
-
-    // public function lottery_create(Request $request)
-    // {
-    //     $request->validate([
-    //         'date' => 'required',
-    //         'time_of_prize1' => 'required',
-    //         'time_of_prize2' => 'required',
-    //         'time_of_prize3' => 'required',
-    //         'cost_of_ticket' => 'required',
-    //     ]);
-
-    //     $data = $request->all();
-    //     Lottery::create($data);
-    //     return back()->withSuccess('Created successfully.');
-    // }
-
-    // public function lottery_update(Request $request)
-    // {
-    //     $request->validate([
-    //         'date' => 'required',
-    //         'time_of_prize1' => 'required',
-    //         'time_of_prize2' => 'required',
-    //         'time_of_prize3' => 'required',
-    //         'cost_of_ticket' => 'required',
-    //     ]);
-
-    //     $data = $request->all();
-    //     unset($data['_token']);
-    //     unset($data['id']);
-    //     Lottery::where('id', $request->id)->update($data);
-    //     return back()->withSuccess('Updated successfully.');
-    // }
-
-    // public function lottery_edit($id)
-    // {
-    //     $lottery = Lottery::find($id);
-    //     return view('admin.lottery_edit', compact('lottery'));
-    // }
 
     
 }

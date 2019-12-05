@@ -22,9 +22,12 @@
                   },
                 },
                 stroke: {
-                    curve: ['straight', 'straight'],
-                    colors: ['#FDB702','#ffdb7e'],
-                    width: [5,5]
+                    curve: ['straight'],
+                    colors: ['#FDB702'],
+                    width: [5]
+                    // curve: ['straight', 'straight'],
+                    // colors: ['#FDB702','#ffdb7e'],
+                    // width: [5,5]
                 },
                 dataLabels: {
                     enabled: true,
@@ -45,10 +48,10 @@
                         name: 'In',
                         data: data.btc_in
                     },
-                    {
-                        name: 'Out',
-                        data: data.btc_out
-                    }
+                    // {
+                    //     name: 'Out',
+                    //     data: data.btc_out
+                    // }
                 ],
                 xaxis: {
                     type: 'category',
@@ -73,7 +76,8 @@
                 tooltip: {
                     enabled: false,
                 },
-                colors: ['#FDB702','#ffdb7e'],
+                colors: ['#FDB702'],
+                // colors: ['#FDB702','#ffdb7e'],
                 responsive: [{
                     breakpoint: 880,
                     options: {
