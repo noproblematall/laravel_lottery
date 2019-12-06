@@ -25,7 +25,7 @@
         <div class="row row-sm mg-t-20">
             <div class="col-md-12">
                <h3 class="text-center">Bitcoin for this order</h3>
-               <h4 class="text-center">{{ $invoice->price_in_bitcoin }} BIT</h4>
+               <h4 class="text-center">{{ $invoice->price_in_bitcoin }} BTC</h4>
             </div>            
         </div><!-- row -->     
         <div class="row row-sm mg-t-20 mg-b-20">
@@ -34,7 +34,7 @@
                 <h4>- Bitcoin Address </h4> <span><a href="https://www.blockchain.com/btc/address/{{ $invoice->address }}" target="_blank">{{ $invoice->address }}</a></span>
                 <h4>- Number Of Ticket </h4> <span>{{ $invoice->number_of_ticket }}</span>
                 <h4>- Wallet Address </h4> <span><a href="https://www.blockchain.com/btc/address/{{ $invoice->wallet_address }}" target="_blank">{{ $invoice->wallet_address }}</a></span>
-                <h4>- User ID</h4> <span>{{ $invoice->user ? $invoice->username : 'User Deleted' }}</span>
+                <h4>- User ID</h4> <span>{{ $invoice->user ? $invoice->user->username : 'User Deleted' }}</span>
                 <h4>- User Email</h4> <span>{{ $invoice->user ? $invoice->user->email : 'User Deleted' }}</span>
             </div>
 
@@ -42,25 +42,25 @@
                 @if ($invoice->is_paid)
                     <h4>- Paid Amount</h4>
                     @foreach ($invoice->invoice_payment as $item)
-                        <h4>&nbsp;&nbsp;Transcation Hash </h4> <span>{{ $item->transaction_hash }} (Amount: {{ $item->value }} BIT )</span>
+                        <h4>&nbsp;&nbsp;Transcation Hash </h4> <span>{{ $item->transaction_hash }} (Amount: {{ $item->value }} BTC )</span>
                     @endforeach
                 @else
                     @if (!$invoice->invoice_payment->isEmpty())
                         <h4>- Current Paid</h4>
                         @foreach ($invoice->invoice_payment as $item)
-                            <h4>&nbsp;&nbsp;Transcation Hash </h4> <span>{{ $item->transaction_hash }} (Amount: {{ $item->value }} BIT )</span>
+                            <h4>&nbsp;&nbsp;Transcation Hash </h4> <span>{{ $item->transaction_hash }} (Amount: {{ $item->value }} BTC )</span>
                         @endforeach
                         @if (!$invoice->invoice_pending_payment->isEmpty())
                             <h4>- Pending Amount</h4>
                             @foreach ($invoice->invoice_pending_payment as $item)
-                                <h4>&nbsp;&nbsp;Transcation Hash </h4> <span>{{ $item->transaction_hash }} (Amount: {{ $item->value }} BIT )</span>
+                                <h4>&nbsp;&nbsp;Transcation Hash </h4> <span>{{ $item->transaction_hash }} (Amount: {{ $item->value }} BTC )</span>
                             @endforeach                        
                         @endif
                     @else
                         @if (!$invoice->invoice_pending_payment->isEmpty())
                             <h4>- Pending Amount</h4>
                             @foreach ($invoice->invoice_pending_payment as $item)
-                                <h4>&nbsp;&nbsp;Transcation Hash </h4> <span>{{ $item->transaction_hash }} (Amount: {{ $item->value }} BIT )</span>
+                                <h4>&nbsp;&nbsp;Transcation Hash </h4> <span>{{ $item->transaction_hash }} (Amount: {{ $item->value }} BTC )</span>
                             @endforeach
                         @else
                             <h4>Not Paid</h4>
