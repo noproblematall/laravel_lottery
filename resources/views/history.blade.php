@@ -48,13 +48,13 @@
                         </thead>
                         <tbody>                           
                             @forelse ($tickets as $item)
-                                @if ($item->is_win != null)
+                                @if ($item->is_win != null && $item->is_win != 0)
                                     <tr class="win_active">
                                         <td>{{ (($tickets->currentPage() - 1 ) * $tickets->perPage() ) + $loop->iteration }}</td>
                                         <td>{{ $item->number }}</td>
                                         <td>{{ $item->invoice->my_invoice_id }}</td>                                    
                                         <td>
-                                            @if ($item->is_win != null)
+                                            @if ($item->is_win != null && $item->is_win != 0)
                                                 {{ $item->is_win }}% prize
                                             @else
                                                 ---
@@ -68,7 +68,7 @@
                                         <td>{{ $item->number }}</td>
                                         <td>{{ $item->invoice->my_invoice_id }}</td>                                    
                                         <td>
-                                            @if ($item->is_win != null)
+                                            @if ($item->is_win != null && $item->is_win != 0)
                                                 {{ $item->is_win }}% prize
                                             @else
                                                 ---
