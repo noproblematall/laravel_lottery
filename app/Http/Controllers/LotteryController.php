@@ -81,7 +81,7 @@ class LotteryController extends Controller
     public function lottery_prize1()
     {
         $setting = Setting::first();
-        $tickets = Ticket::whereNull('lottery_id');
+        $tickets = Ticket::whereNull('lottery_id')->orWhere('lottery_id', 0);
         // $tickets = Ticket::where('lottery_id', 1);
         if ($tickets->exists()) {
             $invoice_array = $tickets->get()->pluck('invoice_id')->toArray();

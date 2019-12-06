@@ -80,13 +80,13 @@ class HomeController extends Controller
                 $current_bitcoin = $lottery->first()->total_bitcoin;
             }else{
                 $income_lottery = '5%';
-                $ticket = Ticket::where('lottery_id', null);
+                $ticket = Ticket::where('lottery_id', null)->orWhere('lottery_id', 0);
                 if ($ticket->exists()) {
                     $invoice_array = $ticket->get()->pluck('invoice_id')->toArray();
                     $current_bitcoin = Invoice::whereIn('my_invoice_id', $invoice_array)->get()->sum('price_in_bitcoin');
                 }
                 // $current_bitcoin = Ticket::where('lottery_id', null)->count() * $cost_of_ticket;
-                $today_ticket = $user->tickets()->where('lottery_id', null);
+                $today_ticket = $user->tickets()->where('lottery_id', null)->orWhere('lottery_id', 0);
                 if ($today_ticket->exists()) {
                     $available_number = implode(', ', $today_ticket->get()->pluck('number')->toArray());
                 }

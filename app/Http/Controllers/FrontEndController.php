@@ -73,7 +73,7 @@ class FrontEndController extends Controller
                 $remaing_time = strtotime($today_date . $next_time) - time();
             }
         }else {
-            $current_tickets = Ticket::whereNull('lottery_id');
+            $current_tickets = Ticket::whereNull('lottery_id')->orWhere('lottery_id', 0);
             if(Lottery::where('is_end', 1)->whereDate('created_at', '=', date('Y-m-d'))->exists()){
                 $date = date("m/d/Y", strtotime("+1 day")) . ' - Tomorrow at ';
                 $remaing_time = strtotime(date("m/d/Y", strtotime("+1 day")) . $next_time) - time();
@@ -222,7 +222,7 @@ class FrontEndController extends Controller
                 $invoice->is_paid = 1;
                 $invoice->save();
                 $current_tickets = array();
-                $tickets = Ticket::where('lottery_id', null);
+                $tickets = Ticket::where('lottery_id', null)->orWhere('lottery_id', 0);
                 DB::transaction(function () use($invoice, $tickets, $current_tickets) {
                     for ($i=0; $i < $invoice->number_of_ticket; $i++) {
                         mt_srand();
@@ -405,7 +405,7 @@ class FrontEndController extends Controller
                     'invoice_id' => $invoice->my_invoice_id,
                 ]);
                 // ------------------------------ Prize 1 ----------------------------------
-                $tickets = Ticket::where('lottery_id', null);
+                $tickets = Ticket::where('lottery_id', null)->orWhere('lottery_id', 0);
                 $current_tickets = array();
                 foreach (range(1,5) as $t_index){
                     mt_srand();
@@ -422,7 +422,7 @@ class FrontEndController extends Controller
                 }
     
             }
-            $tickets = Ticket::whereNull('lottery_id');
+            $tickets = Ticket::whereNull('lottery_id')->orWhere('lottery_id', 0);
             $invoice_array = $tickets->get()->pluck('invoice_id')->toArray();
             $total_bitcoin = Invoice::whereIn('my_invoice_id', $invoice_array)->get()->sum('price_in_bitcoin');
             $lottery = Lottery::create([

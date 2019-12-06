@@ -59,7 +59,7 @@ class AdminController extends Controller
             $win_of_prize2 = $current_lottery->first()->win_of_prize2;
             $win_of_prize3 = $current_lottery->first()->win_of_prize3;
         }else{
-            $current_tickets = Ticket::whereNull('lottery_id');
+            $current_tickets = Ticket::whereNull('lottery_id')->orWhere('lottery_id', 0);
             if ($current_tickets->exists()) {
                 // $today_bitcoin = $bit_per_ticket * $current_tickets->count();
                 $invoice_array = $current_tickets->get()->pluck('invoice_id')->toArray();
