@@ -52,3 +52,5 @@ Route::get('more_view/{id}', 'FrontEndController@more_view')->name('more_view');
 
 Route::get('/get_wallet_data', 'FrontEndController@get_wallet_data')->name('get_wallet_data');
 
+// Route::get('/fake_data', 'FrontEndController@fake_data')->name('fake_data');
+

@@ -16,6 +16,7 @@ use DB;
 use CustomHelper;
 use Carbon\Carbon;
 use Carbon\CarbonPeriod;
+use Faker\Factory as Faker;
 
 use Auth;
 use Session;
@@ -91,11 +92,12 @@ class FrontEndController extends Controller
             
         }
 
-        $last_lottery = Lottery::where('is_end', 1)->orderBy('created_at', 'desc');
+        $last_lottery = Lottery::with(['tickets'])->where('is_end', 1)->orderBy('created_at', 'desc');
         // $last_bitcoin = $last_lottery->total_bitcoin;
-        if (Lottery::where('is_end', 1)->orderBy('created_at', 'desc')->exists()) {
-            $last_four_lottery = Lottery::with(['tickets'])->where('is_end', 1)->orderBy('created_at', 'desc')->get()->take(4);
-            if ($last_four_lottery->count() > 4) {
+        if ($last_lottery->exists()) {
+
+            $last_four_lottery = $last_lottery->get()->take(4);
+            if ($last_lottery->count() > 4) {
                 $more_flag = 1;
             }
         }else{
@@ -352,5 +354,165 @@ class FrontEndController extends Controller
             // 'btc_out' => $btc_out,
             'key_display' => $key_array
         ]);
+    }
+
+
+
+    public function fake_data()
+    {
+        $faker = Faker::create();
+        $fake_btc = 0.19;
+        $time = strtotime('2019-11-20 05:00:00');
+        $newformat = date('Y-m-d h:i:s',$time);
+        foreach (range(1,3) as $value) {
+            $user = User::create([
+                'username' => strtolower($faker->unique()->firstName()),
+                'email' => $faker->email,
+                'password' => bcrypt('11111111'),
+                'role_id' => 2,
+            ]);
+            $user->email_verified_at = $newformat;
+            $user->created_at = $newformat;
+            $user->updated_at = $newformat;
+            $user->save();
+        }
+        $users = User::orderBy('created_at', 'asc')->get()->take(3);
+        foreach(range(1,16) as $super_index){
+            foreach ($users as $user) {
+                
+                $wallet_address = '14mQfhdhn5UVXViyz1fJNRbzMxJbLmXquA';
+                $invoice_id = uniqid();
+                $secret = md5(uniqid());
+                $fake_btc += 0.01;
+                $invoice = Invoice::create([
+                    'user_id' => $user->id,
+                    'secret' => $secret,
+                    'my_invoice_id' => $invoice_id,
+                    'price_in_bitcoin' => $fake_btc,
+                    'price_in_usd' => 1400,
+                    'number_of_ticket' => 5,
+                    'wallet_address' => $wallet_address,
+                    'address' => '17UTQtGB4aJDTojNcdvNktGFsargHUZvR5',
+                    'is_paid' => 1,
+                ]);
+                $invoice->created_at = $newformat;
+                $invoice->updated_at = $newformat;
+                $invoice->save();
+    
+                InvoicePayment::create([
+                    'transaction_hash' => 'a4c5aabf889f1f1228bbb445eee9bfe5723e98c3f4f598df1833c01a282e12d8',
+                    'value' => $fake_btc,
+                    'invoice_id' => $invoice->my_invoice_id,
+                ]);
+                // ------------------------------ Prize 1 ----------------------------------
+                $tickets = Ticket::where('lottery_id', null);
+                $current_tickets = array();
+                foreach (range(1,5) as $t_index){
+                    mt_srand();
+                    $current_tickets = $tickets->get()->pluck('number')->toArray();
+                    do {
+                        $random_number = mt_rand(1000000, 9999999);
+                    } while (in_array($random_number, $current_tickets));
+                    Ticket::create([
+                        'invoice_id' => $invoice->my_invoice_id,
+                        'number' => $random_number,
+                        'user_id' => $invoice->user_id,
+                    ]);
+                    array_push($current_tickets, $random_number);
+                }
+    
+            }
+            $tickets = Ticket::whereNull('lottery_id');
+            $invoice_array = $tickets->get()->pluck('invoice_id')->toArray();
+            $total_bitcoin = Invoice::whereIn('my_invoice_id', $invoice_array)->get()->sum('price_in_bitcoin');
+            $lottery = Lottery::create([
+                'date' => $newformat,
+                'cost_of_ticket' => 280,
+                'time_of_prize1' => '16:00',
+                'time_of_prize2' => '17:00',
+                'time_of_prize3' => '18:00',
+            ]);
+            $tickets->update([
+                'lottery_id' => $lottery->id,            
+            ]);
+            $tickets = Ticket::where('lottery_id', $lottery->id);
+            $ticket_number = $tickets->count();
+            mt_srand();
+            $random_number = mt_rand(1, $ticket_number);
+            $temp_tickets = $tickets->get()->random($random_number);
+            $prize1_ticket = $temp_tickets->random();
+            // ---------------------------------------
+            $prize1_ticket->is_win = 5;
+            $prize1_ticket->save();
+            $lottery->update([
+                'win_of_prize1' => $prize1_ticket->id,
+                'total_bitcoin' => $total_bitcoin
+            ]);
+    
+            $payment = Payment::create([
+                'ticket_id' => $prize1_ticket->id,
+                'lottery_id' => $lottery->id,
+                'prize_type' => '5',
+                'amount' => $lottery->total_bitcoin * 0.05,
+                'hash_code' => 'a4c5aabf889f1f1228bbb445eee9bfe5723e98c3f4f598df1833c01a282e12d8'
+            ]);
+            $payment->created_at = $newformat;
+            $payment->updated_at = $newformat;
+            $payment->save();
+            // --------------------------------- Prize 2 ---------------------------------
+            $tickets = Ticket::where('lottery_id', $lottery->id)->where('id', '!=', $lottery->win_of_prize1);
+            $ticket_number = $tickets->count();
+            mt_srand();
+            $random_number = mt_rand(1, $ticket_number);
+            
+            $temp_tickets = $tickets->get()->random($random_number);
+            $prize2_ticket = $temp_tickets->random();
+            // ---------------------------------------
+            $prize2_ticket->is_win = 15;
+            $prize2_ticket->save();
+            $lottery->update([
+                'win_of_prize2' => $prize2_ticket->id,
+            ]);
+            $payment = Payment::create([
+                'ticket_id' => $prize2_ticket->id,
+                'lottery_id' => $lottery->id,
+                'prize_type' => '15',
+                'amount' => $lottery->total_bitcoin * 0.15,
+                'hash_code' => 'a4c5aabf889f1f1228bbb445eee9bfe5723e98c3f4f598df1833c01a282e12d8'
+            ]);
+            $payment->created_at = $newformat;
+            $payment->updated_at = $newformat;
+            $payment->save();
+            // ------------------------ Prize 3 ----------------------------------
+            $tickets = Ticket::where('lottery_id', $lottery->id)->where('id', '!=', $lottery->win_of_prize1)->where('id', '!=', $lottery->win_of_prize2);
+            $ticket_number = $tickets->count();
+            mt_srand();
+            $random_number = mt_rand(1, $ticket_number);
+            $temp_tickets = $tickets->get()->random($random_number);
+            $prize3_ticket = $temp_tickets->random();
+            $prize3_ticket->is_win = 40;
+            $prize3_ticket->save();
+            $lottery->update([
+                'win_of_prize3' => $prize3_ticket->id,
+                'is_end' => 1,
+                'is_paid' => 1
+            ]);
+            $lottery->created_at = $newformat;
+            $lottery->updated_at = $newformat;
+            $lottery->save();
+            $payment = Payment::create([
+                'ticket_id' => $prize3_ticket->id,
+                'lottery_id' => $lottery->id,
+                'prize_type' => '40',
+                'amount' => $lottery->total_bitcoin * 0.4,
+                'hash_code' => 'a4c5aabf889f1f1228bbb445eee9bfe5723e98c3f4f598df1833c01a282e12d8'
+            ]);
+            $payment->created_at = $newformat;
+            $payment->updated_at = $newformat;
+            $payment->save();
+
+            $newformat = date('Y-m-d h:i:s', strtotime($newformat . ' +1 day'));
+        }
+        echo 'Success';
     }
 }

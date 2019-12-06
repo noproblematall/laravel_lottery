@@ -216,7 +216,7 @@ class HomeController extends Controller
             //     ]);
             //     $address = $temp_invoice->address;
             //     return view('payment', compact('address', 'amount', 'invoice_id'));
-                else{
+            else{
                 $callback_url = config('app.call_back_root') . "callback?invoice_id=" . $invoice_id . "&secret=" . $secret;
     
                 $curl = curl_init();
