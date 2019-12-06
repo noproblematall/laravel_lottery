@@ -105,13 +105,13 @@
                     <div class="row">
                         <div class="col-md-12 text-left">
                             <div class="custom_table table-responsive">
-                                <h3>Winners table Superbit1</h3>
+                                <h3>Winners table SuperFlowy</h3>
                                 <table class="table">
                                     <thead>
                                         <tr>
-                                            <th>Data</th>
-                                            <th>Ganhador</th>
-                                            <th>Valor</th>
+                                            <th>Date</th>
+                                            <th>Winner</th>
+                                            <th>Prize</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -137,13 +137,13 @@
                     <div class="row">
                         <div class="col-md-12 text-left">
                             <div class="custom_table table-responsive">
-                                <h3>Winners table Superbit2</h3>
+                                <h3>Winners table MegaBitcoins</h3>
                                 <table class="table">
                                     <thead>
                                         <tr>
-                                            <th>Data</th>
-                                            <th>Ganhador</th>
-                                            <th>Valor</th>
+                                            <th>Date</th>
+                                            <th>Winner</th>
+                                            <th>Prize</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -169,13 +169,13 @@
                     <div class="row">
                         <div class="col-md-12 text-left">
                             <div class="custom_table table-responsive">
-                                <h3>Winners table Superbit3</h3>
+                                <h3>Winners table LuckyBitcoin</h3>
                                 <table class="table">
                                     <thead>
                                         <tr>
-                                            <th>Data</th>
-                                            <th>Ganhador</th>
-                                            <th>Valor</th>
+                                            <th>Date</th>
+                                            <th>Winner</th>
+                                            <th>Prize</th>
                                         </tr>
                                     </thead>
                                     <tbody>
