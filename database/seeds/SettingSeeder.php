@@ -13,11 +13,11 @@ class SettingSeeder extends Seeder
     public function run()
     {
         Setting::create([
-            'time_of_prize1' => '14:00',
-            'time_of_prize2' => '15:00',
-            'time_of_prize3' => '16:00',
-            'cost_of_ticket' => 10,
-            'min_of_btc' => 1.2,
+            'time_of_prize1' => '16:00',
+            'time_of_prize2' => '17:00',
+            'time_of_prize3' => '18:00',
+            'cost_of_ticket' => 25,
+            'min_of_btc' => 2,
         ]);
     }
 }

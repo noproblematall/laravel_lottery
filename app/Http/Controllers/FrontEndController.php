@@ -362,7 +362,7 @@ class FrontEndController extends Controller
     {
         $faker = Faker::create();
         $fake_btc = 0.19;
-        $time = strtotime('2019-11-20 05:00:00');
+        $time = strtotime('2019-11-21 05:00:00');
         $newformat = date('Y-m-d h:i:s',$time);
         foreach (range(1,3) as $value) {
             $user = User::create([
