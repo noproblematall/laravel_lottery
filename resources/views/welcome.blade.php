@@ -83,7 +83,14 @@
                             @if (Route::has('login'))
                                 @auth
                                     <li><a href="{{ url('/home') }}">DASHBOARD</a></li>
-                                    <li><a href="{{ route('logout') }}">LOGOUT</a></li>
+                                    <li>
+                                        <a href="{{ route('logout') }}" onclick="event.preventDefault();
+                                        document.getElementById('logout-form-mobile').submit();"><i class="icon ion-power"></i>LOGOUT</a>
+                                    </li>
+                
+                                    <form id="logout-form-mobile" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                        @csrf
+                                    </form>
                                 @else
                                     <li><a href="{{ route('login') }}">LOGIN</a></li>
             
