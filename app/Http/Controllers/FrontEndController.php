@@ -78,7 +78,7 @@ class FrontEndController extends Controller
                 $date = date("m/d/Y", strtotime("+1 day")) . ' - Tomorrow at ';
                 $remaing_time = strtotime(date("m/d/Y", strtotime("+1 day")) . $next_time) - time();
                 
-            }else if($current_tickets->exists()){
+            }else {
                 $invoice_array = $current_tickets->get()->pluck('invoice_id')->toArray();
                 $today_bitcoin = Invoice::whereIn('my_invoice_id', $invoice_array)->get()->sum('price_in_bitcoin');
                 // $today_bitcoin = $bit_per_ticket * $current_tickets->count();
