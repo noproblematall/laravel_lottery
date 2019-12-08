@@ -1,4 +1,4 @@
-<p align="center"><h1>Laravel Lottery With Bitcoin Gateway</h1></p>
+<p align="center">Laravel Lottery With Bitcoin Gateway</p>
 
 <p align="center">
 <a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
