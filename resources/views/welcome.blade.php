@@ -775,6 +775,7 @@
                     clearInterval(count_down);
                     $("#count_second").toggleClass('display_none');
                     console.log(difference)
+                    location.reload();
                 }
             }, 1000); 
             function fixIntegers(integer) {
