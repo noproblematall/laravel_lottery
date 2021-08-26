@@ -51,9 +51,7 @@ class FrontEndController extends Controller
         $prize3 = 0;
         $remaing_time = 0;
         $today_date = date('Y-m-d');
-        // dd(time());
-        // dd($today);
-        // dd(date('Y-m-d H:i:s', strtotime($today . '14:20')));
+        
         $bit_per_ticket = Setting::first()->cost_of_ticket;
         $current_lottery = Lottery::where('is_end', 0)->orderBy('created_at', 'desc');
         $date = date('m/d/Y') . ' - Today at ';
@@ -132,7 +130,7 @@ class FrontEndController extends Controller
         $rule = [
             'wallet_address' => 'required|regex:/^[13][a-km-zA-HJ-NP-Z0-9]{26,33}$/im',
             'bit_number' => 'required',
-            'g-recaptcha-response' => 'recaptcha',
+            // 'g-recaptcha-response' => 'recaptcha',
         ];
         if (!Auth::user()) {
             $rule['email'] = 'required|email';
